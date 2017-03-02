@@ -1,0 +1,170 @@
+<?php
+/**
+ * @file
+ * Implement Goodreads views integration.
+ */
+
+// Allow other cron tasks to be running when deciding if on the hour.
+define('GOODREADS_TIME_VARIANCE', 7);
+// If running cron more often than this lower the value.
+// This is the max run time per cron run in seconds.  It should allow enough
+// time for a single set of books to be grabbed and stay under Drupal's
+// 450 second limit.
+define('GOODREADS_MAX_CRON_TIME', 120);
+
+
+/**
+ * Implements hook_menu().
+ *
+ * Adds the url path for the goodreads views settings page.
+ */
+function goodreads_views_menu() {
+  $items = array();
+  $items['admin/config/content/goodreads/views'] = array(
+    'title'                  => 'Views',
+    'description'            => 'Goodreads views settings.',
+    'page callback'          => 'drupal_get_form',
+    'page arguments'         => array('goodreads_views_admin_settings'),
+    'file'                   => 'goodreads_views.admin.inc',
+    'access callback'        => 'user_access',
+    'access arguments'       => array('administer goodreads'),
+    'type'                   => MENU_LOCAL_TASK,
+  );
+  return $items;
+}
+
+
+/**
+ * Implements hook_help().
+ */
+
+
+/**
+ * Implements hook_cron_queue_info().
+ */
+function goodreads_views_cron_queue_info() {
+  $queues['goodreads_views_cron_data'] = array(
+    // This is the callback function for each queue item.
+    'worker callback'        => '_goodreads_views_cron_worker',
+    // This is the max run time per cron run in seconds.
+    'time'                   => GOODREADS_MAX_CRON_TIME,
+  );
+  return $queues;
+}
+
+
+/**
+ * Implements hook_cron().
+ */
+function goodreads_views_cron() {
+
+  // Get what time it is.
+  $hour = format_date(REQUEST_TIME, 'custom', 'G');
+  $minute = format_date(REQUEST_TIME, 'custom', 'i');
+
+  // If it's the selected time, fill the queue.
+  if ((variable_get('goodreads_views_cron_hour', "23") == $hour) && ($minute <= GOODREADS_TIME_VARIANCE)) {
+    _goodreads_views_cron_fill_queue();
+  }
+
+}
+
+
+/**
+ * Fill the queue to get each user's books on all their shelves.
+ */
+function _goodreads_views_cron_fill_queue() {
+  $queue = DrupalQueue::get('goodreads_views_cron_data');
+  // Loop through each user in the Goodreads OAuth token table.
+  // $results = db_query("SELECT * FROM {goodreads_oauth_token}");
+  $db_result = db_select('goodreads_oauth_token', 'oauth')
+    ->fields('oauth', array('uid', 'gid', 'token_key', 'token_secret'))
+    ->execute()
+    ->fetchAll();
+  $i = 0;
+  foreach ($db_result as $data) {
+    if (trim($data->gid) != '') {
+      // Only process users that have a Goodreads user ID.
+      $item = array();
+      $item['uid'] = $data->uid;
+      $item['gid'] = $data->gid;
+      // Not sure I need this, but just in case.
+      $item['token_key'] = $data->token_key;
+      // Not sure I need this, but just in case.
+      $item['token_secret'] = $data->token_secret;
+      // Put everything in a queue for processing.
+      $queue->createItem($item);
+      $i++;
+    }
+  }
+
+  watchdog('Goodreads Views Cron', 'Built queue in cron for !users users', array('!users' => $i));
+
+}
+
+
+/**
+ * Worker Callback for the Goodreads Views cron queue.
+ */
+function _goodreads_views_cron_worker($item) {
+  // Echo '<br />Processed user ' . $item['uid'] . '<br />';
+  // Displays if running cron directly, ignored it not.
+  // Delete any books already in the cache.
+  // db_query("DELETE FROM {goodreads_views_cache}
+  // WHERE cache_uid = %d", $item['uid']);
+  db_delete('goodreads_views_cache')
+  ->condition('cache_uid', $item['uid'])
+  ->execute();
+  if (_goodreads_use_oauth() && ($item['token_key'] != '')) {
+    // OAuth is enabled and the Drupal user being processed has a token key,
+    // use the OAuth call to get "hidden" books.
+    goodreads_oauth_use_another_user($item['uid']);
+    $books = goodreads_oauth_get_user_books_all_shelves($item['gid'], variable_get('goodreads_views_max_books_per_shelf', 100));
+  }
+  else {
+    // Otherwise use the non-oauth call to get all publically visible books.
+    $books = goodreads_get_user_books_all_shelves($item['gid'], variable_get('goodreads_views_max_books_per_shelf', 100));
+  }
+  if ($books['api_error'] === TRUE) {
+    // Don't do any processing if getting the books returns an error.
+    return;
+  }
+  foreach ($books as $key => $book) {
+    if ($book['goodreads_book_id'] != '') {
+      $sql = array(
+        'cache_uid'          => $item['uid'],
+        'cache_time'         => REQUEST_TIME,
+        'goodreads_user_id'  => $item['gid'],
+        'shelf_name'         => $book['shelf_name'],
+        'title'              => $book['title'],
+        'author'             => $book['author'],
+        'ratings_count'      => $book['ratings_count'],
+        'average_rating'     => $book['average_rating'],
+        'text_reviews_count' => $book['text_reviews_count'],
+        'image_url'          => $book['image_url'],
+        'isbn'               => $book['isbn'],
+        'goodreads_book_id'  => $book['goodreads_book_id'],
+        'description'        => $book['description'],
+      );
+      drupal_write_record('goodreads_views_cache', $sql);
+    }
+  }
+}
+
+
+/**
+ * Integrate the goodreads_views_cache table with Views.
+ */
+
+/**
+ * Implements hook_views_api().
+ */
+function goodreads_views_views_api() {
+  return array(
+    'api' => 2,
+  );
+}
+
+/**
+ * Implements hook_views_data is contained in goodreads_views.views.inc.
+ */

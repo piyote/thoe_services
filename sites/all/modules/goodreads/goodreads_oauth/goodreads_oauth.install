@@ -1,0 +1,43 @@
+<?php
+/**
+ * @file
+ * Implement Goodreads OAuth Install and Uninstall
+ */
+
+module_load_include('inc', 'goodreads', 'database_fields');
+
+
+/**
+ * Implements hook_schema().
+ */
+function goodreads_oauth_schema() {
+  $schema['goodreads_oauth_token'] = array(
+    'description' => 'Tokens for request and services accesses.',
+    'fields'                 => array(
+      'uid'                  => _goodreads_int_field('User ID from {user}.uid.'),
+      'gid'                  => _goodreads_varchar_field('Goodreads user ID.', 25),
+      'token_key'            => _goodreads_varchar_field('Tokens key.', 100),
+      'token_secret'         => _goodreads_varchar_field('Token secret.', 100),
+      'type'                 => _goodreads_varchar_field('Type of the token: request or access.', 7),
+    ),
+    'primary key'            => array('uid'),
+    'indexes'                => array(
+      'token_key_type'       => array('token_key'),
+      'gid'                  => array('gid'),
+    ),
+  );
+  return $schema;
+}
+
+/**
+ * Implements hook_install().
+ */
+function goodreads_oauth_install() {
+  // I like the suggestion on http://drupal.org/node/161085,
+  // but coder flags it as an error, so out it goes for now
+  // drupal_set_message(st("Goodreads OAuth module installed,
+  // settings are available under !link",
+  // array('!link' => l(st('Administer > Site configuration > Goodreads API'),
+  // 'admin/config/content/goodreads'))
+  // ));
+}

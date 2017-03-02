@@ -1,0 +1,1376 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN"
+   "http://www.w3.org/TR/html4/strict.dtd">
+<HTML>
+   <HEAD>
+      <TITLE>Goodreads Filter List</TITLE>
+   </HEAD>
+   <BODY>
+goodreads_get_gid_reviews<br />
+<br />
+[<b>goodreads_get_gid_reviews</b> id <i>PARAMETERS</i>]<br />
+[<b>goodreads_get_gid_reviews</b> title <i>PARAMETERS</i>]<br />
+[<b>goodreads_get_gid_reviews</b> isbn <i>PARAMETERS</i>]<br />
+[<b>goodreads_get_gid_reviews</b> isbn13 <i>PARAMETERS</i>]<br />
+[<b>goodreads_get_gid_reviews</b> image_url <i>PARAMETERS</i>]<br />
+[<b>goodreads_get_gid_reviews</b> small_image_url <i>PARAMETERS</i>]<br />
+[<b>goodreads_get_gid_reviews</b> language_code <i>PARAMETERS</i>]<br />
+[<b>goodreads_get_gid_reviews</b> is_ebook <i>PARAMETERS</i>]<br />
+[<b>goodreads_get_gid_reviews</b> work-best_book_id-value <i>PARAMETERS</i>]<br />
+[<b>goodreads_get_gid_reviews</b> work-best_book_id-best_book_id_attr-type <i>PARAMETERS</i>]<br />
+[<b>goodreads_get_gid_reviews</b> work-books_count-value <i>PARAMETERS</i>]<br />
+[<b>goodreads_get_gid_reviews</b> work-books_count-books_count_attr-type <i>PARAMETERS</i>]<br />
+[<b>goodreads_get_gid_reviews</b> work-id-value <i>PARAMETERS</i>]<br />
+[<b>goodreads_get_gid_reviews</b> work-id-id_attr-type <i>PARAMETERS</i>]<br />
+[<b>goodreads_get_gid_reviews</b> work-media_type <i>PARAMETERS</i>]<br />
+[<b>goodreads_get_gid_reviews</b> work-original_language_id-original_language_id_attr-nil <i>PARAMETERS</i>]<br />
+[<b>goodreads_get_gid_reviews</b> work-original_language_id-original_language_id_attr-type <i>PARAMETERS</i>]<br />
+[<b>goodreads_get_gid_reviews</b> work-original_publication_day-value <i>PARAMETERS</i>]<br />
+[<b>goodreads_get_gid_reviews</b> work-original_publication_day-original_publication_day_attr-type <i>PARAMETERS</i>]<br />
+[<b>goodreads_get_gid_reviews</b> work-original_publication_month-value <i>PARAMETERS</i>]<br />
+[<b>goodreads_get_gid_reviews</b> work-original_publication_month-original_publication_month_attr-type <i>PARAMETERS</i>]<br />
+[<b>goodreads_get_gid_reviews</b> work-original_publication_year-value <i>PARAMETERS</i>]<br />
+[<b>goodreads_get_gid_reviews</b> work-original_publication_year-original_publication_year_attr-type <i>PARAMETERS</i>]<br />
+[<b>goodreads_get_gid_reviews</b> work-original_title <i>PARAMETERS</i>]<br />
+[<b>goodreads_get_gid_reviews</b> work-rating_dist <i>PARAMETERS</i>]<br />
+[<b>goodreads_get_gid_reviews</b> work-ratings_count-value <i>PARAMETERS</i>]<br />
+[<b>goodreads_get_gid_reviews</b> work-ratings_count-ratings_count_attr-type <i>PARAMETERS</i>]<br />
+[<b>goodreads_get_gid_reviews</b> work-ratings_sum-value <i>PARAMETERS</i>]<br />
+[<b>goodreads_get_gid_reviews</b> work-ratings_sum-ratings_sum_attr-type <i>PARAMETERS</i>]<br />
+[<b>goodreads_get_gid_reviews</b> work-reviews_count-value <i>PARAMETERS</i>]<br />
+[<b>goodreads_get_gid_reviews</b> work-reviews_count-reviews_count_attr-type <i>PARAMETERS</i>]<br />
+[<b>goodreads_get_gid_reviews</b> work-text_reviews_count-value <i>PARAMETERS</i>]<br />
+[<b>goodreads_get_gid_reviews</b> work-text_reviews_count-text_reviews_count_attr-type <i>PARAMETERS</i>]<br />
+[<b>goodreads_get_gid_reviews</b> average_rating <i>PARAMETERS</i>]<br />
+[<b>goodreads_get_gid_reviews</b> edition_information <i>PARAMETERS</i>]<br />
+[<b>goodreads_get_gid_reviews</b> ratings_count <i>PARAMETERS</i>]<br />
+[<b>goodreads_get_gid_reviews</b> text_reviews_count <i>PARAMETERS</i>]<br />
+[<b>goodreads_get_gid_reviews</b> url <i>PARAMETERS</i>]<br />
+[<b>goodreads_get_gid_reviews</b> link <i>PARAMETERS</i>]<br />
+[<b>goodreads_get_gid_reviews</b> authors-author-0-id <i>PARAMETERS</i>]<br />
+[<b>goodreads_get_gid_reviews</b> authors-author-0-name <i>PARAMETERS</i>]<br />
+[<b>goodreads_get_gid_reviews</b> authors-author-0-image_url <i>PARAMETERS</i>]<br />
+[<b>goodreads_get_gid_reviews</b> authors-author-0-small_image_url <i>PARAMETERS</i>]<br />
+[<b>goodreads_get_gid_reviews</b> authors-author-0-link <i>PARAMETERS</i>]<br />
+[<b>goodreads_get_gid_reviews</b> authors-author-0-average_rating <i>PARAMETERS</i>]<br />
+[<b>goodreads_get_gid_reviews</b> authors-author-0-ratings_count <i>PARAMETERS</i>]<br />
+[<b>goodreads_get_gid_reviews</b> authors-author-0-text_reviews_count <i>PARAMETERS</i>]<br />
+[<b>goodreads_get_gid_reviews</b> reviews_widget <i>PARAMETERS</i>]<br />
+[<b>goodreads_get_gid_reviews</b> popular_shelves-shelf-0-shelf_attr-name <i>PARAMETERS</i>]<br />
+[<b>goodreads_get_gid_reviews</b> popular_shelves-shelf-0-shelf_attr-count <i>PARAMETERS</i>]<br />
+[<b>goodreads_get_gid_reviews</b> book_links-book_link-0-id <i>PARAMETERS</i>]<br />
+[<b>goodreads_get_gid_reviews</b> book_links-book_link-0-name <i>PARAMETERS</i>]<br />
+[<b>goodreads_get_gid_reviews</b> book_links-book_link-0-link <i>PARAMETERS</i>]<br />
+<br />
+<br />
+goodreads_get_isbn_reviews<br />
+<br />
+[<b>goodreads_get_isbn_reviews</b> id <i>PARAMETERS</i>]<br />
+[<b>goodreads_get_isbn_reviews</b> title <i>PARAMETERS</i>]<br />
+[<b>goodreads_get_isbn_reviews</b> isbn <i>PARAMETERS</i>]<br />
+[<b>goodreads_get_isbn_reviews</b> isbn13 <i>PARAMETERS</i>]<br />
+[<b>goodreads_get_isbn_reviews</b> image_url <i>PARAMETERS</i>]<br />
+[<b>goodreads_get_isbn_reviews</b> small_image_url <i>PARAMETERS</i>]<br />
+[<b>goodreads_get_isbn_reviews</b> language_code <i>PARAMETERS</i>]<br />
+[<b>goodreads_get_isbn_reviews</b> is_ebook <i>PARAMETERS</i>]<br />
+[<b>goodreads_get_isbn_reviews</b> work-best_book_id-value <i>PARAMETERS</i>]<br />
+[<b>goodreads_get_isbn_reviews</b> work-best_book_id-best_book_id_attr-type <i>PARAMETERS</i>]<br />
+[<b>goodreads_get_isbn_reviews</b> work-books_count-value <i>PARAMETERS</i>]<br />
+[<b>goodreads_get_isbn_reviews</b> work-books_count-books_count_attr-type <i>PARAMETERS</i>]<br />
+[<b>goodreads_get_isbn_reviews</b> work-id-value <i>PARAMETERS</i>]<br />
+[<b>goodreads_get_isbn_reviews</b> work-id-id_attr-type <i>PARAMETERS</i>]<br />
+[<b>goodreads_get_isbn_reviews</b> work-media_type <i>PARAMETERS</i>]<br />
+[<b>goodreads_get_isbn_reviews</b> work-original_language_id-original_language_id_attr-type <i>PARAMETERS</i>]<br />
+[<b>goodreads_get_isbn_reviews</b> work-original_language_id-original_language_id_attr-nil <i>PARAMETERS</i>]<br />
+[<b>goodreads_get_isbn_reviews</b> work-original_publication_day-value <i>PARAMETERS</i>]<br />
+[<b>goodreads_get_isbn_reviews</b> work-original_publication_day-original_publication_day_attr-type <i>PARAMETERS</i>]<br />
+[<b>goodreads_get_isbn_reviews</b> work-original_publication_month-value <i>PARAMETERS</i>]<br />
+[<b>goodreads_get_isbn_reviews</b> work-original_publication_month-original_publication_month_attr-type <i>PARAMETERS</i>]<br />
+[<b>goodreads_get_isbn_reviews</b> work-original_publication_year-value <i>PARAMETERS</i>]<br />
+[<b>goodreads_get_isbn_reviews</b> work-original_publication_year-original_publication_year_attr-type <i>PARAMETERS</i>]<br />
+[<b>goodreads_get_isbn_reviews</b> work-original_title <i>PARAMETERS</i>]<br />
+[<b>goodreads_get_isbn_reviews</b> work-rating_dist <i>PARAMETERS</i>]<br />
+[<b>goodreads_get_isbn_reviews</b> work-ratings_count-value <i>PARAMETERS</i>]<br />
+[<b>goodreads_get_isbn_reviews</b> work-ratings_count-ratings_count_attr-type <i>PARAMETERS</i>]<br />
+[<b>goodreads_get_isbn_reviews</b> work-ratings_sum-value <i>PARAMETERS</i>]<br />
+[<b>goodreads_get_isbn_reviews</b> work-ratings_sum-ratings_sum_attr-type <i>PARAMETERS</i>]<br />
+[<b>goodreads_get_isbn_reviews</b> work-reviews_count-value <i>PARAMETERS</i>]<br />
+[<b>goodreads_get_isbn_reviews</b> work-reviews_count-reviews_count_attr-type <i>PARAMETERS</i>]<br />
+[<b>goodreads_get_isbn_reviews</b> work-text_reviews_count-value <i>PARAMETERS</i>]<br />
+[<b>goodreads_get_isbn_reviews</b> work-text_reviews_count-text_reviews_count_attr-type <i>PARAMETERS</i>]<br />
+[<b>goodreads_get_isbn_reviews</b> average_rating <i>PARAMETERS</i>]<br />
+[<b>goodreads_get_isbn_reviews</b> edition_information <i>PARAMETERS</i>]<br />
+[<b>goodreads_get_isbn_reviews</b> ratings_count <i>PARAMETERS</i>]<br />
+[<b>goodreads_get_isbn_reviews</b> text_reviews_count <i>PARAMETERS</i>]<br />
+[<b>goodreads_get_isbn_reviews</b> url <i>PARAMETERS</i>]<br />
+[<b>goodreads_get_isbn_reviews</b> link <i>PARAMETERS</i>]<br />
+[<b>goodreads_get_isbn_reviews</b> authors-author-0-id <i>PARAMETERS</i>]<br />
+[<b>goodreads_get_isbn_reviews</b> authors-author-0-name <i>PARAMETERS</i>]<br />
+[<b>goodreads_get_isbn_reviews</b> authors-author-0-image_url <i>PARAMETERS</i>]<br />
+[<b>goodreads_get_isbn_reviews</b> authors-author-0-small_image_url <i>PARAMETERS</i>]<br />
+[<b>goodreads_get_isbn_reviews</b> authors-author-0-link <i>PARAMETERS</i>]<br />
+[<b>goodreads_get_isbn_reviews</b> authors-author-0-average_rating <i>PARAMETERS</i>]<br />
+[<b>goodreads_get_isbn_reviews</b> authors-author-0-ratings_count <i>PARAMETERS</i>]<br />
+[<b>goodreads_get_isbn_reviews</b> authors-author-0-text_reviews_count <i>PARAMETERS</i>]<br />
+[<b>goodreads_get_isbn_reviews</b> reviews_widget <i>PARAMETERS</i>]<br />
+[<b>goodreads_get_isbn_reviews</b> popular_shelves-shelf-0-shelf_attr-name <i>PARAMETERS</i>]<br />
+[<b>goodreads_get_isbn_reviews</b> popular_shelves-shelf-0-shelf_attr-count <i>PARAMETERS</i>]<br />
+[<b>goodreads_get_isbn_reviews</b> book_links-book_link-0-id <i>PARAMETERS</i>]<br />
+[<b>goodreads_get_isbn_reviews</b> book_links-book_link-0-name <i>PARAMETERS</i>]<br />
+[<b>goodreads_get_isbn_reviews</b> book_links-book_link-0-link <i>PARAMETERS</i>]<br />
+<br />
+<br />
+goodreads_get_reviews_title<br />
+<br />
+[<b>goodreads_get_reviews_title</b> id <i>PARAMETERS</i>]<br />
+[<b>goodreads_get_reviews_title</b> title <i>PARAMETERS</i>]<br />
+[<b>goodreads_get_reviews_title</b> isbn <i>PARAMETERS</i>]<br />
+[<b>goodreads_get_reviews_title</b> isbn13 <i>PARAMETERS</i>]<br />
+[<b>goodreads_get_reviews_title</b> image_url <i>PARAMETERS</i>]<br />
+[<b>goodreads_get_reviews_title</b> small_image_url <i>PARAMETERS</i>]<br />
+[<b>goodreads_get_reviews_title</b> publication_year <i>PARAMETERS</i>]<br />
+[<b>goodreads_get_reviews_title</b> publication_month <i>PARAMETERS</i>]<br />
+[<b>goodreads_get_reviews_title</b> publication_day <i>PARAMETERS</i>]<br />
+[<b>goodreads_get_reviews_title</b> publisher <i>PARAMETERS</i>]<br />
+[<b>goodreads_get_reviews_title</b> language_code <i>PARAMETERS</i>]<br />
+[<b>goodreads_get_reviews_title</b> is_ebook <i>PARAMETERS</i>]<br />
+[<b>goodreads_get_reviews_title</b> description <i>PARAMETERS</i>]<br />
+[<b>goodreads_get_reviews_title</b> work-best_book_id-value <i>PARAMETERS</i>]<br />
+[<b>goodreads_get_reviews_title</b> work-best_book_id-best_book_id_attr-type <i>PARAMETERS</i>]<br />
+[<b>goodreads_get_reviews_title</b> work-books_count-value <i>PARAMETERS</i>]<br />
+[<b>goodreads_get_reviews_title</b> work-books_count-books_count_attr-type <i>PARAMETERS</i>]<br />
+[<b>goodreads_get_reviews_title</b> work-id-value <i>PARAMETERS</i>]<br />
+[<b>goodreads_get_reviews_title</b> work-id-id_attr-type <i>PARAMETERS</i>]<br />
+[<b>goodreads_get_reviews_title</b> work-media_type <i>PARAMETERS</i>]<br />
+[<b>goodreads_get_reviews_title</b> work-original_language_id-original_language_id_attr-type <i>PARAMETERS</i>]<br />
+[<b>goodreads_get_reviews_title</b> work-original_language_id-original_language_id_attr-nil <i>PARAMETERS</i>]<br />
+[<b>goodreads_get_reviews_title</b> work-original_publication_day-original_publication_day_attr-type <i>PARAMETERS</i>]<br />
+[<b>goodreads_get_reviews_title</b> work-original_publication_day-original_publication_day_attr-nil <i>PARAMETERS</i>]<br />
+[<b>goodreads_get_reviews_title</b> work-original_publication_month-original_publication_month_attr-type <i>PARAMETERS</i>]<br />
+[<b>goodreads_get_reviews_title</b> work-original_publication_month-original_publication_month_attr-nil <i>PARAMETERS</i>]<br />
+[<b>goodreads_get_reviews_title</b> work-original_publication_year-value <i>PARAMETERS</i>]<br />
+[<b>goodreads_get_reviews_title</b> work-original_publication_year-original_publication_year_attr-type <i>PARAMETERS</i>]<br />
+[<b>goodreads_get_reviews_title</b> work-original_title <i>PARAMETERS</i>]<br />
+[<b>goodreads_get_reviews_title</b> work-rating_dist <i>PARAMETERS</i>]<br />
+[<b>goodreads_get_reviews_title</b> work-ratings_count-value <i>PARAMETERS</i>]<br />
+[<b>goodreads_get_reviews_title</b> work-ratings_count-ratings_count_attr-type <i>PARAMETERS</i>]<br />
+[<b>goodreads_get_reviews_title</b> work-ratings_sum-value <i>PARAMETERS</i>]<br />
+[<b>goodreads_get_reviews_title</b> work-ratings_sum-ratings_sum_attr-type <i>PARAMETERS</i>]<br />
+[<b>goodreads_get_reviews_title</b> work-reviews_count-value <i>PARAMETERS</i>]<br />
+[<b>goodreads_get_reviews_title</b> work-reviews_count-reviews_count_attr-type <i>PARAMETERS</i>]<br />
+[<b>goodreads_get_reviews_title</b> work-text_reviews_count-value <i>PARAMETERS</i>]<br />
+[<b>goodreads_get_reviews_title</b> work-text_reviews_count-text_reviews_count_attr-type <i>PARAMETERS</i>]<br />
+[<b>goodreads_get_reviews_title</b> average_rating <i>PARAMETERS</i>]<br />
+[<b>goodreads_get_reviews_title</b> num_pages <i>PARAMETERS</i>]<br />
+[<b>goodreads_get_reviews_title</b> format <i>PARAMETERS</i>]<br />
+[<b>goodreads_get_reviews_title</b> ratings_count <i>PARAMETERS</i>]<br />
+[<b>goodreads_get_reviews_title</b> text_reviews_count <i>PARAMETERS</i>]<br />
+[<b>goodreads_get_reviews_title</b> url <i>PARAMETERS</i>]<br />
+[<b>goodreads_get_reviews_title</b> link <i>PARAMETERS</i>]<br />
+[<b>goodreads_get_reviews_title</b> authors-author-0-id <i>PARAMETERS</i>]<br />
+[<b>goodreads_get_reviews_title</b> authors-author-0-name <i>PARAMETERS</i>]<br />
+[<b>goodreads_get_reviews_title</b> authors-author-0-image_url <i>PARAMETERS</i>]<br />
+[<b>goodreads_get_reviews_title</b> authors-author-0-small_image_url <i>PARAMETERS</i>]<br />
+[<b>goodreads_get_reviews_title</b> authors-author-0-link <i>PARAMETERS</i>]<br />
+[<b>goodreads_get_reviews_title</b> authors-author-0-average_rating <i>PARAMETERS</i>]<br />
+[<b>goodreads_get_reviews_title</b> authors-author-0-ratings_count <i>PARAMETERS</i>]<br />
+[<b>goodreads_get_reviews_title</b> authors-author-0-text_reviews_count <i>PARAMETERS</i>]<br />
+[<b>goodreads_get_reviews_title</b> reviews_widget <i>PARAMETERS</i>]<br />
+[<b>goodreads_get_reviews_title</b> popular_shelves-shelf-0-shelf_attr-name <i>PARAMETERS</i>]<br />
+[<b>goodreads_get_reviews_title</b> popular_shelves-shelf-0-shelf_attr-count <i>PARAMETERS</i>]<br />
+[<b>goodreads_get_reviews_title</b> book_links-book_link-0-id <i>PARAMETERS</i>]<br />
+[<b>goodreads_get_reviews_title</b> book_links-book_link-0-name <i>PARAMETERS</i>]<br />
+[<b>goodreads_get_reviews_title</b> book_links-book_link-0-link <i>PARAMETERS</i>]<br />
+[<b>goodreads_get_reviews_title</b> public_document-id <i>PARAMETERS</i>]<br />
+[<b>goodreads_get_reviews_title</b> public_document-document_url <i>PARAMETERS</i>]<br />
+<br />
+<br />
+goodreads_get_review<br />
+<br />
+[<b>goodreads_get_review</b> id <i>PARAMETERS</i>]<br />
+[<b>goodreads_get_review</b> user-id <i>PARAMETERS</i>]<br />
+[<b>goodreads_get_review</b> user-name <i>PARAMETERS</i>]<br />
+[<b>goodreads_get_review</b> user-location <i>PARAMETERS</i>]<br />
+[<b>goodreads_get_review</b> user-link <i>PARAMETERS</i>]<br />
+[<b>goodreads_get_review</b> user-image_url <i>PARAMETERS</i>]<br />
+[<b>goodreads_get_review</b> user-small_image_url <i>PARAMETERS</i>]<br />
+[<b>goodreads_get_review</b> book-id-value <i>PARAMETERS</i>]<br />
+[<b>goodreads_get_review</b> book-id-id_attr-type <i>PARAMETERS</i>]<br />
+[<b>goodreads_get_review</b> book-isbn <i>PARAMETERS</i>]<br />
+[<b>goodreads_get_review</b> book-isbn13 <i>PARAMETERS</i>]<br />
+[<b>goodreads_get_review</b> book-text_reviews_count-value <i>PARAMETERS</i>]<br />
+[<b>goodreads_get_review</b> book-text_reviews_count-text_reviews_count_attr-type <i>PARAMETERS</i>]<br />
+[<b>goodreads_get_review</b> book-title <i>PARAMETERS</i>]<br />
+[<b>goodreads_get_review</b> book-image_url <i>PARAMETERS</i>]<br />
+[<b>goodreads_get_review</b> book-small_image_url <i>PARAMETERS</i>]<br />
+[<b>goodreads_get_review</b> book-link <i>PARAMETERS</i>]<br />
+[<b>goodreads_get_review</b> book-format <i>PARAMETERS</i>]<br />
+[<b>goodreads_get_review</b> book-publisher <i>PARAMETERS</i>]<br />
+[<b>goodreads_get_review</b> book-publication_day <i>PARAMETERS</i>]<br />
+[<b>goodreads_get_review</b> book-publication_year <i>PARAMETERS</i>]<br />
+[<b>goodreads_get_review</b> book-publication_month <i>PARAMETERS</i>]<br />
+[<b>goodreads_get_review</b> book-average_rating <i>PARAMETERS</i>]<br />
+[<b>goodreads_get_review</b> book-ratings_count <i>PARAMETERS</i>]<br />
+[<b>goodreads_get_review</b> book-authors-author-id <i>PARAMETERS</i>]<br />
+[<b>goodreads_get_review</b> book-authors-author-name <i>PARAMETERS</i>]<br />
+[<b>goodreads_get_review</b> book-authors-author-image_url <i>PARAMETERS</i>]<br />
+[<b>goodreads_get_review</b> book-authors-author-small_image_url <i>PARAMETERS</i>]<br />
+[<b>goodreads_get_review</b> book-authors-author-link <i>PARAMETERS</i>]<br />
+[<b>goodreads_get_review</b> book-authors-author-average_rating <i>PARAMETERS</i>]<br />
+[<b>goodreads_get_review</b> book-authors-author-ratings_count <i>PARAMETERS</i>]<br />
+[<b>goodreads_get_review</b> book-authors-author-text_reviews_count <i>PARAMETERS</i>]<br />
+[<b>goodreads_get_review</b> book-published <i>PARAMETERS</i>]<br />
+[<b>goodreads_get_review</b> rating <i>PARAMETERS</i>]<br />
+[<b>goodreads_get_review</b> votes <i>PARAMETERS</i>]<br />
+[<b>goodreads_get_review</b> spoiler_flag <i>PARAMETERS</i>]<br />
+[<b>goodreads_get_review</b> spoilers_state <i>PARAMETERS</i>]<br />
+[<b>goodreads_get_review</b> shelves-shelf-shelf_attr-name <i>PARAMETERS</i>]<br />
+[<b>goodreads_get_review</b> date_added <i>PARAMETERS</i>]<br />
+[<b>goodreads_get_review</b> date_updated <i>PARAMETERS</i>]<br />
+[<b>goodreads_get_review</b> comments_count <i>PARAMETERS</i>]<br />
+[<b>goodreads_get_review</b> comments-comments_attr-start <i>PARAMETERS</i>]<br />
+[<b>goodreads_get_review</b> comments-comments_attr-end <i>PARAMETERS</i>]<br />
+[<b>goodreads_get_review</b> comments-comments_attr-total <i>PARAMETERS</i>]<br />
+[<b>goodreads_get_review</b> comments-comment-0-id <i>PARAMETERS</i>]<br />
+[<b>goodreads_get_review</b> comments-comment-0-body <i>PARAMETERS</i>]<br />
+[<b>goodreads_get_review</b> comments-comment-0-user-id <i>PARAMETERS</i>]<br />
+[<b>goodreads_get_review</b> comments-comment-0-user-name <i>PARAMETERS</i>]<br />
+[<b>goodreads_get_review</b> comments-comment-0-user-location <i>PARAMETERS</i>]<br />
+[<b>goodreads_get_review</b> comments-comment-0-user-link <i>PARAMETERS</i>]<br />
+[<b>goodreads_get_review</b> comments-comment-0-user-image_url <i>PARAMETERS</i>]<br />
+[<b>goodreads_get_review</b> comments-comment-0-user-small_image_url <i>PARAMETERS</i>]<br />
+[<b>goodreads_get_review</b> comments-comment-0-created_at <i>PARAMETERS</i>]<br />
+[<b>goodreads_get_review</b> comments-comment-0-updated_at <i>PARAMETERS</i>]<br />
+[<b>goodreads_get_review</b> url <i>PARAMETERS</i>]<br />
+[<b>goodreads_get_review</b> link <i>PARAMETERS</i>]<br />
+[<b>goodreads_get_review</b> owned <i>PARAMETERS</i>]<br />
+<br />
+<br />
+goodreads_get_review_by_user_and_book<br />
+<br />
+[<b>goodreads_get_review_by_user_and_book</b> id <i>PARAMETERS</i>]<br />
+[<b>goodreads_get_review_by_user_and_book</b> user-id <i>PARAMETERS</i>]<br />
+[<b>goodreads_get_review_by_user_and_book</b> user-name <i>PARAMETERS</i>]<br />
+[<b>goodreads_get_review_by_user_and_book</b> user-location <i>PARAMETERS</i>]<br />
+[<b>goodreads_get_review_by_user_and_book</b> user-link <i>PARAMETERS</i>]<br />
+[<b>goodreads_get_review_by_user_and_book</b> user-image_url <i>PARAMETERS</i>]<br />
+[<b>goodreads_get_review_by_user_and_book</b> user-small_image_url <i>PARAMETERS</i>]<br />
+[<b>goodreads_get_review_by_user_and_book</b> book-id-value <i>PARAMETERS</i>]<br />
+[<b>goodreads_get_review_by_user_and_book</b> book-id-id_attr-type <i>PARAMETERS</i>]<br />
+[<b>goodreads_get_review_by_user_and_book</b> book-isbn <i>PARAMETERS</i>]<br />
+[<b>goodreads_get_review_by_user_and_book</b> book-isbn13 <i>PARAMETERS</i>]<br />
+[<b>goodreads_get_review_by_user_and_book</b> book-text_reviews_count-value <i>PARAMETERS</i>]<br />
+[<b>goodreads_get_review_by_user_and_book</b> book-text_reviews_count-text_reviews_count_attr-type <i>PARAMETERS</i>]<br />
+[<b>goodreads_get_review_by_user_and_book</b> book-title <i>PARAMETERS</i>]<br />
+[<b>goodreads_get_review_by_user_and_book</b> book-image_url <i>PARAMETERS</i>]<br />
+[<b>goodreads_get_review_by_user_and_book</b> book-small_image_url <i>PARAMETERS</i>]<br />
+[<b>goodreads_get_review_by_user_and_book</b> book-link <i>PARAMETERS</i>]<br />
+[<b>goodreads_get_review_by_user_and_book</b> book-num_pages <i>PARAMETERS</i>]<br />
+[<b>goodreads_get_review_by_user_and_book</b> book-format <i>PARAMETERS</i>]<br />
+[<b>goodreads_get_review_by_user_and_book</b> book-publisher <i>PARAMETERS</i>]<br />
+[<b>goodreads_get_review_by_user_and_book</b> book-publication_day <i>PARAMETERS</i>]<br />
+[<b>goodreads_get_review_by_user_and_book</b> book-publication_year <i>PARAMETERS</i>]<br />
+[<b>goodreads_get_review_by_user_and_book</b> book-publication_month <i>PARAMETERS</i>]<br />
+[<b>goodreads_get_review_by_user_and_book</b> book-average_rating <i>PARAMETERS</i>]<br />
+[<b>goodreads_get_review_by_user_and_book</b> book-ratings_count <i>PARAMETERS</i>]<br />
+[<b>goodreads_get_review_by_user_and_book</b> book-description <i>PARAMETERS</i>]<br />
+[<b>goodreads_get_review_by_user_and_book</b> book-authors-author-id <i>PARAMETERS</i>]<br />
+[<b>goodreads_get_review_by_user_and_book</b> book-authors-author-name <i>PARAMETERS</i>]<br />
+[<b>goodreads_get_review_by_user_and_book</b> book-authors-author-image_url <i>PARAMETERS</i>]<br />
+[<b>goodreads_get_review_by_user_and_book</b> book-authors-author-small_image_url <i>PARAMETERS</i>]<br />
+[<b>goodreads_get_review_by_user_and_book</b> book-authors-author-link <i>PARAMETERS</i>]<br />
+[<b>goodreads_get_review_by_user_and_book</b> book-authors-author-average_rating <i>PARAMETERS</i>]<br />
+[<b>goodreads_get_review_by_user_and_book</b> book-authors-author-ratings_count <i>PARAMETERS</i>]<br />
+[<b>goodreads_get_review_by_user_and_book</b> book-authors-author-text_reviews_count <i>PARAMETERS</i>]<br />
+[<b>goodreads_get_review_by_user_and_book</b> book-published <i>PARAMETERS</i>]<br />
+[<b>goodreads_get_review_by_user_and_book</b> rating <i>PARAMETERS</i>]<br />
+[<b>goodreads_get_review_by_user_and_book</b> votes <i>PARAMETERS</i>]<br />
+[<b>goodreads_get_review_by_user_and_book</b> spoiler_flag <i>PARAMETERS</i>]<br />
+[<b>goodreads_get_review_by_user_and_book</b> spoilers_state <i>PARAMETERS</i>]<br />
+[<b>goodreads_get_review_by_user_and_book</b> shelves-shelf-shelf_attr-name <i>PARAMETERS</i>]<br />
+[<b>goodreads_get_review_by_user_and_book</b> date_added <i>PARAMETERS</i>]<br />
+[<b>goodreads_get_review_by_user_and_book</b> date_updated <i>PARAMETERS</i>]<br />
+[<b>goodreads_get_review_by_user_and_book</b> comments_count <i>PARAMETERS</i>]<br />
+[<b>goodreads_get_review_by_user_and_book</b> url <i>PARAMETERS</i>]<br />
+[<b>goodreads_get_review_by_user_and_book</b> link <i>PARAMETERS</i>]<br />
+[<b>goodreads_get_review_by_user_and_book</b> owned <i>PARAMETERS</i>]<br />
+<br />
+<br />
+goodreads_get_recent_reviews<br />
+<br />
+[<b>goodreads_get_recent_reviews</b> review-0-id <i>PARAMETERS</i>]<br />
+[<b>goodreads_get_recent_reviews</b> review-0-user-id <i>PARAMETERS</i>]<br />
+[<b>goodreads_get_recent_reviews</b> review-0-user-name <i>PARAMETERS</i>]<br />
+[<b>goodreads_get_recent_reviews</b> review-0-user-location <i>PARAMETERS</i>]<br />
+[<b>goodreads_get_recent_reviews</b> review-0-user-link <i>PARAMETERS</i>]<br />
+[<b>goodreads_get_recent_reviews</b> review-0-user-image_url <i>PARAMETERS</i>]<br />
+[<b>goodreads_get_recent_reviews</b> review-0-user-small_image_url <i>PARAMETERS</i>]<br />
+[<b>goodreads_get_recent_reviews</b> review-0-book-id-value <i>PARAMETERS</i>]<br />
+[<b>goodreads_get_recent_reviews</b> review-0-book-id-id_attr-type <i>PARAMETERS</i>]<br />
+[<b>goodreads_get_recent_reviews</b> review-0-book-isbn <i>PARAMETERS</i>]<br />
+[<b>goodreads_get_recent_reviews</b> review-0-book-isbn13 <i>PARAMETERS</i>]<br />
+[<b>goodreads_get_recent_reviews</b> review-0-book-text_reviews_count-value <i>PARAMETERS</i>]<br />
+[<b>goodreads_get_recent_reviews</b> review-0-book-text_reviews_count-text_reviews_count_attr-type <i>PARAMETERS</i>]<br />
+[<b>goodreads_get_recent_reviews</b> review-0-book-title <i>PARAMETERS</i>]<br />
+[<b>goodreads_get_recent_reviews</b> review-0-book-image_url <i>PARAMETERS</i>]<br />
+[<b>goodreads_get_recent_reviews</b> review-0-book-small_image_url <i>PARAMETERS</i>]<br />
+[<b>goodreads_get_recent_reviews</b> review-0-book-link <i>PARAMETERS</i>]<br />
+[<b>goodreads_get_recent_reviews</b> review-0-book-average_rating <i>PARAMETERS</i>]<br />
+[<b>goodreads_get_recent_reviews</b> review-0-book-ratings_count <i>PARAMETERS</i>]<br />
+[<b>goodreads_get_recent_reviews</b> review-0-book-authors-author-id <i>PARAMETERS</i>]<br />
+[<b>goodreads_get_recent_reviews</b> review-0-book-authors-author-name <i>PARAMETERS</i>]<br />
+[<b>goodreads_get_recent_reviews</b> review-0-book-authors-author-image_url <i>PARAMETERS</i>]<br />
+[<b>goodreads_get_recent_reviews</b> review-0-book-authors-author-small_image_url <i>PARAMETERS</i>]<br />
+[<b>goodreads_get_recent_reviews</b> review-0-book-authors-author-link <i>PARAMETERS</i>]<br />
+[<b>goodreads_get_recent_reviews</b> review-0-book-authors-author-average_rating <i>PARAMETERS</i>]<br />
+[<b>goodreads_get_recent_reviews</b> review-0-book-authors-author-ratings_count <i>PARAMETERS</i>]<br />
+[<b>goodreads_get_recent_reviews</b> review-0-book-authors-author-text_reviews_count <i>PARAMETERS</i>]<br />
+[<b>goodreads_get_recent_reviews</b> review-0-rating <i>PARAMETERS</i>]<br />
+[<b>goodreads_get_recent_reviews</b> review-0-votes <i>PARAMETERS</i>]<br />
+[<b>goodreads_get_recent_reviews</b> review-0-spoiler_flag <i>PARAMETERS</i>]<br />
+[<b>goodreads_get_recent_reviews</b> review-0-spoilers_state <i>PARAMETERS</i>]<br />
+[<b>goodreads_get_recent_reviews</b> review-0-shelves-shelf-0-shelf_attr-name <i>PARAMETERS</i>]<br />
+[<b>goodreads_get_recent_reviews</b> review-0-date_added <i>PARAMETERS</i>]<br />
+[<b>goodreads_get_recent_reviews</b> review-0-date_updated <i>PARAMETERS</i>]<br />
+[<b>goodreads_get_recent_reviews</b> review-0-body <i>PARAMETERS</i>]<br />
+[<b>goodreads_get_recent_reviews</b> review-0-comments_count <i>PARAMETERS</i>]<br />
+[<b>goodreads_get_recent_reviews</b> review-0-url <i>PARAMETERS</i>]<br />
+[<b>goodreads_get_recent_reviews</b> review-0-link <i>PARAMETERS</i>]<br />
+[<b>goodreads_get_recent_reviews</b> review-0-owned <i>PARAMETERS</i>]<br />
+<br />
+<br />
+goodreads_get_isbn_review_statistics<br />
+<br />
+[<b>goodreads_get_isbn_review_statistics</b> books-0-reviews_count <i>PARAMETERS</i>]<br />
+[<b>goodreads_get_isbn_review_statistics</b> books-0-ratings_count <i>PARAMETERS</i>]<br />
+[<b>goodreads_get_isbn_review_statistics</b> books-0-work_text_reviews_count <i>PARAMETERS</i>]<br />
+[<b>goodreads_get_isbn_review_statistics</b> books-0-text_reviews_count <i>PARAMETERS</i>]<br />
+[<b>goodreads_get_isbn_review_statistics</b> books-0-isbn13 <i>PARAMETERS</i>]<br />
+[<b>goodreads_get_isbn_review_statistics</b> books-0-average_rating <i>PARAMETERS</i>]<br />
+[<b>goodreads_get_isbn_review_statistics</b> books-0-work_ratings_count <i>PARAMETERS</i>]<br />
+[<b>goodreads_get_isbn_review_statistics</b> books-0-isbn <i>PARAMETERS</i>]<br />
+[<b>goodreads_get_isbn_review_statistics</b> books-0-work_reviews_count <i>PARAMETERS</i>]<br />
+[<b>goodreads_get_isbn_review_statistics</b> books-0-id <i>PARAMETERS</i>]<br />
+<br />
+<br />
+goodreads_isbn2id<br />
+<br />
+[<b>goodreads_isbn2id</b> id <i>PARAMETERS</i>]<br />
+<br />
+<br />
+goodreads_book_search<br />
+<br />
+[<b>goodreads_book_search</b> query <i>PARAMETERS</i>]<br />
+[<b>goodreads_book_search</b> results-start <i>PARAMETERS</i>]<br />
+[<b>goodreads_book_search</b> results-end <i>PARAMETERS</i>]<br />
+[<b>goodreads_book_search</b> total-results <i>PARAMETERS</i>]<br />
+[<b>goodreads_book_search</b> source <i>PARAMETERS</i>]<br />
+[<b>goodreads_book_search</b> query-time-seconds <i>PARAMETERS</i>]<br />
+[<b>goodreads_book_search</b> results-work-0-books_count-value <i>PARAMETERS</i>]<br />
+[<b>goodreads_book_search</b> results-work-0-books_count-books_count_attr-type <i>PARAMETERS</i>]<br />
+[<b>goodreads_book_search</b> results-work-0-id-value <i>PARAMETERS</i>]<br />
+[<b>goodreads_book_search</b> results-work-0-id-id_attr-type <i>PARAMETERS</i>]<br />
+[<b>goodreads_book_search</b> results-work-0-original_publication_day-original_publication_day_attr-nil <i>PARAMETERS</i>]<br />
+[<b>goodreads_book_search</b> results-work-0-original_publication_day-original_publication_day_attr-type <i>PARAMETERS</i>]<br />
+[<b>goodreads_book_search</b> results-work-0-original_publication_month-original_publication_month_attr-nil <i>PARAMETERS</i>]<br />
+[<b>goodreads_book_search</b> results-work-0-original_publication_month-original_publication_month_attr-type <i>PARAMETERS</i>]<br />
+[<b>goodreads_book_search</b> results-work-0-original_publication_year-value <i>PARAMETERS</i>]<br />
+[<b>goodreads_book_search</b> results-work-0-original_publication_year-original_publication_year_attr-type <i>PARAMETERS</i>]<br />
+[<b>goodreads_book_search</b> results-work-0-ratings_count-value <i>PARAMETERS</i>]<br />
+[<b>goodreads_book_search</b> results-work-0-ratings_count-ratings_count_attr-type <i>PARAMETERS</i>]<br />
+[<b>goodreads_book_search</b> results-work-0-text_reviews_count-value <i>PARAMETERS</i>]<br />
+[<b>goodreads_book_search</b> results-work-0-text_reviews_count-text_reviews_count_attr-type <i>PARAMETERS</i>]<br />
+[<b>goodreads_book_search</b> results-work-0-average_rating <i>PARAMETERS</i>]<br />
+[<b>goodreads_book_search</b> results-work-0-best_book-id-value <i>PARAMETERS</i>]<br />
+[<b>goodreads_book_search</b> results-work-0-best_book-id-id_attr-type <i>PARAMETERS</i>]<br />
+[<b>goodreads_book_search</b> results-work-0-best_book-title <i>PARAMETERS</i>]<br />
+[<b>goodreads_book_search</b> results-work-0-best_book-author-id-value <i>PARAMETERS</i>]<br />
+[<b>goodreads_book_search</b> results-work-0-best_book-author-id-id_attr-type <i>PARAMETERS</i>]<br />
+[<b>goodreads_book_search</b> results-work-0-best_book-author-name <i>PARAMETERS</i>]<br />
+[<b>goodreads_book_search</b> results-work-0-best_book-image_url <i>PARAMETERS</i>]<br />
+[<b>goodreads_book_search</b> results-work-0-best_book-small_image_url <i>PARAMETERS</i>]<br />
+<br />
+<br />
+goodreads_get_author_book_list<br />
+<br />
+[<b>goodreads_get_author_book_list</b> id <i>PARAMETERS</i>]<br />
+[<b>goodreads_get_author_book_list</b> name <i>PARAMETERS</i>]<br />
+[<b>goodreads_get_author_book_list</b> link <i>PARAMETERS</i>]<br />
+[<b>goodreads_get_author_book_list</b> books-books_attr-start <i>PARAMETERS</i>]<br />
+[<b>goodreads_get_author_book_list</b> books-books_attr-end <i>PARAMETERS</i>]<br />
+[<b>goodreads_get_author_book_list</b> books-books_attr-total <i>PARAMETERS</i>]<br />
+[<b>goodreads_get_author_book_list</b> books-book-0-id-value <i>PARAMETERS</i>]<br />
+[<b>goodreads_get_author_book_list</b> books-book-0-id-id_attr-type <i>PARAMETERS</i>]<br />
+[<b>goodreads_get_author_book_list</b> books-book-0-isbn <i>PARAMETERS</i>]<br />
+[<b>goodreads_get_author_book_list</b> books-book-0-isbn13 <i>PARAMETERS</i>]<br />
+[<b>goodreads_get_author_book_list</b> books-book-0-text_reviews_count-value <i>PARAMETERS</i>]<br />
+[<b>goodreads_get_author_book_list</b> books-book-0-text_reviews_count-text_reviews_count_attr-type <i>PARAMETERS</i>]<br />
+[<b>goodreads_get_author_book_list</b> books-book-0-title <i>PARAMETERS</i>]<br />
+[<b>goodreads_get_author_book_list</b> books-book-0-image_url <i>PARAMETERS</i>]<br />
+[<b>goodreads_get_author_book_list</b> books-book-0-small_image_url <i>PARAMETERS</i>]<br />
+[<b>goodreads_get_author_book_list</b> books-book-0-link <i>PARAMETERS</i>]<br />
+[<b>goodreads_get_author_book_list</b> books-book-0-average_rating <i>PARAMETERS</i>]<br />
+[<b>goodreads_get_author_book_list</b> books-book-0-ratings_count <i>PARAMETERS</i>]<br />
+[<b>goodreads_get_author_book_list</b> books-book-0-description <i>PARAMETERS</i>]<br />
+[<b>goodreads_get_author_book_list</b> books-book-0-authors-author-id <i>PARAMETERS</i>]<br />
+[<b>goodreads_get_author_book_list</b> books-book-0-authors-author-name <i>PARAMETERS</i>]<br />
+[<b>goodreads_get_author_book_list</b> books-book-0-authors-author-image_url <i>PARAMETERS</i>]<br />
+[<b>goodreads_get_author_book_list</b> books-book-0-authors-author-small_image_url <i>PARAMETERS</i>]<br />
+[<b>goodreads_get_author_book_list</b> books-book-0-authors-author-link <i>PARAMETERS</i>]<br />
+[<b>goodreads_get_author_book_list</b> books-book-0-authors-author-average_rating <i>PARAMETERS</i>]<br />
+[<b>goodreads_get_author_book_list</b> books-book-0-authors-author-ratings_count <i>PARAMETERS</i>]<br />
+[<b>goodreads_get_author_book_list</b> books-book-0-authors-author-text_reviews_count <i>PARAMETERS</i>]<br />
+<br />
+<br />
+goodreads_get_author_info<br />
+<br />
+[<b>goodreads_get_author_info</b> id <i>PARAMETERS</i>]<br />
+[<b>goodreads_get_author_info</b> name <i>PARAMETERS</i>]<br />
+[<b>goodreads_get_author_info</b> link <i>PARAMETERS</i>]<br />
+[<b>goodreads_get_author_info</b> fans_count-value <i>PARAMETERS</i>]<br />
+[<b>goodreads_get_author_info</b> fans_count-fans_count_attr-type <i>PARAMETERS</i>]<br />
+[<b>goodreads_get_author_info</b> image_url <i>PARAMETERS</i>]<br />
+[<b>goodreads_get_author_info</b> small_image_url <i>PARAMETERS</i>]<br />
+[<b>goodreads_get_author_info</b> about <i>PARAMETERS</i>]<br />
+[<b>goodreads_get_author_info</b> influences <i>PARAMETERS</i>]<br />
+[<b>goodreads_get_author_info</b> works_count <i>PARAMETERS</i>]<br />
+[<b>goodreads_get_author_info</b> gender <i>PARAMETERS</i>]<br />
+[<b>goodreads_get_author_info</b> hometown <i>PARAMETERS</i>]<br />
+[<b>goodreads_get_author_info</b> born_at <i>PARAMETERS</i>]<br />
+[<b>goodreads_get_author_info</b> died_at <i>PARAMETERS</i>]<br />
+[<b>goodreads_get_author_info</b> books-book-0-id-value <i>PARAMETERS</i>]<br />
+[<b>goodreads_get_author_info</b> books-book-0-id-id_attr-type <i>PARAMETERS</i>]<br />
+[<b>goodreads_get_author_info</b> books-book-0-isbn <i>PARAMETERS</i>]<br />
+[<b>goodreads_get_author_info</b> books-book-0-isbn13 <i>PARAMETERS</i>]<br />
+[<b>goodreads_get_author_info</b> books-book-0-text_reviews_count-value <i>PARAMETERS</i>]<br />
+[<b>goodreads_get_author_info</b> books-book-0-text_reviews_count-text_reviews_count_attr-type <i>PARAMETERS</i>]<br />
+[<b>goodreads_get_author_info</b> books-book-0-title <i>PARAMETERS</i>]<br />
+[<b>goodreads_get_author_info</b> books-book-0-image_url <i>PARAMETERS</i>]<br />
+[<b>goodreads_get_author_info</b> books-book-0-small_image_url <i>PARAMETERS</i>]<br />
+[<b>goodreads_get_author_info</b> books-book-0-link <i>PARAMETERS</i>]<br />
+[<b>goodreads_get_author_info</b> books-book-0-average_rating <i>PARAMETERS</i>]<br />
+[<b>goodreads_get_author_info</b> books-book-0-ratings_count <i>PARAMETERS</i>]<br />
+[<b>goodreads_get_author_info</b> books-book-0-description <i>PARAMETERS</i>]<br />
+[<b>goodreads_get_author_info</b> books-book-0-authors-author-id <i>PARAMETERS</i>]<br />
+[<b>goodreads_get_author_info</b> books-book-0-authors-author-name <i>PARAMETERS</i>]<br />
+[<b>goodreads_get_author_info</b> books-book-0-authors-author-image_url <i>PARAMETERS</i>]<br />
+[<b>goodreads_get_author_info</b> books-book-0-authors-author-small_image_url <i>PARAMETERS</i>]<br />
+[<b>goodreads_get_author_info</b> books-book-0-authors-author-link <i>PARAMETERS</i>]<br />
+[<b>goodreads_get_author_info</b> books-book-0-authors-author-average_rating <i>PARAMETERS</i>]<br />
+[<b>goodreads_get_author_info</b> books-book-0-authors-author-ratings_count <i>PARAMETERS</i>]<br />
+[<b>goodreads_get_author_info</b> books-book-0-authors-author-text_reviews_count <i>PARAMETERS</i>]<br />
+<br />
+<br />
+goodreads_find_author<br />
+<br />
+[<b>goodreads_find_author</b> author-author_attr-id <i>PARAMETERS</i>]<br />
+[<b>goodreads_find_author</b> author-name <i>PARAMETERS</i>]<br />
+[<b>goodreads_find_author</b> author-link <i>PARAMETERS</i>]<br />
+<br />
+<br />
+goodreads_get_author_series<br />
+<br />
+[<b>goodreads_get_author_series</b> series_work-0-id <i>PARAMETERS</i>]<br />
+[<b>goodreads_get_author_series</b> series_work-0-user_position <i>PARAMETERS</i>]<br />
+[<b>goodreads_get_author_series</b> series_work-0-series-id <i>PARAMETERS</i>]<br />
+[<b>goodreads_get_author_series</b> series_work-0-series-title <i>PARAMETERS</i>]<br />
+[<b>goodreads_get_author_series</b> series_work-0-series-description <i>PARAMETERS</i>]<br />
+[<b>goodreads_get_author_series</b> series_work-0-series-series_works_count <i>PARAMETERS</i>]<br />
+[<b>goodreads_get_author_series</b> series_work-0-series-primary_work_count <i>PARAMETERS</i>]<br />
+[<b>goodreads_get_author_series</b> series_work-0-series-numbered <i>PARAMETERS</i>]<br />
+[<b>goodreads_get_author_series</b> series_work-0-work-id-value <i>PARAMETERS</i>]<br />
+[<b>goodreads_get_author_series</b> series_work-0-work-id-id_attr-type <i>PARAMETERS</i>]<br />
+[<b>goodreads_get_author_series</b> series_work-0-work-ratings_count-value <i>PARAMETERS</i>]<br />
+[<b>goodreads_get_author_series</b> series_work-0-work-ratings_count-ratings_count_attr-type <i>PARAMETERS</i>]<br />
+[<b>goodreads_get_author_series</b> series_work-0-work-ratings_sum-value <i>PARAMETERS</i>]<br />
+[<b>goodreads_get_author_series</b> series_work-0-work-ratings_sum-ratings_sum_attr-type <i>PARAMETERS</i>]<br />
+[<b>goodreads_get_author_series</b> series_work-0-work-reviews_count-value <i>PARAMETERS</i>]<br />
+[<b>goodreads_get_author_series</b> series_work-0-work-reviews_count-reviews_count_attr-type <i>PARAMETERS</i>]<br />
+[<b>goodreads_get_author_series</b> series_work-0-work-best_book-id-value <i>PARAMETERS</i>]<br />
+[<b>goodreads_get_author_series</b> series_work-0-work-best_book-id-id_attr-type <i>PARAMETERS</i>]<br />
+[<b>goodreads_get_author_series</b> series_work-0-work-best_book-title <i>PARAMETERS</i>]<br />
+[<b>goodreads_get_author_series</b> series_work-0-work-best_book-author-id-value <i>PARAMETERS</i>]<br />
+[<b>goodreads_get_author_series</b> series_work-0-work-best_book-author-id-id_attr-type <i>PARAMETERS</i>]<br />
+[<b>goodreads_get_author_series</b> series_work-0-work-best_book-author-name <i>PARAMETERS</i>]<br />
+<br />
+<br />
+goodreads_get_series_info<br />
+<br />
+[<b>goodreads_get_series_info</b> id <i>PARAMETERS</i>]<br />
+[<b>goodreads_get_series_info</b> title <i>PARAMETERS</i>]<br />
+[<b>goodreads_get_series_info</b> description <i>PARAMETERS</i>]<br />
+[<b>goodreads_get_series_info</b> series_works_count <i>PARAMETERS</i>]<br />
+[<b>goodreads_get_series_info</b> primary_work_count <i>PARAMETERS</i>]<br />
+[<b>goodreads_get_series_info</b> numbered <i>PARAMETERS</i>]<br />
+[<b>goodreads_get_series_info</b> series_works-series_work-0-id <i>PARAMETERS</i>]<br />
+[<b>goodreads_get_series_info</b> series_works-series_work-0-user_position <i>PARAMETERS</i>]<br />
+[<b>goodreads_get_series_info</b> series_works-series_work-0-work-id-value <i>PARAMETERS</i>]<br />
+[<b>goodreads_get_series_info</b> series_works-series_work-0-work-id-id_attr-type <i>PARAMETERS</i>]<br />
+[<b>goodreads_get_series_info</b> series_works-series_work-0-work-ratings_count-value <i>PARAMETERS</i>]<br />
+[<b>goodreads_get_series_info</b> series_works-series_work-0-work-ratings_count-ratings_count_attr-type <i>PARAMETERS</i>]<br />
+[<b>goodreads_get_series_info</b> series_works-series_work-0-work-ratings_sum-value <i>PARAMETERS</i>]<br />
+[<b>goodreads_get_series_info</b> series_works-series_work-0-work-ratings_sum-ratings_sum_attr-type <i>PARAMETERS</i>]<br />
+[<b>goodreads_get_series_info</b> series_works-series_work-0-work-reviews_count-value <i>PARAMETERS</i>]<br />
+[<b>goodreads_get_series_info</b> series_works-series_work-0-work-reviews_count-reviews_count_attr-type <i>PARAMETERS</i>]<br />
+[<b>goodreads_get_series_info</b> series_works-series_work-0-work-best_book-id-value <i>PARAMETERS</i>]<br />
+[<b>goodreads_get_series_info</b> series_works-series_work-0-work-best_book-id-id_attr-type <i>PARAMETERS</i>]<br />
+[<b>goodreads_get_series_info</b> series_works-series_work-0-work-best_book-title <i>PARAMETERS</i>]<br />
+[<b>goodreads_get_series_info</b> series_works-series_work-0-work-best_book-author-id-value <i>PARAMETERS</i>]<br />
+[<b>goodreads_get_series_info</b> series_works-series_work-0-work-best_book-author-id-id_attr-type <i>PARAMETERS</i>]<br />
+[<b>goodreads_get_series_info</b> series_works-series_work-0-work-best_book-author-name <i>PARAMETERS</i>]<br />
+<br />
+<br />
+goodreads_get_work_series<br />
+<br />
+[<b>goodreads_get_work_series</b> series_work-id <i>PARAMETERS</i>]<br />
+[<b>goodreads_get_work_series</b> series_work-user_position <i>PARAMETERS</i>]<br />
+[<b>goodreads_get_work_series</b> series_work-series-id <i>PARAMETERS</i>]<br />
+[<b>goodreads_get_work_series</b> series_work-series-title <i>PARAMETERS</i>]<br />
+[<b>goodreads_get_work_series</b> series_work-series-description <i>PARAMETERS</i>]<br />
+[<b>goodreads_get_work_series</b> series_work-series-series_works_count <i>PARAMETERS</i>]<br />
+[<b>goodreads_get_work_series</b> series_work-series-primary_work_count <i>PARAMETERS</i>]<br />
+[<b>goodreads_get_work_series</b> series_work-series-numbered <i>PARAMETERS</i>]<br />
+<br />
+<br />
+goodreads_get_group_by_id<br />
+<br />
+[<b>goodreads_get_group_by_id</b> id <i>PARAMETERS</i>]<br />
+[<b>goodreads_get_group_by_id</b> title <i>PARAMETERS</i>]<br />
+[<b>goodreads_get_group_by_id</b> description <i>PARAMETERS</i>]<br />
+[<b>goodreads_get_group_by_id</b> access <i>PARAMETERS</i>]<br />
+[<b>goodreads_get_group_by_id</b> last_activity_at <i>PARAMETERS</i>]<br />
+[<b>goodreads_get_group_by_id</b> display_folder_count <i>PARAMETERS</i>]<br />
+[<b>goodreads_get_group_by_id</b> display_topics_per_folder <i>PARAMETERS</i>]<br />
+[<b>goodreads_get_group_by_id</b> bookshelves_public_flag-0 <i>PARAMETERS</i>]<br />
+[<b>goodreads_get_group_by_id</b> add_books_flag <i>PARAMETERS</i>]<br />
+[<b>goodreads_get_group_by_id</b> add_events_flag <i>PARAMETERS</i>]<br />
+[<b>goodreads_get_group_by_id</b> polls_flag <i>PARAMETERS</i>]<br />
+[<b>goodreads_get_group_by_id</b> discussion_public_flag <i>PARAMETERS</i>]<br />
+[<b>goodreads_get_group_by_id</b> real_world_flag <i>PARAMETERS</i>]<br />
+[<b>goodreads_get_group_by_id</b> accepting_new_members_flag <i>PARAMETERS</i>]<br />
+[<b>goodreads_get_group_by_id</b> category <i>PARAMETERS</i>]<br />
+[<b>goodreads_get_group_by_id</b> subcategory <i>PARAMETERS</i>]<br />
+[<b>goodreads_get_group_by_id</b> rules <i>PARAMETERS</i>]<br />
+[<b>goodreads_get_group_by_id</b> link <i>PARAMETERS</i>]<br />
+[<b>goodreads_get_group_by_id</b> image_url <i>PARAMETERS</i>]<br />
+[<b>goodreads_get_group_by_id</b> group_users_count <i>PARAMETERS</i>]<br />
+[<b>goodreads_get_group_by_id</b> folders-folder-0-id <i>PARAMETERS</i>]<br />
+[<b>goodreads_get_group_by_id</b> folders-folder-0-name <i>PARAMETERS</i>]<br />
+[<b>goodreads_get_group_by_id</b> folders-folder-0-items_count <i>PARAMETERS</i>]<br />
+[<b>goodreads_get_group_by_id</b> folders-folder-0-sub_items_count <i>PARAMETERS</i>]<br />
+[<b>goodreads_get_group_by_id</b> members-group_user-0-comments_count-value <i>PARAMETERS</i>]<br />
+[<b>goodreads_get_group_by_id</b> members-group_user-0-comments_count-comments_count_attr-type <i>PARAMETERS</i>]<br />
+[<b>goodreads_get_group_by_id</b> members-group_user-0-user-first_name <i>PARAMETERS</i>]<br />
+[<b>goodreads_get_group_by_id</b> members-group_user-0-user-id-value <i>PARAMETERS</i>]<br />
+[<b>goodreads_get_group_by_id</b> members-group_user-0-user-id-id_attr-type <i>PARAMETERS</i>]<br />
+[<b>goodreads_get_group_by_id</b> members-group_user-0-user-last_name <i>PARAMETERS</i>]<br />
+[<b>goodreads_get_group_by_id</b> members-group_user-0-user-user_name <i>PARAMETERS</i>]<br />
+[<b>goodreads_get_group_by_id</b> members-group_user-0-user-p2_image_url <i>PARAMETERS</i>]<br />
+<br />
+<br />
+goodreads_get_group_members<br />
+<br />
+[<b>goodreads_get_group_members</b> group_user-0-comments_count-value <i>PARAMETERS</i>]<br />
+[<b>goodreads_get_group_members</b> group_user-0-comments_count-comments_count_attr-type <i>PARAMETERS</i>]<br />
+[<b>goodreads_get_group_members</b> group_user-0-created_at-value <i>PARAMETERS</i>]<br />
+[<b>goodreads_get_group_members</b> group_user-0-created_at-created_at_attr-type <i>PARAMETERS</i>]<br />
+[<b>goodreads_get_group_members</b> group_user-0-id-value <i>PARAMETERS</i>]<br />
+[<b>goodreads_get_group_members</b> group_user-0-id-id_attr-type <i>PARAMETERS</i>]<br />
+[<b>goodreads_get_group_members</b> group_user-0-moderator_at-value <i>PARAMETERS</i>]<br />
+[<b>goodreads_get_group_members</b> group_user-0-moderator_at-moderator_at_attr-type <i>PARAMETERS</i>]<br />
+[<b>goodreads_get_group_members</b> group_user-0-user-first_name <i>PARAMETERS</i>]<br />
+[<b>goodreads_get_group_members</b> group_user-0-user-id-value <i>PARAMETERS</i>]<br />
+[<b>goodreads_get_group_members</b> group_user-0-user-id-id_attr-type <i>PARAMETERS</i>]<br />
+[<b>goodreads_get_group_members</b> group_user-0-user_status-id-value <i>PARAMETERS</i>]<br />
+[<b>goodreads_get_group_members</b> group_user-0-user_status-id-id_attr-type <i>PARAMETERS</i>]<br />
+[<b>goodreads_get_group_members</b> group_user-0-user_status-book-id-value <i>PARAMETERS</i>]<br />
+[<b>goodreads_get_group_members</b> group_user-0-user_status-book-id-id_attr-type <i>PARAMETERS</i>]<br />
+[<b>goodreads_get_group_members</b> group_user-0-user_status-book-title <i>PARAMETERS</i>]<br />
+[<b>goodreads_get_group_members</b> group_user-0-user_status-book-small_image_url <i>PARAMETERS</i>]<br />
+<br />
+<br />
+goodreads_get_user_groups<br />
+<br />
+[<b>goodreads_get_user_groups</b> user-first_name <i>PARAMETERS</i>]<br />
+[<b>goodreads_get_user_groups</b> user-id-value <i>PARAMETERS</i>]<br />
+[<b>goodreads_get_user_groups</b> user-id-id_attr-type <i>PARAMETERS</i>]<br />
+[<b>goodreads_get_user_groups</b> user-last_name <i>PARAMETERS</i>]<br />
+[<b>goodreads_get_user_groups</b> user-user_name-user_name_attr-nil <i>PARAMETERS</i>]<br />
+[<b>goodreads_get_user_groups</b> user-p2_image_url <i>PARAMETERS</i>]<br />
+[<b>goodreads_get_user_groups</b> count <i>PARAMETERS</i>]<br />
+[<b>goodreads_get_user_groups</b> list-list_attr-start <i>PARAMETERS</i>]<br />
+[<b>goodreads_get_user_groups</b> list-list_attr-end <i>PARAMETERS</i>]<br />
+[<b>goodreads_get_user_groups</b> list-list_attr-total <i>PARAMETERS</i>]<br />
+[<b>goodreads_get_user_groups</b> list-group-0-id <i>PARAMETERS</i>]<br />
+[<b>goodreads_get_user_groups</b> list-group-0-access <i>PARAMETERS</i>]<br />
+[<b>goodreads_get_user_groups</b> list-group-0-users_count <i>PARAMETERS</i>]<br />
+[<b>goodreads_get_user_groups</b> list-group-0-title <i>PARAMETERS</i>]<br />
+[<b>goodreads_get_user_groups</b> list-group-0-image_url <i>PARAMETERS</i>]<br />
+[<b>goodreads_get_user_groups</b> list-group-0-last_activity_at <i>PARAMETERS</i>]<br />
+<br />
+<br />
+goodreads_get_user_info<br />
+<br />
+[<b>goodreads_get_user_info</b> id <i>PARAMETERS</i>]<br />
+[<b>goodreads_get_user_info</b> name <i>PARAMETERS</i>]<br />
+[<b>goodreads_get_user_info</b> link <i>PARAMETERS</i>]<br />
+[<b>goodreads_get_user_info</b> image_url <i>PARAMETERS</i>]<br />
+[<b>goodreads_get_user_info</b> small_image_url <i>PARAMETERS</i>]<br />
+[<b>goodreads_get_user_info</b> age <i>PARAMETERS</i>]<br />
+[<b>goodreads_get_user_info</b> location <i>PARAMETERS</i>]<br />
+[<b>goodreads_get_user_info</b> joined <i>PARAMETERS</i>]<br />
+[<b>goodreads_get_user_info</b> last_active <i>PARAMETERS</i>]<br />
+[<b>goodreads_get_user_info</b> favorite_books <i>PARAMETERS</i>]<br />
+[<b>goodreads_get_user_info</b> updates_rss_url <i>PARAMETERS</i>]<br />
+[<b>goodreads_get_user_info</b> reviews_rss_url <i>PARAMETERS</i>]<br />
+[<b>goodreads_get_user_info</b> friends_count-value <i>PARAMETERS</i>]<br />
+[<b>goodreads_get_user_info</b> friends_count-friends_count_attr-type <i>PARAMETERS</i>]<br />
+[<b>goodreads_get_user_info</b> groups_count <i>PARAMETERS</i>]<br />
+[<b>goodreads_get_user_info</b> reviews_count-value <i>PARAMETERS</i>]<br />
+[<b>goodreads_get_user_info</b> reviews_count-reviews_count_attr-type <i>PARAMETERS</i>]<br />
+[<b>goodreads_get_user_info</b> user_shelves-user_shelves_attr-type <i>PARAMETERS</i>]<br />
+[<b>goodreads_get_user_info</b> user_shelves-user_shelf-0-book_count-value <i>PARAMETERS</i>]<br />
+[<b>goodreads_get_user_info</b> user_shelves-user_shelf-0-book_count-book_count_attr-type <i>PARAMETERS</i>]<br />
+[<b>goodreads_get_user_info</b> user_shelves-user_shelf-0-description-description_attr-nil <i>PARAMETERS</i>]<br />
+[<b>goodreads_get_user_info</b> user_shelves-user_shelf-0-exclusive_flag-value <i>PARAMETERS</i>]<br />
+[<b>goodreads_get_user_info</b> user_shelves-user_shelf-0-exclusive_flag-exclusive_flag_attr-type <i>PARAMETERS</i>]<br />
+[<b>goodreads_get_user_info</b> user_shelves-user_shelf-0-featured-value <i>PARAMETERS</i>]<br />
+[<b>goodreads_get_user_info</b> user_shelves-user_shelf-0-featured-featured_attr-type <i>PARAMETERS</i>]<br />
+[<b>goodreads_get_user_info</b> user_shelves-user_shelf-0-id-value <i>PARAMETERS</i>]<br />
+[<b>goodreads_get_user_info</b> user_shelves-user_shelf-0-id-id_attr-type <i>PARAMETERS</i>]<br />
+[<b>goodreads_get_user_info</b> user_shelves-user_shelf-0-name <i>PARAMETERS</i>]<br />
+[<b>goodreads_get_user_info</b> user_shelves-user_shelf-0-order-order_attr-nil <i>PARAMETERS</i>]<br />
+[<b>goodreads_get_user_info</b> user_shelves-user_shelf-0-per_page-per_page_attr-nil <i>PARAMETERS</i>]<br />
+[<b>goodreads_get_user_info</b> user_shelves-user_shelf-0-per_page-per_page_attr-type <i>PARAMETERS</i>]<br />
+[<b>goodreads_get_user_info</b> user_shelves-user_shelf-0-recommend_for-value <i>PARAMETERS</i>]<br />
+[<b>goodreads_get_user_info</b> user_shelves-user_shelf-0-recommend_for-recommend_for_attr-type <i>PARAMETERS</i>]<br />
+[<b>goodreads_get_user_info</b> user_shelves-user_shelf-0-sort-sort_attr-nil <i>PARAMETERS</i>]<br />
+[<b>goodreads_get_user_info</b> user_shelves-user_shelf-0-sticky-sticky_attr-nil <i>PARAMETERS</i>]<br />
+[<b>goodreads_get_user_info</b> user_shelves-user_shelf-0-sticky-sticky_attr-type <i>PARAMETERS</i>]<br />
+[<b>goodreads_get_user_info</b> updates-updates_attr-type <i>PARAMETERS</i>]<br />
+[<b>goodreads_get_user_info</b> updates-update-0-update_attr-type <i>PARAMETERS</i>]<br />
+[<b>goodreads_get_user_info</b> updates-update-0-action_text <i>PARAMETERS</i>]<br />
+[<b>goodreads_get_user_info</b> updates-update-0-link <i>PARAMETERS</i>]<br />
+[<b>goodreads_get_user_info</b> updates-update-0-image_url <i>PARAMETERS</i>]<br />
+[<b>goodreads_get_user_info</b> updates-update-0-actor-id-value <i>PARAMETERS</i>]<br />
+[<b>goodreads_get_user_info</b> updates-update-0-actor-id-id_attr-type <i>PARAMETERS</i>]<br />
+[<b>goodreads_get_user_info</b> updates-update-0-actor-name <i>PARAMETERS</i>]<br />
+[<b>goodreads_get_user_info</b> updates-update-0-actor-image_url <i>PARAMETERS</i>]<br />
+[<b>goodreads_get_user_info</b> updates-update-0-actor-link <i>PARAMETERS</i>]<br />
+[<b>goodreads_get_user_info</b> updates-update-0-updated_at <i>PARAMETERS</i>]<br />
+[<b>goodreads_get_user_info</b> updates-update-0-action-action_attr-type <i>PARAMETERS</i>]<br />
+[<b>goodreads_get_user_info</b> updates-update-0-action-rating <i>PARAMETERS</i>]<br />
+[<b>goodreads_get_user_info</b> updates-update-0-object-book-id <i>PARAMETERS</i>]<br />
+[<b>goodreads_get_user_info</b> updates-update-0-object-book-title <i>PARAMETERS</i>]<br />
+[<b>goodreads_get_user_info</b> updates-update-0-object-book-link <i>PARAMETERS</i>]<br />
+[<b>goodreads_get_user_info</b> updates-update-0-object-book-authors-author-id <i>PARAMETERS</i>]<br />
+[<b>goodreads_get_user_info</b> updates-update-0-object-book-authors-author-name <i>PARAMETERS</i>]<br />
+[<b>goodreads_get_user_info</b> updates-update-0-object-book-authors-author-image_url <i>PARAMETERS</i>]<br />
+[<b>goodreads_get_user_info</b> updates-update-0-object-book-authors-author-small_image_url <i>PARAMETERS</i>]<br />
+[<b>goodreads_get_user_info</b> updates-update-0-object-book-authors-author-link <i>PARAMETERS</i>]<br />
+[<b>goodreads_get_user_info</b> updates-update-0-object-book-authors-author-average_rating <i>PARAMETERS</i>]<br />
+[<b>goodreads_get_user_info</b> updates-update-0-object-book-authors-author-ratings_count <i>PARAMETERS</i>]<br />
+[<b>goodreads_get_user_info</b> updates-update-0-object-book-authors-author-text_reviews_count <i>PARAMETERS</i>]<br />
+<br />
+<br />
+goodreads_get_recent_user_status<br />
+<br />
+[<b>goodreads_get_recent_user_status</b> updates_attr-type <i>PARAMETERS</i>]<br />
+[<b>goodreads_get_recent_user_status</b> update-0-update_attr-type <i>PARAMETERS</i>]<br />
+[<b>goodreads_get_recent_user_status</b> update-0-action_text <i>PARAMETERS</i>]<br />
+[<b>goodreads_get_recent_user_status</b> update-0-link <i>PARAMETERS</i>]<br />
+[<b>goodreads_get_recent_user_status</b> update-0-image_url <i>PARAMETERS</i>]<br />
+[<b>goodreads_get_recent_user_status</b> update-0-actor-id-value <i>PARAMETERS</i>]<br />
+[<b>goodreads_get_recent_user_status</b> update-0-actor-id-id_attr-type <i>PARAMETERS</i>]<br />
+[<b>goodreads_get_recent_user_status</b> update-0-actor-name <i>PARAMETERS</i>]<br />
+[<b>goodreads_get_recent_user_status</b> update-0-actor-image_url <i>PARAMETERS</i>]<br />
+[<b>goodreads_get_recent_user_status</b> update-0-actor-link <i>PARAMETERS</i>]<br />
+[<b>goodreads_get_recent_user_status</b> update-0-updated_at <i>PARAMETERS</i>]<br />
+[<b>goodreads_get_recent_user_status</b> update-0-body <i>PARAMETERS</i>]<br />
+<br />
+<br />
+goodreads_get_user_shelves<br />
+<br />
+[<b>goodreads_get_user_shelves</b> shelves_attr-start <i>PARAMETERS</i>]<br />
+[<b>goodreads_get_user_shelves</b> shelves_attr-end <i>PARAMETERS</i>]<br />
+[<b>goodreads_get_user_shelves</b> shelves_attr-total <i>PARAMETERS</i>]<br />
+[<b>goodreads_get_user_shelves</b> user_shelf-0-book_count-value <i>PARAMETERS</i>]<br />
+[<b>goodreads_get_user_shelves</b> user_shelf-0-book_count-book_count_attr-type <i>PARAMETERS</i>]<br />
+[<b>goodreads_get_user_shelves</b> user_shelf-0-description-description_attr-nil <i>PARAMETERS</i>]<br />
+[<b>goodreads_get_user_shelves</b> user_shelf-0-exclusive_flag-value <i>PARAMETERS</i>]<br />
+[<b>goodreads_get_user_shelves</b> user_shelf-0-exclusive_flag-exclusive_flag_attr-type <i>PARAMETERS</i>]<br />
+[<b>goodreads_get_user_shelves</b> user_shelf-0-featured-value <i>PARAMETERS</i>]<br />
+[<b>goodreads_get_user_shelves</b> user_shelf-0-featured-featured_attr-type <i>PARAMETERS</i>]<br />
+[<b>goodreads_get_user_shelves</b> user_shelf-0-id-value <i>PARAMETERS</i>]<br />
+[<b>goodreads_get_user_shelves</b> user_shelf-0-id-id_attr-type <i>PARAMETERS</i>]<br />
+[<b>goodreads_get_user_shelves</b> user_shelf-0-name <i>PARAMETERS</i>]<br />
+[<b>goodreads_get_user_shelves</b> user_shelf-0-order-order_attr-nil <i>PARAMETERS</i>]<br />
+[<b>goodreads_get_user_shelves</b> user_shelf-0-per_page-per_page_attr-type <i>PARAMETERS</i>]<br />
+[<b>goodreads_get_user_shelves</b> user_shelf-0-per_page-per_page_attr-nil <i>PARAMETERS</i>]<br />
+[<b>goodreads_get_user_shelves</b> user_shelf-0-recommend_for-value <i>PARAMETERS</i>]<br />
+[<b>goodreads_get_user_shelves</b> user_shelf-0-recommend_for-recommend_for_attr-type <i>PARAMETERS</i>]<br />
+[<b>goodreads_get_user_shelves</b> user_shelf-0-sort-sort_attr-nil <i>PARAMETERS</i>]<br />
+[<b>goodreads_get_user_shelves</b> user_shelf-0-sticky-sticky_attr-type <i>PARAMETERS</i>]<br />
+[<b>goodreads_get_user_shelves</b> user_shelf-0-sticky-sticky_attr-nil <i>PARAMETERS</i>]<br />
+<br />
+<br />
+goodreads_oauth_get_user_books<br />
+<br />
+[<b>goodreads_oauth_get_user_books</b> review-0-id <i>PARAMETERS</i>]<br />
+[<b>goodreads_oauth_get_user_books</b> review-0-book-id-value <i>PARAMETERS</i>]<br />
+[<b>goodreads_oauth_get_user_books</b> review-0-book-id-id_attr-type <i>PARAMETERS</i>]<br />
+[<b>goodreads_oauth_get_user_books</b> review-0-book-isbn <i>PARAMETERS</i>]<br />
+[<b>goodreads_oauth_get_user_books</b> review-0-book-isbn13 <i>PARAMETERS</i>]<br />
+[<b>goodreads_oauth_get_user_books</b> review-0-book-text_reviews_count-value <i>PARAMETERS</i>]<br />
+[<b>goodreads_oauth_get_user_books</b> review-0-book-text_reviews_count-text_reviews_count_attr-type <i>PARAMETERS</i>]<br />
+[<b>goodreads_oauth_get_user_books</b> review-0-book-title <i>PARAMETERS</i>]<br />
+[<b>goodreads_oauth_get_user_books</b> review-0-book-image_url <i>PARAMETERS</i>]<br />
+[<b>goodreads_oauth_get_user_books</b> review-0-book-small_image_url <i>PARAMETERS</i>]<br />
+[<b>goodreads_oauth_get_user_books</b> review-0-book-link <i>PARAMETERS</i>]<br />
+[<b>goodreads_oauth_get_user_books</b> review-0-book-format <i>PARAMETERS</i>]<br />
+[<b>goodreads_oauth_get_user_books</b> review-0-book-publisher <i>PARAMETERS</i>]<br />
+[<b>goodreads_oauth_get_user_books</b> review-0-book-publication_day <i>PARAMETERS</i>]<br />
+[<b>goodreads_oauth_get_user_books</b> review-0-book-publication_year <i>PARAMETERS</i>]<br />
+[<b>goodreads_oauth_get_user_books</b> review-0-book-publication_month <i>PARAMETERS</i>]<br />
+[<b>goodreads_oauth_get_user_books</b> review-0-book-average_rating <i>PARAMETERS</i>]<br />
+[<b>goodreads_oauth_get_user_books</b> review-0-book-ratings_count <i>PARAMETERS</i>]<br />
+[<b>goodreads_oauth_get_user_books</b> review-0-book-authors-author-id <i>PARAMETERS</i>]<br />
+[<b>goodreads_oauth_get_user_books</b> review-0-book-authors-author-name <i>PARAMETERS</i>]<br />
+[<b>goodreads_oauth_get_user_books</b> review-0-book-authors-author-image_url <i>PARAMETERS</i>]<br />
+[<b>goodreads_oauth_get_user_books</b> review-0-book-authors-author-small_image_url <i>PARAMETERS</i>]<br />
+[<b>goodreads_oauth_get_user_books</b> review-0-book-authors-author-link <i>PARAMETERS</i>]<br />
+[<b>goodreads_oauth_get_user_books</b> review-0-book-authors-author-average_rating <i>PARAMETERS</i>]<br />
+[<b>goodreads_oauth_get_user_books</b> review-0-book-authors-author-ratings_count <i>PARAMETERS</i>]<br />
+[<b>goodreads_oauth_get_user_books</b> review-0-book-authors-author-text_reviews_count <i>PARAMETERS</i>]<br />
+[<b>goodreads_oauth_get_user_books</b> review-0-book-published <i>PARAMETERS</i>]<br />
+[<b>goodreads_oauth_get_user_books</b> review-0-rating <i>PARAMETERS</i>]<br />
+[<b>goodreads_oauth_get_user_books</b> review-0-votes <i>PARAMETERS</i>]<br />
+[<b>goodreads_oauth_get_user_books</b> review-0-spoiler_flag <i>PARAMETERS</i>]<br />
+[<b>goodreads_oauth_get_user_books</b> review-0-spoilers_state <i>PARAMETERS</i>]<br />
+[<b>goodreads_oauth_get_user_books</b> review-0-shelves-shelf-shelf_attr-name <i>PARAMETERS</i>]<br />
+[<b>goodreads_oauth_get_user_books</b> review-0-date_added <i>PARAMETERS</i>]<br />
+[<b>goodreads_oauth_get_user_books</b> review-0-date_updated <i>PARAMETERS</i>]<br />
+[<b>goodreads_oauth_get_user_books</b> review-0-comments_count <i>PARAMETERS</i>]<br />
+[<b>goodreads_oauth_get_user_books</b> review-0-url <i>PARAMETERS</i>]<br />
+[<b>goodreads_oauth_get_user_books</b> review-0-link <i>PARAMETERS</i>]<br />
+[<b>goodreads_oauth_get_user_books</b> review-0-owned <i>PARAMETERS</i>]<br />
+<br />
+<br />
+goodreads_get_topics_by_group_and_folder<br />
+<br />
+[<b>goodreads_get_topics_by_group_and_folder</b> id <i>PARAMETERS</i>]<br />
+[<b>goodreads_get_topics_by_group_and_folder</b> group_id <i>PARAMETERS</i>]<br />
+[<b>goodreads_get_topics_by_group_and_folder</b> items_count <i>PARAMETERS</i>]<br />
+[<b>goodreads_get_topics_by_group_and_folder</b> name <i>PARAMETERS</i>]<br />
+[<b>goodreads_get_topics_by_group_and_folder</b> topics-topics_attr-start <i>PARAMETERS</i>]<br />
+[<b>goodreads_get_topics_by_group_and_folder</b> topics-topics_attr-end <i>PARAMETERS</i>]<br />
+[<b>goodreads_get_topics_by_group_and_folder</b> topics-topics_attr-total <i>PARAMETERS</i>]<br />
+[<b>goodreads_get_topics_by_group_and_folder</b> topics-topic-comments_count-value <i>PARAMETERS</i>]<br />
+[<b>goodreads_get_topics_by_group_and_folder</b> topics-topic-comments_count-comments_count_attr-type <i>PARAMETERS</i>]<br />
+[<b>goodreads_get_topics_by_group_and_folder</b> topics-topic-id-value <i>PARAMETERS</i>]<br />
+[<b>goodreads_get_topics_by_group_and_folder</b> topics-topic-id-id_attr-type <i>PARAMETERS</i>]<br />
+[<b>goodreads_get_topics_by_group_and_folder</b> topics-topic-last_comment_at-value <i>PARAMETERS</i>]<br />
+[<b>goodreads_get_topics_by_group_and_folder</b> topics-topic-last_comment_at-last_comment_at_attr-type <i>PARAMETERS</i>]<br />
+[<b>goodreads_get_topics_by_group_and_folder</b> topics-topic-title <i>PARAMETERS</i>]<br />
+[<b>goodreads_get_topics_by_group_and_folder</b> topics-topic-unread_count-unread_count_attr-nil <i>PARAMETERS</i>]<br />
+[<b>goodreads_get_topics_by_group_and_folder</b> topics-topic-folder-id-value <i>PARAMETERS</i>]<br />
+[<b>goodreads_get_topics_by_group_and_folder</b> topics-topic-folder-id-id_attr-type <i>PARAMETERS</i>]<br />
+[<b>goodreads_get_topics_by_group_and_folder</b> topics-topic-folder-name <i>PARAMETERS</i>]<br />
+[<b>goodreads_get_topics_by_group_and_folder</b> topics-topic-author_user-first_name <i>PARAMETERS</i>]<br />
+[<b>goodreads_get_topics_by_group_and_folder</b> topics-topic-author_user-id-value <i>PARAMETERS</i>]<br />
+[<b>goodreads_get_topics_by_group_and_folder</b> topics-topic-author_user-id-id_attr-type <i>PARAMETERS</i>]<br />
+[<b>goodreads_get_topics_by_group_and_folder</b> topics-topic-author_user-last_name <i>PARAMETERS</i>]<br />
+[<b>goodreads_get_topics_by_group_and_folder</b> topics-topic-author_user-user_name <i>PARAMETERS</i>]<br />
+[<b>goodreads_get_topics_by_group_and_folder</b> topics-topic-subject_id <i>PARAMETERS</i>]<br />
+<br />
+<br />
+goodreads_get_topic_info<br />
+<br />
+[<b>goodreads_get_topic_info</b> id <i>PARAMETERS</i>]<br />
+[<b>goodreads_get_topic_info</b> author_user_id <i>PARAMETERS</i>]<br />
+[<b>goodreads_get_topic_info</b> author_user_name <i>PARAMETERS</i>]<br />
+[<b>goodreads_get_topic_info</b> comments_count <i>PARAMETERS</i>]<br />
+[<b>goodreads_get_topic_info</b> new_comments_count <i>PARAMETERS</i>]<br />
+[<b>goodreads_get_topic_info</b> comments_per_page <i>PARAMETERS</i>]<br />
+[<b>goodreads_get_topic_info</b> title <i>PARAMETERS</i>]<br />
+[<b>goodreads_get_topic_info</b> updated_at <i>PARAMETERS</i>]<br />
+[<b>goodreads_get_topic_info</b> last_comment_at <i>PARAMETERS</i>]<br />
+[<b>goodreads_get_topic_info</b> subject_type <i>PARAMETERS</i>]<br />
+[<b>goodreads_get_topic_info</b> folder-id-value <i>PARAMETERS</i>]<br />
+[<b>goodreads_get_topic_info</b> folder-id-id_attr-type <i>PARAMETERS</i>]<br />
+[<b>goodreads_get_topic_info</b> folder-name <i>PARAMETERS</i>]<br />
+[<b>goodreads_get_topic_info</b> group-id-value <i>PARAMETERS</i>]<br />
+[<b>goodreads_get_topic_info</b> group-id-id_attr-type <i>PARAMETERS</i>]<br />
+[<b>goodreads_get_topic_info</b> group-title <i>PARAMETERS</i>]<br />
+[<b>goodreads_get_topic_info</b> group-p1_image_url <i>PARAMETERS</i>]<br />
+[<b>goodreads_get_topic_info</b> comments-comments_attr-start <i>PARAMETERS</i>]<br />
+[<b>goodreads_get_topic_info</b> comments-comments_attr-end <i>PARAMETERS</i>]<br />
+[<b>goodreads_get_topic_info</b> comments-comments_attr-total <i>PARAMETERS</i>]<br />
+[<b>goodreads_get_topic_info</b> comments-comment-0-id <i>PARAMETERS</i>]<br />
+[<b>goodreads_get_topic_info</b> comments-comment-0-body <i>PARAMETERS</i>]<br />
+[<b>goodreads_get_topic_info</b> comments-comment-0-updated_at <i>PARAMETERS</i>]<br />
+[<b>goodreads_get_topic_info</b> comments-comment-0-user-id <i>PARAMETERS</i>]<br />
+[<b>goodreads_get_topic_info</b> comments-comment-0-user-name <i>PARAMETERS</i>]<br />
+[<b>goodreads_get_topic_info</b> comments-comment-0-user-small_image_url <i>PARAMETERS</i>]<br />
+<br />
+<br />
+goodreads_get_comments<br />
+<br />
+[<b>goodreads_get_comments</b> comment-0-id <i>PARAMETERS</i>]<br />
+[<b>goodreads_get_comments</b> comment-0-body <i>PARAMETERS</i>]<br />
+[<b>goodreads_get_comments</b> comment-0-user-id <i>PARAMETERS</i>]<br />
+[<b>goodreads_get_comments</b> comment-0-user-name <i>PARAMETERS</i>]<br />
+[<b>goodreads_get_comments</b> comment-0-user-location <i>PARAMETERS</i>]<br />
+[<b>goodreads_get_comments</b> comment-0-user-link <i>PARAMETERS</i>]<br />
+[<b>goodreads_get_comments</b> comment-0-user-image_url <i>PARAMETERS</i>]<br />
+[<b>goodreads_get_comments</b> comment-0-user-small_image_url <i>PARAMETERS</i>]<br />
+[<b>goodreads_get_comments</b> comment-0-created_at <i>PARAMETERS</i>]<br />
+[<b>goodreads_get_comments</b> comment-0-updated_at <i>PARAMETERS</i>]<br />
+<br />
+<br />
+goodreads_get_events<br />
+<br />
+[<b>goodreads_get_events</b> event-0-access <i>PARAMETERS</i>]<br />
+[<b>goodreads_get_events</b> event-0-address <i>PARAMETERS</i>]<br />
+[<b>goodreads_get_events</b> event-0-can_invite_flag-value <i>PARAMETERS</i>]<br />
+[<b>goodreads_get_events</b> event-0-can_invite_flag-can_invite_flag_attr-type <i>PARAMETERS</i>]<br />
+[<b>goodreads_get_events</b> event-0-country_code <i>PARAMETERS</i>]<br />
+[<b>goodreads_get_events</b> event-0-created_at-value <i>PARAMETERS</i>]<br />
+[<b>goodreads_get_events</b> event-0-created_at-created_at_attr-type <i>PARAMETERS</i>]<br />
+[<b>goodreads_get_events</b> event-0-end_at-value <i>PARAMETERS</i>]<br />
+[<b>goodreads_get_events</b> event-0-end_at-end_at_attr-type <i>PARAMETERS</i>]<br />
+[<b>goodreads_get_events</b> event-0-event_attending_count-value <i>PARAMETERS</i>]<br />
+[<b>goodreads_get_events</b> event-0-event_attending_count-event_attending_count_attr-type <i>PARAMETERS</i>]<br />
+[<b>goodreads_get_events</b> event-0-event_responses_count-value <i>PARAMETERS</i>]<br />
+[<b>goodreads_get_events</b> event-0-event_responses_count-event_responses_count_attr-type <i>PARAMETERS</i>]<br />
+[<b>goodreads_get_events</b> event-0-event_type <i>PARAMETERS</i>]<br />
+[<b>goodreads_get_events</b> event-0-id-value <i>PARAMETERS</i>]<br />
+[<b>goodreads_get_events</b> event-0-id-id_attr-type <i>PARAMETERS</i>]<br />
+[<b>goodreads_get_events</b> event-0-public_flag-value <i>PARAMETERS</i>]<br />
+[<b>goodreads_get_events</b> event-0-public_flag-public_flag_attr-type <i>PARAMETERS</i>]<br />
+[<b>goodreads_get_events</b> event-0-reminder_at-value <i>PARAMETERS</i>]<br />
+[<b>goodreads_get_events</b> event-0-reminder_at-reminder_at_attr-type <i>PARAMETERS</i>]<br />
+[<b>goodreads_get_events</b> event-0-resource_id-value <i>PARAMETERS</i>]<br />
+[<b>goodreads_get_events</b> event-0-resource_id-resource_id_attr-type <i>PARAMETERS</i>]<br />
+[<b>goodreads_get_events</b> event-0-resource_type <i>PARAMETERS</i>]<br />
+[<b>goodreads_get_events</b> event-0-rsvp_end_at-value <i>PARAMETERS</i>]<br />
+[<b>goodreads_get_events</b> event-0-rsvp_end_at-rsvp_end_at_attr-type <i>PARAMETERS</i>]<br />
+[<b>goodreads_get_events</b> event-0-source-source_attr-nil <i>PARAMETERS</i>]<br />
+[<b>goodreads_get_events</b> event-0-source_url-source_url_attr-nil <i>PARAMETERS</i>]<br />
+[<b>goodreads_get_events</b> event-0-start_at-value <i>PARAMETERS</i>]<br />
+[<b>goodreads_get_events</b> event-0-start_at-start_at_attr-type <i>PARAMETERS</i>]<br />
+[<b>goodreads_get_events</b> event-0-title <i>PARAMETERS</i>]<br />
+[<b>goodreads_get_events</b> event-0-updated_at-value <i>PARAMETERS</i>]<br />
+[<b>goodreads_get_events</b> event-0-updated_at-updated_at_attr-type <i>PARAMETERS</i>]<br />
+[<b>goodreads_get_events</b> event-0-user_id-value <i>PARAMETERS</i>]<br />
+[<b>goodreads_get_events</b> event-0-user_id-user_id_attr-type <i>PARAMETERS</i>]<br />
+[<b>goodreads_get_events</b> event-0-venue <i>PARAMETERS</i>]<br />
+[<b>goodreads_get_events</b> event-0-image_url <i>PARAMETERS</i>]<br />
+[<b>goodreads_get_events</b> event-0-link <i>PARAMETERS</i>]<br />
+[<b>goodreads_get_events</b> event-0-description <i>PARAMETERS</i>]<br />
+<br />
+<br />
+goodreads_oauth_get_user_id<br />
+<br />
+[<b>goodreads_oauth_get_user_id</b> id <i>PARAMETERS</i>]<br />
+[<b>goodreads_oauth_get_user_id</b> name <i>PARAMETERS</i>]<br />
+[<b>goodreads_oauth_get_user_id</b> link <i>PARAMETERS</i>]<br />
+<br />
+<br />
+goodreads_oauth_get_user_friends<br />
+<br />
+[<b>goodreads_oauth_get_user_friends</b> Request-authentication <i>PARAMETERS</i>]<br />
+[<b>goodreads_oauth_get_user_friends</b> Request-key <i>PARAMETERS</i>]<br />
+[<b>goodreads_oauth_get_user_friends</b> Request-method <i>PARAMETERS</i>]<br />
+[<b>goodreads_oauth_get_user_friends</b> friends-friends_attr-start <i>PARAMETERS</i>]<br />
+[<b>goodreads_oauth_get_user_friends</b> friends-friends_attr-end <i>PARAMETERS</i>]<br />
+[<b>goodreads_oauth_get_user_friends</b> friends-friends_attr-total <i>PARAMETERS</i>]<br />
+[<b>goodreads_oauth_get_user_friends</b> friends-user-0-id <i>PARAMETERS</i>]<br />
+[<b>goodreads_oauth_get_user_friends</b> friends-user-0-name <i>PARAMETERS</i>]<br />
+[<b>goodreads_oauth_get_user_friends</b> friends-user-0-link <i>PARAMETERS</i>]<br />
+[<b>goodreads_oauth_get_user_friends</b> friends-user-0-image_url <i>PARAMETERS</i>]<br />
+[<b>goodreads_oauth_get_user_friends</b> friends-user-0-small_image_url <i>PARAMETERS</i>]<br />
+[<b>goodreads_oauth_get_user_friends</b> friends-user-0-friends_count <i>PARAMETERS</i>]<br />
+[<b>goodreads_oauth_get_user_friends</b> friends-user-0-reviews_count <i>PARAMETERS</i>]<br />
+[<b>goodreads_oauth_get_user_friends</b> friends-user-0-created_at <i>PARAMETERS</i>]<br />
+<br />
+<br />
+goodreads_oauth_get_user_friends_updates<br />
+<br />
+[<b>goodreads_oauth_get_user_friends_updates</b> updates_attr-type <i>PARAMETERS</i>]<br />
+[<b>goodreads_oauth_get_user_friends_updates</b> update-0-update_attr-type <i>PARAMETERS</i>]<br />
+[<b>goodreads_oauth_get_user_friends_updates</b> update-0-action_text <i>PARAMETERS</i>]<br />
+[<b>goodreads_oauth_get_user_friends_updates</b> update-0-link <i>PARAMETERS</i>]<br />
+[<b>goodreads_oauth_get_user_friends_updates</b> update-0-image_url <i>PARAMETERS</i>]<br />
+[<b>goodreads_oauth_get_user_friends_updates</b> update-0-actor-id-value <i>PARAMETERS</i>]<br />
+[<b>goodreads_oauth_get_user_friends_updates</b> update-0-actor-id-id_attr-type <i>PARAMETERS</i>]<br />
+[<b>goodreads_oauth_get_user_friends_updates</b> update-0-actor-name <i>PARAMETERS</i>]<br />
+[<b>goodreads_oauth_get_user_friends_updates</b> update-0-actor-image_url <i>PARAMETERS</i>]<br />
+[<b>goodreads_oauth_get_user_friends_updates</b> update-0-actor-link <i>PARAMETERS</i>]<br />
+[<b>goodreads_oauth_get_user_friends_updates</b> update-0-updated_at <i>PARAMETERS</i>]<br />
+[<b>goodreads_oauth_get_user_friends_updates</b> update-0-body <i>PARAMETERS</i>]<br />
+<br />
+<br />
+goodreads_oauth_get_users_owned_books<br />
+<br />
+[<b>goodreads_oauth_get_users_owned_books</b> owned_book-0-comments_count-value <i>PARAMETERS</i>]<br />
+[<b>goodreads_oauth_get_users_owned_books</b> owned_book-0-comments_count-comments_count_attr-type <i>PARAMETERS</i>]<br />
+[<b>goodreads_oauth_get_users_owned_books</b> owned_book-0-current_owner_id-value <i>PARAMETERS</i>]<br />
+[<b>goodreads_oauth_get_users_owned_books</b> owned_book-0-current_owner_id-current_owner_id_attr-type <i>PARAMETERS</i>]<br />
+[<b>goodreads_oauth_get_users_owned_books</b> owned_book-0-id-value <i>PARAMETERS</i>]<br />
+[<b>goodreads_oauth_get_users_owned_books</b> owned_book-0-id-id_attr-type <i>PARAMETERS</i>]<br />
+[<b>goodreads_oauth_get_users_owned_books</b> owned_book-0-original_purchase_date-original_purchase_date_attr-nil <i>PARAMETERS</i>]<br />
+[<b>goodreads_oauth_get_users_owned_books</b> owned_book-0-original_purchase_date-original_purchase_date_attr-type <i>PARAMETERS</i>]<br />
+[<b>goodreads_oauth_get_users_owned_books</b> owned_book-0-original_purchase_location-original_purchase_location_attr-nil <i>PARAMETERS</i>]<br />
+[<b>goodreads_oauth_get_users_owned_books</b> owned_book-0-condition <i>PARAMETERS</i>]<br />
+[<b>goodreads_oauth_get_users_owned_books</b> owned_book-0-swappable <i>PARAMETERS</i>]<br />
+[<b>goodreads_oauth_get_users_owned_books</b> owned_book-0-traded_count <i>PARAMETERS</i>]<br />
+[<b>goodreads_oauth_get_users_owned_books</b> owned_book-0-link <i>PARAMETERS</i>]<br />
+[<b>goodreads_oauth_get_users_owned_books</b> owned_book-0-book-id-value <i>PARAMETERS</i>]<br />
+[<b>goodreads_oauth_get_users_owned_books</b> owned_book-0-book-id-id_attr-type <i>PARAMETERS</i>]<br />
+[<b>goodreads_oauth_get_users_owned_books</b> owned_book-0-book-isbn <i>PARAMETERS</i>]<br />
+[<b>goodreads_oauth_get_users_owned_books</b> owned_book-0-book-isbn13 <i>PARAMETERS</i>]<br />
+[<b>goodreads_oauth_get_users_owned_books</b> owned_book-0-book-text_reviews_count-value <i>PARAMETERS</i>]<br />
+[<b>goodreads_oauth_get_users_owned_books</b> owned_book-0-book-text_reviews_count-text_reviews_count_attr-type <i>PARAMETERS</i>]<br />
+[<b>goodreads_oauth_get_users_owned_books</b> owned_book-0-book-title <i>PARAMETERS</i>]<br />
+[<b>goodreads_oauth_get_users_owned_books</b> owned_book-0-book-image_url <i>PARAMETERS</i>]<br />
+[<b>goodreads_oauth_get_users_owned_books</b> owned_book-0-book-small_image_url <i>PARAMETERS</i>]<br />
+[<b>goodreads_oauth_get_users_owned_books</b> owned_book-0-book-link <i>PARAMETERS</i>]<br />
+[<b>goodreads_oauth_get_users_owned_books</b> owned_book-0-book-num_pages <i>PARAMETERS</i>]<br />
+[<b>goodreads_oauth_get_users_owned_books</b> owned_book-0-book-format <i>PARAMETERS</i>]<br />
+[<b>goodreads_oauth_get_users_owned_books</b> owned_book-0-book-publisher <i>PARAMETERS</i>]<br />
+[<b>goodreads_oauth_get_users_owned_books</b> owned_book-0-book-publication_day <i>PARAMETERS</i>]<br />
+[<b>goodreads_oauth_get_users_owned_books</b> owned_book-0-book-publication_year <i>PARAMETERS</i>]<br />
+[<b>goodreads_oauth_get_users_owned_books</b> owned_book-0-book-publication_month <i>PARAMETERS</i>]<br />
+[<b>goodreads_oauth_get_users_owned_books</b> owned_book-0-book-average_rating <i>PARAMETERS</i>]<br />
+[<b>goodreads_oauth_get_users_owned_books</b> owned_book-0-book-ratings_count <i>PARAMETERS</i>]<br />
+[<b>goodreads_oauth_get_users_owned_books</b> owned_book-0-book-description <i>PARAMETERS</i>]<br />
+[<b>goodreads_oauth_get_users_owned_books</b> owned_book-0-book-authors-author-id <i>PARAMETERS</i>]<br />
+[<b>goodreads_oauth_get_users_owned_books</b> owned_book-0-book-authors-author-name <i>PARAMETERS</i>]<br />
+[<b>goodreads_oauth_get_users_owned_books</b> owned_book-0-book-authors-author-image_url <i>PARAMETERS</i>]<br />
+[<b>goodreads_oauth_get_users_owned_books</b> owned_book-0-book-authors-author-small_image_url <i>PARAMETERS</i>]<br />
+[<b>goodreads_oauth_get_users_owned_books</b> owned_book-0-book-authors-author-link <i>PARAMETERS</i>]<br />
+[<b>goodreads_oauth_get_users_owned_books</b> owned_book-0-book-authors-author-average_rating <i>PARAMETERS</i>]<br />
+[<b>goodreads_oauth_get_users_owned_books</b> owned_book-0-book-authors-author-ratings_count <i>PARAMETERS</i>]<br />
+[<b>goodreads_oauth_get_users_owned_books</b> owned_book-0-book-authors-author-text_reviews_count <i>PARAMETERS</i>]<br />
+[<b>goodreads_oauth_get_users_owned_books</b> owned_book-0-book-published <i>PARAMETERS</i>]<br />
+[<b>goodreads_oauth_get_users_owned_books</b> owned_book-0-review-id <i>PARAMETERS</i>]<br />
+[<b>goodreads_oauth_get_users_owned_books</b> owned_book-0-review-rating <i>PARAMETERS</i>]<br />
+[<b>goodreads_oauth_get_users_owned_books</b> owned_book-0-review-votes <i>PARAMETERS</i>]<br />
+[<b>goodreads_oauth_get_users_owned_books</b> owned_book-0-review-spoiler_flag <i>PARAMETERS</i>]<br />
+[<b>goodreads_oauth_get_users_owned_books</b> owned_book-0-review-spoilers_state <i>PARAMETERS</i>]<br />
+[<b>goodreads_oauth_get_users_owned_books</b> owned_book-0-review-shelves-shelf-shelf_attr-name <i>PARAMETERS</i>]<br />
+[<b>goodreads_oauth_get_users_owned_books</b> owned_book-0-review-date_added <i>PARAMETERS</i>]<br />
+[<b>goodreads_oauth_get_users_owned_books</b> owned_book-0-review-date_updated <i>PARAMETERS</i>]<br />
+[<b>goodreads_oauth_get_users_owned_books</b> owned_book-0-review-comments_count <i>PARAMETERS</i>]<br />
+[<b>goodreads_oauth_get_users_owned_books</b> owned_book-0-review-url <i>PARAMETERS</i>]<br />
+[<b>goodreads_oauth_get_users_owned_books</b> owned_book-0-review-link <i>PARAMETERS</i>]<br />
+[<b>goodreads_oauth_get_users_owned_books</b> owned_book-0-review-owned <i>PARAMETERS</i>]<br />
+<br />
+<br />
+goodreads_oauth_get_user_compare_books<br />
+<br />
+[<b>goodreads_oauth_get_user_compare_books</b> not_in_common <i>PARAMETERS</i>]<br />
+[<b>goodreads_oauth_get_user_compare_books</b> your_library_percent <i>PARAMETERS</i>]<br />
+[<b>goodreads_oauth_get_user_compare_books</b> their_library_percent <i>PARAMETERS</i>]<br />
+[<b>goodreads_oauth_get_user_compare_books</b> common_count <i>PARAMETERS</i>]<br />
+[<b>goodreads_oauth_get_user_compare_books</b> reviews-review-0-book-title <i>PARAMETERS</i>]<br />
+[<b>goodreads_oauth_get_user_compare_books</b> reviews-review-0-book-id <i>PARAMETERS</i>]<br />
+[<b>goodreads_oauth_get_user_compare_books</b> reviews-review-0-book-url <i>PARAMETERS</i>]<br />
+[<b>goodreads_oauth_get_user_compare_books</b> reviews-review-0-your_review-rating <i>PARAMETERS</i>]<br />
+[<b>goodreads_oauth_get_user_compare_books</b> reviews-review-0-their_review-rating <i>PARAMETERS</i>]<br />
+<br />
+<br />
+goodreads_oauth_get_show_owned_book<br />
+<br />
+[<b>goodreads_oauth_get_show_owned_book</b> comments_count-value <i>PARAMETERS</i>]<br />
+[<b>goodreads_oauth_get_show_owned_book</b> comments_count-comments_count_attr-type <i>PARAMETERS</i>]<br />
+[<b>goodreads_oauth_get_show_owned_book</b> current_owner_id-value <i>PARAMETERS</i>]<br />
+[<b>goodreads_oauth_get_show_owned_book</b> current_owner_id-current_owner_id_attr-type <i>PARAMETERS</i>]<br />
+[<b>goodreads_oauth_get_show_owned_book</b> id-value <i>PARAMETERS</i>]<br />
+[<b>goodreads_oauth_get_show_owned_book</b> id-id_attr-type <i>PARAMETERS</i>]<br />
+[<b>goodreads_oauth_get_show_owned_book</b> original_purchase_date-original_purchase_date_attr-type <i>PARAMETERS</i>]<br />
+[<b>goodreads_oauth_get_show_owned_book</b> original_purchase_date-original_purchase_date_attr-nil <i>PARAMETERS</i>]<br />
+[<b>goodreads_oauth_get_show_owned_book</b> original_purchase_location-original_purchase_location_attr-nil <i>PARAMETERS</i>]<br />
+[<b>goodreads_oauth_get_show_owned_book</b> condition <i>PARAMETERS</i>]<br />
+[<b>goodreads_oauth_get_show_owned_book</b> swappable <i>PARAMETERS</i>]<br />
+[<b>goodreads_oauth_get_show_owned_book</b> traded_count <i>PARAMETERS</i>]<br />
+[<b>goodreads_oauth_get_show_owned_book</b> link <i>PARAMETERS</i>]<br />
+[<b>goodreads_oauth_get_show_owned_book</b> book-id-value <i>PARAMETERS</i>]<br />
+[<b>goodreads_oauth_get_show_owned_book</b> book-id-id_attr-type <i>PARAMETERS</i>]<br />
+[<b>goodreads_oauth_get_show_owned_book</b> book-isbn <i>PARAMETERS</i>]<br />
+[<b>goodreads_oauth_get_show_owned_book</b> book-isbn13 <i>PARAMETERS</i>]<br />
+[<b>goodreads_oauth_get_show_owned_book</b> book-text_reviews_count-value <i>PARAMETERS</i>]<br />
+[<b>goodreads_oauth_get_show_owned_book</b> book-text_reviews_count-text_reviews_count_attr-type <i>PARAMETERS</i>]<br />
+[<b>goodreads_oauth_get_show_owned_book</b> book-title <i>PARAMETERS</i>]<br />
+[<b>goodreads_oauth_get_show_owned_book</b> book-image_url <i>PARAMETERS</i>]<br />
+[<b>goodreads_oauth_get_show_owned_book</b> book-small_image_url <i>PARAMETERS</i>]<br />
+[<b>goodreads_oauth_get_show_owned_book</b> book-link <i>PARAMETERS</i>]<br />
+[<b>goodreads_oauth_get_show_owned_book</b> book-num_pages <i>PARAMETERS</i>]<br />
+[<b>goodreads_oauth_get_show_owned_book</b> book-format <i>PARAMETERS</i>]<br />
+[<b>goodreads_oauth_get_show_owned_book</b> book-publisher <i>PARAMETERS</i>]<br />
+[<b>goodreads_oauth_get_show_owned_book</b> book-publication_day <i>PARAMETERS</i>]<br />
+[<b>goodreads_oauth_get_show_owned_book</b> book-publication_year <i>PARAMETERS</i>]<br />
+[<b>goodreads_oauth_get_show_owned_book</b> book-publication_month <i>PARAMETERS</i>]<br />
+[<b>goodreads_oauth_get_show_owned_book</b> book-average_rating <i>PARAMETERS</i>]<br />
+[<b>goodreads_oauth_get_show_owned_book</b> book-ratings_count <i>PARAMETERS</i>]<br />
+[<b>goodreads_oauth_get_show_owned_book</b> book-description <i>PARAMETERS</i>]<br />
+[<b>goodreads_oauth_get_show_owned_book</b> book-authors-author-id <i>PARAMETERS</i>]<br />
+[<b>goodreads_oauth_get_show_owned_book</b> book-authors-author-name <i>PARAMETERS</i>]<br />
+[<b>goodreads_oauth_get_show_owned_book</b> book-authors-author-image_url <i>PARAMETERS</i>]<br />
+[<b>goodreads_oauth_get_show_owned_book</b> book-authors-author-small_image_url <i>PARAMETERS</i>]<br />
+[<b>goodreads_oauth_get_show_owned_book</b> book-authors-author-link <i>PARAMETERS</i>]<br />
+[<b>goodreads_oauth_get_show_owned_book</b> book-authors-author-average_rating <i>PARAMETERS</i>]<br />
+[<b>goodreads_oauth_get_show_owned_book</b> book-authors-author-ratings_count <i>PARAMETERS</i>]<br />
+[<b>goodreads_oauth_get_show_owned_book</b> book-authors-author-text_reviews_count <i>PARAMETERS</i>]<br />
+[<b>goodreads_oauth_get_show_owned_book</b> book-published <i>PARAMETERS</i>]<br />
+[<b>goodreads_oauth_get_show_owned_book</b> review-id <i>PARAMETERS</i>]<br />
+[<b>goodreads_oauth_get_show_owned_book</b> review-rating <i>PARAMETERS</i>]<br />
+[<b>goodreads_oauth_get_show_owned_book</b> review-votes <i>PARAMETERS</i>]<br />
+[<b>goodreads_oauth_get_show_owned_book</b> review-spoiler_flag <i>PARAMETERS</i>]<br />
+[<b>goodreads_oauth_get_show_owned_book</b> review-spoilers_state <i>PARAMETERS</i>]<br />
+[<b>goodreads_oauth_get_show_owned_book</b> review-shelves-shelf-shelf_attr-name <i>PARAMETERS</i>]<br />
+[<b>goodreads_oauth_get_show_owned_book</b> review-date_added <i>PARAMETERS</i>]<br />
+[<b>goodreads_oauth_get_show_owned_book</b> review-date_updated <i>PARAMETERS</i>]<br />
+[<b>goodreads_oauth_get_show_owned_book</b> review-comments_count <i>PARAMETERS</i>]<br />
+[<b>goodreads_oauth_get_show_owned_book</b> review-url <i>PARAMETERS</i>]<br />
+[<b>goodreads_oauth_get_show_owned_book</b> review-link <i>PARAMETERS</i>]<br />
+[<b>goodreads_oauth_get_show_owned_book</b> review-owned <i>PARAMETERS</i>]<br />
+<br />
+<br />
+goodreads_oauth_get_topics_with_unread_comments<br />
+<br />
+[<b>goodreads_oauth_get_topics_with_unread_comments</b> id <i>PARAMETERS</i>]<br />
+[<b>goodreads_oauth_get_topics_with_unread_comments</b> group_id <i>PARAMETERS</i>]<br />
+[<b>goodreads_oauth_get_topics_with_unread_comments</b> items_count <i>PARAMETERS</i>]<br />
+[<b>goodreads_oauth_get_topics_with_unread_comments</b> name <i>PARAMETERS</i>]<br />
+[<b>goodreads_oauth_get_topics_with_unread_comments</b> topics-topics_attr-start <i>PARAMETERS</i>]<br />
+[<b>goodreads_oauth_get_topics_with_unread_comments</b> topics-topics_attr-end <i>PARAMETERS</i>]<br />
+[<b>goodreads_oauth_get_topics_with_unread_comments</b> topics-topics_attr-total <i>PARAMETERS</i>]<br />
+[<b>goodreads_oauth_get_topics_with_unread_comments</b> topics-topic-0-comments_count-value <i>PARAMETERS</i>]<br />
+[<b>goodreads_oauth_get_topics_with_unread_comments</b> topics-topic-0-comments_count-comments_count_attr-type <i>PARAMETERS</i>]<br />
+[<b>goodreads_oauth_get_topics_with_unread_comments</b> topics-topic-0-id-value <i>PARAMETERS</i>]<br />
+[<b>goodreads_oauth_get_topics_with_unread_comments</b> topics-topic-0-id-id_attr-type <i>PARAMETERS</i>]<br />
+[<b>goodreads_oauth_get_topics_with_unread_comments</b> topics-topic-0-last_comment_at-value <i>PARAMETERS</i>]<br />
+[<b>goodreads_oauth_get_topics_with_unread_comments</b> topics-topic-0-last_comment_at-last_comment_at_attr-type <i>PARAMETERS</i>]<br />
+[<b>goodreads_oauth_get_topics_with_unread_comments</b> topics-topic-0-title <i>PARAMETERS</i>]<br />
+[<b>goodreads_oauth_get_topics_with_unread_comments</b> topics-topic-0-unread_count-value <i>PARAMETERS</i>]<br />
+[<b>goodreads_oauth_get_topics_with_unread_comments</b> topics-topic-0-unread_count-unread_count_attr-type <i>PARAMETERS</i>]<br />
+[<b>goodreads_oauth_get_topics_with_unread_comments</b> topics-topic-0-folder-id-value <i>PARAMETERS</i>]<br />
+[<b>goodreads_oauth_get_topics_with_unread_comments</b> topics-topic-0-folder-id-id_attr-type <i>PARAMETERS</i>]<br />
+[<b>goodreads_oauth_get_topics_with_unread_comments</b> topics-topic-0-folder-name <i>PARAMETERS</i>]<br />
+[<b>goodreads_oauth_get_topics_with_unread_comments</b> topics-topic-0-author_user-first_name <i>PARAMETERS</i>]<br />
+[<b>goodreads_oauth_get_topics_with_unread_comments</b> topics-topic-0-author_user-id-value <i>PARAMETERS</i>]<br />
+[<b>goodreads_oauth_get_topics_with_unread_comments</b> topics-topic-0-author_user-id-id_attr-type <i>PARAMETERS</i>]<br />
+[<b>goodreads_oauth_get_topics_with_unread_comments</b> topics-topic-0-author_user-user_name-user_name_attr-nil <i>PARAMETERS</i>]<br />
+[<b>goodreads_oauth_get_topics_with_unread_comments</b> topics-topic-0-subject_id <i>PARAMETERS</i>]<br />
+<br />
+<br />
+goodreads_oauth_delete_bookshelf&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<b>Not Recommended!</b><br />
+<br />
+[<b>goodreads_oauth_delete_bookshelf</b> data <i>PARAMETERS</i>]<br />
+<br />
+<br />
+goodreads_oauth_follow_user&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<b>Not Recommended!</b><br />
+<br />
+[<b>goodreads_oauth_follow_user</b> data <i>PARAMETERS</i>]<br />
+<br />
+<br />
+goodreads_oauth_update_user_status&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<b>Not Recommended!</b><br />
+<br />
+[<b>goodreads_oauth_update_user_status</b> user-status-body <i>PARAMETERS</i>]<br />
+[<b>goodreads_oauth_update_user_status</b> user-status-book-id-value <i>PARAMETERS</i>]<br />
+[<b>goodreads_oauth_update_user_status</b> user-status-book-id-book-id_attr-type <i>PARAMETERS</i>]<br />
+[<b>goodreads_oauth_update_user_status</b> user-status-chapter-chapter_attr-nil <i>PARAMETERS</i>]<br />
+[<b>goodreads_oauth_update_user_status</b> user-status-chapter-chapter_attr-type <i>PARAMETERS</i>]<br />
+[<b>goodreads_oauth_update_user_status</b> user-status-comments-count-value <i>PARAMETERS</i>]<br />
+[<b>goodreads_oauth_update_user_status</b> user-status-comments-count-comments-count_attr-type <i>PARAMETERS</i>]<br />
+[<b>goodreads_oauth_update_user_status</b> user-status-created-at-value <i>PARAMETERS</i>]<br />
+[<b>goodreads_oauth_update_user_status</b> user-status-created-at-created-at_attr-type <i>PARAMETERS</i>]<br />
+[<b>goodreads_oauth_update_user_status</b> user-status-id-value <i>PARAMETERS</i>]<br />
+[<b>goodreads_oauth_update_user_status</b> user-status-id-id_attr-type <i>PARAMETERS</i>]<br />
+[<b>goodreads_oauth_update_user_status</b> user-status-last-comment-at-last-comment-at_attr-nil <i>PARAMETERS</i>]<br />
+[<b>goodreads_oauth_update_user_status</b> user-status-last-comment-at-last-comment-at_attr-type <i>PARAMETERS</i>]<br />
+[<b>goodreads_oauth_update_user_status</b> user-status-page-page_attr-nil <i>PARAMETERS</i>]<br />
+[<b>goodreads_oauth_update_user_status</b> user-status-page-page_attr-type <i>PARAMETERS</i>]<br />
+[<b>goodreads_oauth_update_user_status</b> user-status-percent-value <i>PARAMETERS</i>]<br />
+[<b>goodreads_oauth_update_user_status</b> user-status-percent-percent_attr-type <i>PARAMETERS</i>]<br />
+[<b>goodreads_oauth_update_user_status</b> user-status-ratings-count-value <i>PARAMETERS</i>]<br />
+[<b>goodreads_oauth_update_user_status</b> user-status-ratings-count-ratings-count_attr-type <i>PARAMETERS</i>]<br />
+[<b>goodreads_oauth_update_user_status</b> user-status-updated-at-value <i>PARAMETERS</i>]<br />
+[<b>goodreads_oauth_update_user_status</b> user-status-updated-at-updated-at_attr-type <i>PARAMETERS</i>]<br />
+[<b>goodreads_oauth_update_user_status</b> user-status-user-id-value <i>PARAMETERS</i>]<br />
+[<b>goodreads_oauth_update_user_status</b> user-status-user-id-user-id_attr-type <i>PARAMETERS</i>]<br />
+[<b>goodreads_oauth_update_user_status</b> user-status-work-id-value <i>PARAMETERS</i>]<br />
+[<b>goodreads_oauth_update_user_status</b> user-status-work-id-work-id_attr-type <i>PARAMETERS</i>]<br />
+<br />
+<br />
+goodreads_oauth_delete_status&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<b>Not Recommended!</b><br />
+<br />
+[<b>goodreads_oauth_delete_status</b> data <i>PARAMETERS</i>]<br />
+<br />
+<br />
+goodreads_oauth_add_book_to_shelf&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<b>Not Recommended!</b><br />
+<br />
+[<b>goodreads_oauth_add_book_to_shelf</b> shelf-created-at-created-at_attr-type <i>PARAMETERS</i>]<br />
+[<b>goodreads_oauth_add_book_to_shelf</b> shelf-created-at-created-at_attr-nil <i>PARAMETERS</i>]<br />
+[<b>goodreads_oauth_add_book_to_shelf</b> shelf-position-position_attr-type <i>PARAMETERS</i>]<br />
+[<b>goodreads_oauth_add_book_to_shelf</b> shelf-position-position_attr-nil <i>PARAMETERS</i>]<br />
+[<b>goodreads_oauth_add_book_to_shelf</b> shelf-review-id-value <i>PARAMETERS</i>]<br />
+[<b>goodreads_oauth_add_book_to_shelf</b> shelf-review-id-review-id_attr-type <i>PARAMETERS</i>]<br />
+[<b>goodreads_oauth_add_book_to_shelf</b> shelf-updated-at-updated-at_attr-type <i>PARAMETERS</i>]<br />
+[<b>goodreads_oauth_add_book_to_shelf</b> shelf-updated-at-updated-at_attr-nil <i>PARAMETERS</i>]<br />
+[<b>goodreads_oauth_add_book_to_shelf</b> shelf-user-shelf-id-value <i>PARAMETERS</i>]<br />
+[<b>goodreads_oauth_add_book_to_shelf</b> shelf-user-shelf-id-user-shelf-id_attr-type <i>PARAMETERS</i>]<br />
+[<b>goodreads_oauth_add_book_to_shelf</b> shelf-name <i>PARAMETERS</i>]<br />
+<br />
+<br />
+goodreads_oauth_rate_review&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<b>Not Recommended!</b><br />
+<br />
+[<b>goodreads_oauth_rate_review</b> Request-authentication <i>PARAMETERS</i>]<br />
+[<b>goodreads_oauth_rate_review</b> Request-key <i>PARAMETERS</i>]<br />
+[<b>goodreads_oauth_rate_review</b> Request-method <i>PARAMETERS</i>]<br />
+[<b>goodreads_oauth_rate_review</b> review-id <i>PARAMETERS</i>]<br />
+[<b>goodreads_oauth_rate_review</b> review-user-id <i>PARAMETERS</i>]<br />
+[<b>goodreads_oauth_rate_review</b> review-user-name <i>PARAMETERS</i>]<br />
+[<b>goodreads_oauth_rate_review</b> review-user-location <i>PARAMETERS</i>]<br />
+[<b>goodreads_oauth_rate_review</b> review-user-link <i>PARAMETERS</i>]<br />
+[<b>goodreads_oauth_rate_review</b> review-user-image_url <i>PARAMETERS</i>]<br />
+[<b>goodreads_oauth_rate_review</b> review-user-small_image_url <i>PARAMETERS</i>]<br />
+[<b>goodreads_oauth_rate_review</b> review-book-id-value <i>PARAMETERS</i>]<br />
+[<b>goodreads_oauth_rate_review</b> review-book-id-id_attr-type <i>PARAMETERS</i>]<br />
+[<b>goodreads_oauth_rate_review</b> review-book-isbn <i>PARAMETERS</i>]<br />
+[<b>goodreads_oauth_rate_review</b> review-book-isbn13 <i>PARAMETERS</i>]<br />
+[<b>goodreads_oauth_rate_review</b> review-book-text_reviews_count-value <i>PARAMETERS</i>]<br />
+[<b>goodreads_oauth_rate_review</b> review-book-text_reviews_count-text_reviews_count_attr-type <i>PARAMETERS</i>]<br />
+[<b>goodreads_oauth_rate_review</b> review-book-title <i>PARAMETERS</i>]<br />
+[<b>goodreads_oauth_rate_review</b> review-book-image_url <i>PARAMETERS</i>]<br />
+[<b>goodreads_oauth_rate_review</b> review-book-small_image_url <i>PARAMETERS</i>]<br />
+[<b>goodreads_oauth_rate_review</b> review-book-link <i>PARAMETERS</i>]<br />
+[<b>goodreads_oauth_rate_review</b> review-book-num_pages <i>PARAMETERS</i>]<br />
+[<b>goodreads_oauth_rate_review</b> review-book-average_rating <i>PARAMETERS</i>]<br />
+[<b>goodreads_oauth_rate_review</b> review-book-ratings_count <i>PARAMETERS</i>]<br />
+[<b>goodreads_oauth_rate_review</b> review-book-description <i>PARAMETERS</i>]<br />
+[<b>goodreads_oauth_rate_review</b> review-book-authors-author-id <i>PARAMETERS</i>]<br />
+[<b>goodreads_oauth_rate_review</b> review-book-authors-author-name <i>PARAMETERS</i>]<br />
+[<b>goodreads_oauth_rate_review</b> review-book-authors-author-image_url <i>PARAMETERS</i>]<br />
+[<b>goodreads_oauth_rate_review</b> review-book-authors-author-small_image_url <i>PARAMETERS</i>]<br />
+[<b>goodreads_oauth_rate_review</b> review-book-authors-author-link <i>PARAMETERS</i>]<br />
+[<b>goodreads_oauth_rate_review</b> review-book-authors-author-average_rating <i>PARAMETERS</i>]<br />
+[<b>goodreads_oauth_rate_review</b> review-book-authors-author-ratings_count <i>PARAMETERS</i>]<br />
+[<b>goodreads_oauth_rate_review</b> review-book-authors-author-text_reviews_count <i>PARAMETERS</i>]<br />
+[<b>goodreads_oauth_rate_review</b> review-rating <i>PARAMETERS</i>]<br />
+[<b>goodreads_oauth_rate_review</b> review-votes <i>PARAMETERS</i>]<br />
+[<b>goodreads_oauth_rate_review</b> review-liked <i>PARAMETERS</i>]<br />
+[<b>goodreads_oauth_rate_review</b> review-voted <i>PARAMETERS</i>]<br />
+[<b>goodreads_oauth_rate_review</b> review-spoiler_flag <i>PARAMETERS</i>]<br />
+[<b>goodreads_oauth_rate_review</b> review-spoilers_state <i>PARAMETERS</i>]<br />
+[<b>goodreads_oauth_rate_review</b> review-shelves-shelf-shelf_attr-name <i>PARAMETERS</i>]<br />
+[<b>goodreads_oauth_rate_review</b> review-read_at <i>PARAMETERS</i>]<br />
+[<b>goodreads_oauth_rate_review</b> review-date_added <i>PARAMETERS</i>]<br />
+[<b>goodreads_oauth_rate_review</b> review-date_updated <i>PARAMETERS</i>]<br />
+[<b>goodreads_oauth_rate_review</b> review-body <i>PARAMETERS</i>]<br />
+[<b>goodreads_oauth_rate_review</b> review-comments_count <i>PARAMETERS</i>]<br />
+[<b>goodreads_oauth_rate_review</b> review-url <i>PARAMETERS</i>]<br />
+[<b>goodreads_oauth_rate_review</b> review-link <i>PARAMETERS</i>]<br />
+[<b>goodreads_oauth_rate_review</b> review-owned <i>PARAMETERS</i>]<br />
+<br />
+<br />
+goodreads_oauth_create_comment&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<b>Not Recommended!</b><br />
+<br />
+[<b>goodreads_oauth_create_comment</b> comment-id <i>PARAMETERS</i>]<br />
+[<b>goodreads_oauth_create_comment</b> comment-body <i>PARAMETERS</i>]<br />
+[<b>goodreads_oauth_create_comment</b> comment-user-id <i>PARAMETERS</i>]<br />
+[<b>goodreads_oauth_create_comment</b> comment-user-name <i>PARAMETERS</i>]<br />
+[<b>goodreads_oauth_create_comment</b> comment-user-location <i>PARAMETERS</i>]<br />
+[<b>goodreads_oauth_create_comment</b> comment-user-link <i>PARAMETERS</i>]<br />
+[<b>goodreads_oauth_create_comment</b> comment-user-image_url <i>PARAMETERS</i>]<br />
+[<b>goodreads_oauth_create_comment</b> comment-user-small_image_url <i>PARAMETERS</i>]<br />
+[<b>goodreads_oauth_create_comment</b> comment-created_at <i>PARAMETERS</i>]<br />
+[<b>goodreads_oauth_create_comment</b> comment-updated_at <i>PARAMETERS</i>]<br />
+<br />
+<br />
+goodreads_oauth_add_owned_book&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<b>Not Recommended!</b><br />
+<br />
+[<b>goodreads_oauth_add_owned_book</b> owned-book-available-for-swap-value <i>PARAMETERS</i>]<br />
+[<b>goodreads_oauth_add_owned_book</b> owned-book-available-for-swap-available-for-swap_attr-type <i>PARAMETERS</i>]<br />
+[<b>goodreads_oauth_add_owned_book</b> owned-book-book-id-value <i>PARAMETERS</i>]<br />
+[<b>goodreads_oauth_add_owned_book</b> owned-book-book-id-book-id_attr-type <i>PARAMETERS</i>]<br />
+[<b>goodreads_oauth_add_owned_book</b> owned-book-book-trades-count-value <i>PARAMETERS</i>]<br />
+[<b>goodreads_oauth_add_owned_book</b> owned-book-book-trades-count-book-trades-count_attr-type <i>PARAMETERS</i>]<br />
+[<b>goodreads_oauth_add_owned_book</b> owned-book-comments-count-value <i>PARAMETERS</i>]<br />
+[<b>goodreads_oauth_add_owned_book</b> owned-book-comments-count-comments-count_attr-type <i>PARAMETERS</i>]<br />
+[<b>goodreads_oauth_add_owned_book</b> owned-book-condition-code-value <i>PARAMETERS</i>]<br />
+[<b>goodreads_oauth_add_owned_book</b> owned-book-condition-code-condition-code_attr-type <i>PARAMETERS</i>]<br />
+[<b>goodreads_oauth_add_owned_book</b> owned-book-condition-description <i>PARAMETERS</i>]<br />
+[<b>goodreads_oauth_add_owned_book</b> owned-book-created-at-value <i>PARAMETERS</i>]<br />
+[<b>goodreads_oauth_add_owned_book</b> owned-book-created-at-created-at_attr-type <i>PARAMETERS</i>]<br />
+[<b>goodreads_oauth_add_owned_book</b> owned-book-current-owner-id-value <i>PARAMETERS</i>]<br />
+[<b>goodreads_oauth_add_owned_book</b> owned-book-current-owner-id-current-owner-id_attr-type <i>PARAMETERS</i>]<br />
+[<b>goodreads_oauth_add_owned_book</b> owned-book-current-owner-name-current-owner-name_attr-nil <i>PARAMETERS</i>]<br />
+[<b>goodreads_oauth_add_owned_book</b> owned-book-id-value <i>PARAMETERS</i>]<br />
+[<b>goodreads_oauth_add_owned_book</b> owned-book-id-id_attr-type <i>PARAMETERS</i>]<br />
+[<b>goodreads_oauth_add_owned_book</b> owned-book-last-comment-at-last-comment-at_attr-nil <i>PARAMETERS</i>]<br />
+[<b>goodreads_oauth_add_owned_book</b> owned-book-last-comment-at-last-comment-at_attr-type <i>PARAMETERS</i>]<br />
+[<b>goodreads_oauth_add_owned_book</b> owned-book-original-purchase-date-original-purchase-date_attr-nil <i>PARAMETERS</i>]<br />
+[<b>goodreads_oauth_add_owned_book</b> owned-book-original-purchase-date-original-purchase-date_attr-type <i>PARAMETERS</i>]<br />
+[<b>goodreads_oauth_add_owned_book</b> owned-book-original-purchase-location <i>PARAMETERS</i>]<br />
+[<b>goodreads_oauth_add_owned_book</b> owned-book-review-id-value <i>PARAMETERS</i>]<br />
+[<b>goodreads_oauth_add_owned_book</b> owned-book-review-id-review-id_attr-type <i>PARAMETERS</i>]<br />
+[<b>goodreads_oauth_add_owned_book</b> owned-book-swappable-flag-value <i>PARAMETERS</i>]<br />
+[<b>goodreads_oauth_add_owned_book</b> owned-book-swappable-flag-swappable-flag_attr-type <i>PARAMETERS</i>]<br />
+[<b>goodreads_oauth_add_owned_book</b> owned-book-unique-code-unique-code_attr-nil <i>PARAMETERS</i>]<br />
+[<b>goodreads_oauth_add_owned_book</b> owned-book-updated-at-value <i>PARAMETERS</i>]<br />
+[<b>goodreads_oauth_add_owned_book</b> owned-book-updated-at-updated-at_attr-type <i>PARAMETERS</i>]<br />
+[<b>goodreads_oauth_add_owned_book</b> owned-book-work-id-value <i>PARAMETERS</i>]<br />
+[<b>goodreads_oauth_add_owned_book</b> owned-book-work-id-work-id_attr-type <i>PARAMETERS</i>]<br />
+<br />
+<br />
+goodreads_oauth_update_owned_book&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<b>Not Recommended!</b><br />
+<br />
+[<b>goodreads_oauth_update_owned_book</b> Request-authentication <i>PARAMETERS</i>]<br />
+[<b>goodreads_oauth_update_owned_book</b> Request-key <i>PARAMETERS</i>]<br />
+[<b>goodreads_oauth_update_owned_book</b> Request-method <i>PARAMETERS</i>]<br />
+[<b>goodreads_oauth_update_owned_book</b> owned_book-comments_count-value <i>PARAMETERS</i>]<br />
+[<b>goodreads_oauth_update_owned_book</b> owned_book-comments_count-comments_count_attr-type <i>PARAMETERS</i>]<br />
+[<b>goodreads_oauth_update_owned_book</b> owned_book-current_owner_id-value <i>PARAMETERS</i>]<br />
+[<b>goodreads_oauth_update_owned_book</b> owned_book-current_owner_id-current_owner_id_attr-type <i>PARAMETERS</i>]<br />
+[<b>goodreads_oauth_update_owned_book</b> owned_book-id-value <i>PARAMETERS</i>]<br />
+[<b>goodreads_oauth_update_owned_book</b> owned_book-id-id_attr-type <i>PARAMETERS</i>]<br />
+[<b>goodreads_oauth_update_owned_book</b> owned_book-original_purchase_date-original_purchase_date_attr-type <i>PARAMETERS</i>]<br />
+[<b>goodreads_oauth_update_owned_book</b> owned_book-original_purchase_date-original_purchase_date_attr-nil <i>PARAMETERS</i>]<br />
+[<b>goodreads_oauth_update_owned_book</b> owned_book-original_purchase_location <i>PARAMETERS</i>]<br />
+[<b>goodreads_oauth_update_owned_book</b> owned_book-condition <i>PARAMETERS</i>]<br />
+[<b>goodreads_oauth_update_owned_book</b> owned_book-swappable <i>PARAMETERS</i>]<br />
+[<b>goodreads_oauth_update_owned_book</b> owned_book-traded_count <i>PARAMETERS</i>]<br />
+[<b>goodreads_oauth_update_owned_book</b> owned_book-link <i>PARAMETERS</i>]<br />
+[<b>goodreads_oauth_update_owned_book</b> owned_book-book-id-value <i>PARAMETERS</i>]<br />
+[<b>goodreads_oauth_update_owned_book</b> owned_book-book-id-id_attr-type <i>PARAMETERS</i>]<br />
+[<b>goodreads_oauth_update_owned_book</b> owned_book-book-isbn <i>PARAMETERS</i>]<br />
+[<b>goodreads_oauth_update_owned_book</b> owned_book-book-isbn13 <i>PARAMETERS</i>]<br />
+[<b>goodreads_oauth_update_owned_book</b> owned_book-book-text_reviews_count-value <i>PARAMETERS</i>]<br />
+[<b>goodreads_oauth_update_owned_book</b> owned_book-book-text_reviews_count-text_reviews_count_attr-type <i>PARAMETERS</i>]<br />
+[<b>goodreads_oauth_update_owned_book</b> owned_book-book-title <i>PARAMETERS</i>]<br />
+[<b>goodreads_oauth_update_owned_book</b> owned_book-book-image_url <i>PARAMETERS</i>]<br />
+[<b>goodreads_oauth_update_owned_book</b> owned_book-book-small_image_url <i>PARAMETERS</i>]<br />
+[<b>goodreads_oauth_update_owned_book</b> owned_book-book-link <i>PARAMETERS</i>]<br />
+[<b>goodreads_oauth_update_owned_book</b> owned_book-book-num_pages <i>PARAMETERS</i>]<br />
+[<b>goodreads_oauth_update_owned_book</b> owned_book-book-format <i>PARAMETERS</i>]<br />
+[<b>goodreads_oauth_update_owned_book</b> owned_book-book-publisher <i>PARAMETERS</i>]<br />
+[<b>goodreads_oauth_update_owned_book</b> owned_book-book-publication_day <i>PARAMETERS</i>]<br />
+[<b>goodreads_oauth_update_owned_book</b> owned_book-book-publication_year <i>PARAMETERS</i>]<br />
+[<b>goodreads_oauth_update_owned_book</b> owned_book-book-publication_month <i>PARAMETERS</i>]<br />
+[<b>goodreads_oauth_update_owned_book</b> owned_book-book-average_rating <i>PARAMETERS</i>]<br />
+[<b>goodreads_oauth_update_owned_book</b> owned_book-book-ratings_count <i>PARAMETERS</i>]<br />
+[<b>goodreads_oauth_update_owned_book</b> owned_book-book-description <i>PARAMETERS</i>]<br />
+[<b>goodreads_oauth_update_owned_book</b> owned_book-book-authors-author-id <i>PARAMETERS</i>]<br />
+[<b>goodreads_oauth_update_owned_book</b> owned_book-book-authors-author-name <i>PARAMETERS</i>]<br />
+[<b>goodreads_oauth_update_owned_book</b> owned_book-book-authors-author-image_url <i>PARAMETERS</i>]<br />
+[<b>goodreads_oauth_update_owned_book</b> owned_book-book-authors-author-small_image_url <i>PARAMETERS</i>]<br />
+[<b>goodreads_oauth_update_owned_book</b> owned_book-book-authors-author-link <i>PARAMETERS</i>]<br />
+[<b>goodreads_oauth_update_owned_book</b> owned_book-book-authors-author-average_rating <i>PARAMETERS</i>]<br />
+[<b>goodreads_oauth_update_owned_book</b> owned_book-book-authors-author-ratings_count <i>PARAMETERS</i>]<br />
+[<b>goodreads_oauth_update_owned_book</b> owned_book-book-authors-author-text_reviews_count <i>PARAMETERS</i>]<br />
+[<b>goodreads_oauth_update_owned_book</b> owned_book-book-published <i>PARAMETERS</i>]<br />
+<br />
+<br />
+goodreads_oauth_add_quote&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<b>Not Recommended!</b><br />
+<br />
+[<b>goodreads_oauth_add_quote</b> quote-author-id-value <i>PARAMETERS</i>]<br />
+[<b>goodreads_oauth_add_quote</b> quote-author-id-author-id_attr-type <i>PARAMETERS</i>]<br />
+[<b>goodreads_oauth_add_quote</b> quote-author-name <i>PARAMETERS</i>]<br />
+[<b>goodreads_oauth_add_quote</b> quote-body <i>PARAMETERS</i>]<br />
+[<b>goodreads_oauth_add_quote</b> quote-body-hash <i>PARAMETERS</i>]<br />
+[<b>goodreads_oauth_add_quote</b> quote-book-id-value <i>PARAMETERS</i>]<br />
+[<b>goodreads_oauth_add_quote</b> quote-book-id-book-id_attr-type <i>PARAMETERS</i>]<br />
+[<b>goodreads_oauth_add_quote</b> quote-comments-count-value <i>PARAMETERS</i>]<br />
+[<b>goodreads_oauth_add_quote</b> quote-comments-count-comments-count_attr-type <i>PARAMETERS</i>]<br />
+[<b>goodreads_oauth_add_quote</b> quote-created-at-value <i>PARAMETERS</i>]<br />
+[<b>goodreads_oauth_add_quote</b> quote-created-at-created-at_attr-type <i>PARAMETERS</i>]<br />
+[<b>goodreads_oauth_add_quote</b> quote-creator-user-id-value <i>PARAMETERS</i>]<br />
+[<b>goodreads_oauth_add_quote</b> quote-creator-user-id-creator-user-id_attr-type <i>PARAMETERS</i>]<br />
+[<b>goodreads_oauth_add_quote</b> quote-id-value <i>PARAMETERS</i>]<br />
+[<b>goodreads_oauth_add_quote</b> quote-id-id_attr-type <i>PARAMETERS</i>]<br />
+[<b>goodreads_oauth_add_quote</b> quote-image-uploaded-at-image-uploaded-at_attr-nil <i>PARAMETERS</i>]<br />
+[<b>goodreads_oauth_add_quote</b> quote-image-uploaded-at-image-uploaded-at_attr-type <i>PARAMETERS</i>]<br />
+[<b>goodreads_oauth_add_quote</b> quote-tags <i>PARAMETERS</i>]<br />
+[<b>goodreads_oauth_add_quote</b> quote-updated-at-value <i>PARAMETERS</i>]<br />
+[<b>goodreads_oauth_add_quote</b> quote-updated-at-updated-at_attr-type <i>PARAMETERS</i>]<br />
+[<b>goodreads_oauth_add_quote</b> quote-user-quotes-count-value <i>PARAMETERS</i>]<br />
+[<b>goodreads_oauth_add_quote</b> quote-user-quotes-count-user-quotes-count_attr-type <i>PARAMETERS</i>]<br />
+[<b>goodreads_oauth_add_quote</b> quote-work-id-value <i>PARAMETERS</i>]<br />
+[<b>goodreads_oauth_add_quote</b> quote-work-id-work-id_attr-type <i>PARAMETERS</i>]<br />
+<br />
+<br />
+goodreads_oauth_create_topic&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<b>Not Recommended!</b><br />
+<br />
+[<b>goodreads_oauth_create_topic</b> Request-authentication <i>PARAMETERS</i>]<br />
+[<b>goodreads_oauth_create_topic</b> Request-key <i>PARAMETERS</i>]<br />
+[<b>goodreads_oauth_create_topic</b> Request-method <i>PARAMETERS</i>]<br />
+[<b>goodreads_oauth_create_topic</b> topic-id <i>PARAMETERS</i>]<br />
+[<b>goodreads_oauth_create_topic</b> topic-author_user_id <i>PARAMETERS</i>]<br />
+[<b>goodreads_oauth_create_topic</b> topic-author_user_name <i>PARAMETERS</i>]<br />
+[<b>goodreads_oauth_create_topic</b> topic-comments_count <i>PARAMETERS</i>]<br />
+[<b>goodreads_oauth_create_topic</b> topic-comments_per_page <i>PARAMETERS</i>]<br />
+[<b>goodreads_oauth_create_topic</b> topic-title <i>PARAMETERS</i>]<br />
+[<b>goodreads_oauth_create_topic</b> topic-updated_at <i>PARAMETERS</i>]<br />
+[<b>goodreads_oauth_create_topic</b> topic-last_comment_at <i>PARAMETERS</i>]<br />
+[<b>goodreads_oauth_create_topic</b> topic-subject_type <i>PARAMETERS</i>]<br />
+[<b>goodreads_oauth_create_topic</b> topic-group-id-value <i>PARAMETERS</i>]<br />
+[<b>goodreads_oauth_create_topic</b> topic-group-id-id_attr-type <i>PARAMETERS</i>]<br />
+[<b>goodreads_oauth_create_topic</b> topic-group-title <i>PARAMETERS</i>]<br />
+[<b>goodreads_oauth_create_topic</b> topic-group-p1_image_url <i>PARAMETERS</i>]<br />
+[<b>goodreads_oauth_create_topic</b> topic-comments-comments_attr-start <i>PARAMETERS</i>]<br />
+[<b>goodreads_oauth_create_topic</b> topic-comments-comments_attr-end <i>PARAMETERS</i>]<br />
+[<b>goodreads_oauth_create_topic</b> topic-comments-comments_attr-total <i>PARAMETERS</i>]<br />
+[<b>goodreads_oauth_create_topic</b> topic-comments-comment-id <i>PARAMETERS</i>]<br />
+[<b>goodreads_oauth_create_topic</b> topic-comments-comment-body <i>PARAMETERS</i>]<br />
+[<b>goodreads_oauth_create_topic</b> topic-comments-comment-updated_at <i>PARAMETERS</i>]<br />
+[<b>goodreads_oauth_create_topic</b> topic-comments-comment-user-id <i>PARAMETERS</i>]<br />
+[<b>goodreads_oauth_create_topic</b> topic-comments-comment-user-name <i>PARAMETERS</i>]<br />
+[<b>goodreads_oauth_create_topic</b> topic-comments-comment-user-small_image_url <i>PARAMETERS</i>]<br />
+<br />
+<br />
+goodreads_oauth_get_user_books<br />
+<br />
+[<b>goodreads_oauth_get_user_books</b> review-0-id <i>PARAMETERS</i>]<br />
+[<b>goodreads_oauth_get_user_books</b> review-0-book-id-value <i>PARAMETERS</i>]<br />
+[<b>goodreads_oauth_get_user_books</b> review-0-book-id-id_attr-type <i>PARAMETERS</i>]<br />
+[<b>goodreads_oauth_get_user_books</b> review-0-book-isbn <i>PARAMETERS</i>]<br />
+[<b>goodreads_oauth_get_user_books</b> review-0-book-isbn13 <i>PARAMETERS</i>]<br />
+[<b>goodreads_oauth_get_user_books</b> review-0-book-text_reviews_count-value <i>PARAMETERS</i>]<br />
+[<b>goodreads_oauth_get_user_books</b> review-0-book-text_reviews_count-text_reviews_count_attr-type <i>PARAMETERS</i>]<br />
+[<b>goodreads_oauth_get_user_books</b> review-0-book-title <i>PARAMETERS</i>]<br />
+[<b>goodreads_oauth_get_user_books</b> review-0-book-image_url <i>PARAMETERS</i>]<br />
+[<b>goodreads_oauth_get_user_books</b> review-0-book-small_image_url <i>PARAMETERS</i>]<br />
+[<b>goodreads_oauth_get_user_books</b> review-0-book-link <i>PARAMETERS</i>]<br />
+[<b>goodreads_oauth_get_user_books</b> review-0-book-format <i>PARAMETERS</i>]<br />
+[<b>goodreads_oauth_get_user_books</b> review-0-book-publisher <i>PARAMETERS</i>]<br />
+[<b>goodreads_oauth_get_user_books</b> review-0-book-publication_day <i>PARAMETERS</i>]<br />
+[<b>goodreads_oauth_get_user_books</b> review-0-book-publication_year <i>PARAMETERS</i>]<br />
+[<b>goodreads_oauth_get_user_books</b> review-0-book-publication_month <i>PARAMETERS</i>]<br />
+[<b>goodreads_oauth_get_user_books</b> review-0-book-average_rating <i>PARAMETERS</i>]<br />
+[<b>goodreads_oauth_get_user_books</b> review-0-book-ratings_count <i>PARAMETERS</i>]<br />
+[<b>goodreads_oauth_get_user_books</b> review-0-book-authors-author-id <i>PARAMETERS</i>]<br />
+[<b>goodreads_oauth_get_user_books</b> review-0-book-authors-author-name <i>PARAMETERS</i>]<br />
+[<b>goodreads_oauth_get_user_books</b> review-0-book-authors-author-image_url <i>PARAMETERS</i>]<br />
+[<b>goodreads_oauth_get_user_books</b> review-0-book-authors-author-small_image_url <i>PARAMETERS</i>]<br />
+[<b>goodreads_oauth_get_user_books</b> review-0-book-authors-author-link <i>PARAMETERS</i>]<br />
+[<b>goodreads_oauth_get_user_books</b> review-0-book-authors-author-average_rating <i>PARAMETERS</i>]<br />
+[<b>goodreads_oauth_get_user_books</b> review-0-book-authors-author-ratings_count <i>PARAMETERS</i>]<br />
+[<b>goodreads_oauth_get_user_books</b> review-0-book-authors-author-text_reviews_count <i>PARAMETERS</i>]<br />
+[<b>goodreads_oauth_get_user_books</b> review-0-book-published <i>PARAMETERS</i>]<br />
+[<b>goodreads_oauth_get_user_books</b> review-0-rating <i>PARAMETERS</i>]<br />
+[<b>goodreads_oauth_get_user_books</b> review-0-votes <i>PARAMETERS</i>]<br />
+[<b>goodreads_oauth_get_user_books</b> review-0-spoiler_flag <i>PARAMETERS</i>]<br />
+[<b>goodreads_oauth_get_user_books</b> review-0-spoilers_state <i>PARAMETERS</i>]<br />
+[<b>goodreads_oauth_get_user_books</b> review-0-shelves-shelf-shelf_attr-name <i>PARAMETERS</i>]<br />
+[<b>goodreads_oauth_get_user_books</b> review-0-date_added <i>PARAMETERS</i>]<br />
+[<b>goodreads_oauth_get_user_books</b> review-0-date_updated <i>PARAMETERS</i>]<br />
+[<b>goodreads_oauth_get_user_books</b> review-0-comments_count <i>PARAMETERS</i>]<br />
+[<b>goodreads_oauth_get_user_books</b> review-0-url <i>PARAMETERS</i>]<br />
+[<b>goodreads_oauth_get_user_books</b> review-0-link <i>PARAMETERS</i>]<br />
+[<b>goodreads_oauth_get_user_books</b> review-0-owned <i>PARAMETERS</i>]<br />
+<br />
+<br />
+ </BODY>
+</HTML>

@@ -1,0 +1,13 @@
+name = Goodreads Filter
+description = Lets writers use the [goodreads] tag to embed Goodreads API information in text.
+package = "Goodreads"
+dependencies[] = goodreads
+core = 7.x
+configure = admin/config/content/goodreads/filter
+
+; Information added by Drupal.org packaging script on 2016-11-19
+version = "7.x-1.x-dev"
+core = "7.x"
+project = "goodreads"
+datestamp = "1479598740"
+

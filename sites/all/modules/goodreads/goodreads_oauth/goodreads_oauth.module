@@ -1,0 +1,101 @@
+<?php
+
+/**
+ * @file
+ * Implement Goodreads OAuth functions
+ */
+
+module_load_include('inc', 'goodreads_oauth', 'goodreads_oauth');
+module_load_include('inc', 'goodreads_oauth', 'goodreads_oauth.oauth_interface');
+
+
+/**
+ * Implements hook_menu().
+ *
+ * Adds the url path for the goodreads settings page.
+ */
+function goodreads_oauth_menu() {
+  // Goodreads API settings, without cache lifetime.
+  $items['admin/config/content/goodreads/OAuth'] = array(
+    'title'                  => 'OAuth',
+     // Coder and I disagree about OAuth.
+    'description'            => 'Goodreads OAuth settings.',
+    'page callback'          => 'drupal_get_form',
+    'page arguments'         => array('goodreads_oauth_settings'),
+    'file'                   => 'goodreads_oauth.admin.inc',
+    'access callback'        => 'user_access',
+    'access arguments'       => array('administer goodreads'),
+    'type'                   => MENU_LOCAL_TASK,
+  );
+  // Allow for a link to start OAuth authentication.
+  $items['goodreads/user/authorize'] = array(
+    'type'                   => MENU_CALLBACK,
+    'description'            => 'Let user tie their Goodreads account with their local user account',
+    'page callback'          => 'goodreads_oauth_request_access_token',
+    'page arguments'         => array(2),
+    'access callback'        => 'goodreads_oauth_authorize_access',
+    'access arguments'       => array(2),
+    'file'                   => 'goodreads_oauth.oauth_interface.inc',
+  );
+  // Callback for oauth token request on Goodreads API.
+  $items['goodreads/token/%user'] = array(
+    'type'                   => MENU_CALLBACK,
+    'description'            => 'Let user tie their Goodreads account with their local user account',
+    'page callback'          => 'goodreads_oauth_authorize_callback',
+    'page arguments'         => array(2),
+    'access callback'        => 'goodreads_oauth_token_access',
+    'access arguments'       => array(2),
+    'file'                   => 'goodreads_oauth.oauth_interface.inc',
+  );
+  // User settings form : used by submodules.
+  $items['user/%user/edit/goodreads'] = array(
+    'title'                  => 'Goodreads',
+    'type'                   => MENU_LOCAL_TASK,
+    'page callback'          => 'goodreads_oauth_user_settings',
+    'page arguments'         => array(1),
+    // Access arguments don't support multiple arguments,
+    // so create our access handler.
+    'access callback'        => 'goodreads_oauth_user_access',
+    'access arguments'       => array(1),
+    'file'                   => 'goodreads_oauth.admin.inc',
+  );
+  return $items;
+}
+
+
+/**
+ * Custom access callback for goodreads/user/authorize.
+ */
+function goodreads_oauth_authorize_access($account) {
+  global $user;
+  if ($user->uid > 0) {
+    return TRUE;
+  }
+  return FALSE;
+}
+
+
+/**
+ * Custom access callback for goodreads/token/%user.
+ */
+function goodreads_oauth_token_access($account) {
+  global $user;
+  if ($account->uid > 0 && $account->uid == $user->uid) {
+    return TRUE;
+  }
+  return FALSE;
+}
+
+
+/**
+ * Custom access callback for user/%user/edit/goodreads.
+ */
+function goodreads_oauth_user_access($account) {
+  // Debugging code for now.
+  // return TRUE;
+  global $user;
+  if ($account->uid > 0 && $account->uid == $user->uid) {
+    return TRUE;
+  }
+  return FALSE;
+}

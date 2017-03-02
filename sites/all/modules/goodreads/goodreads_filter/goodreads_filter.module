@@ -1,0 +1,169 @@
+<?php
+/**
+ * @file
+ * Implement Goodreads filters.
+ *
+ * @todo fix closing brackets on nested filters
+ */
+
+/**
+ * Implements hook_menu().
+ *
+ * Adds the url path for the goodreads filter settings page.
+ */
+function goodreads_filter_menu() {
+  $items = array();
+  $items['admin/config/content/goodreads/filter'] = array(
+    'title'                  => 'Filter',
+    'description'            => 'Goodreads filter error messages',
+    'page callback'          => 'drupal_get_form',
+    'page arguments'         => array('goodreads_filter_admin_settings'),
+    'file'                   => 'goodreads_filter.admin.inc',
+    'access callback'        => 'user_access',
+    'access arguments'       => array('administer goodreads'),
+    'type'                   => MENU_LOCAL_TASK,
+  );
+  return $items;
+}
+
+/**
+ * Implements hook_help().
+ */
+
+/**
+ * Implements hook_filter_info().
+ */
+function goodreads_filter_filter_info() {
+  $filters = array();
+  $filters['goodreads_filter'] = array(
+    'title'               => t('Goodreads filter'),
+    'description'         => t('Lets writers use the [goodreads-*] tags to embed Goodreads API information in text.'),
+    'process callback'    => '_goodreads_filter_process',
+    'tips callback'       => '_goodreads_filter_filter_tips',
+    'cache'               => FALSE,
+  );
+  return $filters;
+}
+
+/**
+ * Implements hook_filter_tips().
+ */
+function _goodreads_filter_filter_tips($delta, $format, $long = FALSE) {
+  if ($long) {
+    return t('Get goodreads API results  using [goodreads_function selector parameters], for example,
+    [goodreads_get_isbn_reviews work-original_title 1430209895],
+    [goodreads_oauth_get_user_books review-*-book-title 7535600,title,a], or
+    [goodreads_oauth_get_users_owned_books owned_book-0-review-url 7535600].
+    Selectors are the array indexes to retrieve the data desired separated by dashes instead
+    of enclosed in square brackets.  So [work][id][value] is represented by work-id-value.
+    Parameters are the parameters passed to the function.  They are separated by commas.
+    While they can be contained in single or double quotes, it is not required.  Single quotes
+    inside double quotes are preserved, conversely double quotes inside single quotes are preserved.
+    For selectors that can return array items (e.g. -0-), use the index number in place of the zero,
+    or use * (asterisk) to return a comma separated list of the values.
+
+
+    For example, [goodreads_get_isbn_reviews work-original_title 1430209895] will provide the title of the item, and
+    [goodreads_get_isbn_reviews image_url 1430209895] will be replaced with a URL to the image which can be embedded inside
+    the HTML img tag giving the large image.
+    ');
+  }
+  else {
+    return t('Link to goodreads API results with: [goodreads_function selector parameters]. Example:
+    [goodreads_get_isbn_reviews work-original_title 1430209895] or [goodreads_get_gid_reviews reviews_widget 1430209895].');
+  }
+}
+
+/**
+ * Implements the actual processing of the text.
+ */
+function _goodreads_filter_process($text, $filter, $format) {
+  // This pattern will match all goodreads_* followed by a parameter
+  // and optional selectors.
+  $pattern = "/\[goodreads_+(.*?) +(.*?)(?: +(.*?))?\]/";
+  $matches = array();
+  // preg_match_all will match ALL the goodreads tokens in a single search.
+  if (preg_match_all($pattern, $text, $matches)) {
+    // we're going to use the array version of str_replace
+    $search = array();
+    $replace = array();
+    // Cycle through each match found.
+    foreach ($matches[0] as $key => $value) {
+      // Each match will get replaced, even if it's by nothing.
+      $search[$key] = $matches[0][$key];
+      $goodreads_function = 'goodreads_' . $matches[1][$key];
+      // Should never appear!
+      $replace[$key] = '*** There was an unknown problem with ' . $goodreads_function;
+      $selector_array = explode('-', $matches[2][$key]);
+      $selector = '';
+      foreach ($selector_array as $element) {
+        $selector .= '[' . $element . ']';
+      }
+      $goodreads_parameters = $matches[3][$key];
+      if (strpos($goodreads_parameters, '[') !== FALSE) {
+        // dpm($goodreads_parameters, 'Nested filter');
+        // It's sort of possible the parameter is itself a filter, so process
+        // it we need to add a trailing ']' to the text since the preg_match
+        // stops at the first ] that means we need to either not put two ]].
+        // When using nested filters or figure out how to eliminate the second
+        // when processing (ideally should eliminate 'N-1' brackets if its
+        // possible to next multiple levels. Right now filters within filters
+        // only work if there is only one parameter (the nested
+        // filter) on the "outer" filter.
+        $goodreads_parameters = _goodreads_filter_process_text($goodreads_parameters . ']');
+        // dpm($goodreads_parameters, 'Nested filter result');
+      }
+      $goodreads_parameters = str_replace(', ', ',', $goodreads_parameters);
+      $goodreads_parameters = explode(',', $goodreads_parameters);
+      foreach ($goodreads_parameters as $parameter_key => $value) {
+        $value = trim($value);
+        if (drupal_substr($value, 0, 1) == '"') {
+          $goodreads_parameters[$parameter_key] = str_replace('"', '', $value);
+        }
+        if (drupal_substr($value, 0, 1) == "'") {
+          $goodreads_parameters[$parameter_key] = str_replace("'", '', $value);
+        }
+      }
+      // Drupal 7 doesn't like undefined offsets in the parameter call,
+      // so make the extra parameters empty strings.
+      for ($i = count($goodreads_parameters); $i <= 8; $i++) {
+        $goodreads_parameters[$i] = '';
+      }
+      if (!function_exists($goodreads_function)) {
+        $replace[$key] = t(variable_get('goodreads_filter_function_error', t("*** Goodreads function: @function doesn't exist")), array('@function' => $goodreads_function));
+      }
+      else {
+        // $goodreads_function exists, so call it
+        // I've never used variable functions before, this is pretty exciting!
+        // I wonder if there's a way to pass the parameters in a better way
+        // than I am (e.g. actually pass the number of parameters that I have).
+        // Fortunately all the functions default to empty strings as a
+        // parameter so this works ok.
+        $goodreads_result = $goodreads_function($goodreads_parameters[0], $goodreads_parameters[1], $goodreads_parameters[2], $goodreads_parameters[3], $goodreads_parameters[4], $goodreads_parameters[5], $goodreads_parameters[6], $goodreads_parameters[7], $goodreads_parameters[8]);
+        if ($goodreads_result['api_error']) {
+          $replace[$key] = t(variable_get('goodreads_filter_api_error', t("*** Goodreads function: @function returned an API error: @error")), array('@function' => $goodreads_function, '@error' => $goodreads_result['error_message']));
+        }
+        else {
+          // Goodreads returned data, extract what we want.
+          if (($asterisk = strpos($selector, '*')) === FALSE) {
+            // No asterisk in the selector, just replace with a value.
+            $replace[$key] = _goodreads_variable_array($goodreads_result, $selector);
+          }
+          else {
+            $selector_last = drupal_substr($selector, $asterisk + 2);
+            $partial_array = _goodreads_variable_array($goodreads_result, drupal_substr($selector, 0, $asterisk - 1));
+            $replace[$key] = '';
+            $group_separator = '';
+            foreach ($partial_array as $element) {
+              $replace[$key] .= $group_separator . _goodreads_variable_array($element, drupal_substr($selector, $asterisk + 2));
+              $group_separator = ', ';
+            }
+          }
+        }
+      }
+    }
+    $text = str_replace($search, $replace, $text);
+  }
+
+  return $text;
+}

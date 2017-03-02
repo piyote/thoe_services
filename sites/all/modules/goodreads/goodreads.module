@@ -1,0 +1,71 @@
+<?php
+
+/**
+ * @file
+ * Goodreads Integration
+ *
+ * Provides a Drupal wrapper and caching mechanism for the Goodreads
+ * APIs. This module provides no user-visible functionality
+ * save configuration and setup.
+ */
+
+define('GOODREADS_ENDPOINT', 'http://www.goodreads.com/');
+define('GOODREADS_MAX_PAGES', 5);
+module_load_include('inc', 'goodreads', 'goodreads');
+// Goodreads appears to have some performance issues, by default the
+// drupal_http_request is noted to have a 60 second time out and 3 retry
+// default.  default_socket_timeout is in seconds.
+// If that is causing issues, try commenting these lines.
+ini_set('default_socket_timeout', '10');
+define('DEFAULT_SOCKET_TIMEOUT', '10');
+define('GOODREADS_MAX_RETRIES', 3);
+
+/**
+ * Implements hook_menu().
+ *
+ * Adds the url path for the goodreadssettings page.
+ */
+function goodreads_menu() {
+  $items = array();
+  $items['admin/config/content/goodreads'] = array(
+    // I disagree with Coder review on the next line.
+    'title'                  => 'Goodreads API',
+    'description'            => 'Global settings for the Goodreads APIs.',
+    'page callback'          => 'drupal_get_form',
+    'page arguments'         => array('goodreads_admin_settings'),
+    'file'                   => 'goodreads.admin.inc',
+    'access callback'        => 'user_access',
+    'access arguments'       => array('administer goodreads'),
+    'type'                   => MENU_NORMAL_ITEM,
+  );
+  $items['admin/config/content/goodreads/test'] = array(
+    'title'                  => 'Test',
+    'description'            => 'Test to see if Goodreads keys are entered correctly by looking up a book.',
+    'page callback'          => 'drupal_get_form',
+    'page arguments'         => array('goodreads_test_form'),
+    'file'                   => 'goodreads.admin.inc',
+    'access callback'        => 'user_access',
+    'access arguments'       => array('administer goodreads'),
+    'type'                   => MENU_LOCAL_TASK,
+  );
+  $items['admin/config/content/goodreads/api'] = array(
+    'title'                  => 'Settings',
+    'description'            => 'Global settings for the Goodreads APIs.',
+    'weight'                 => -10,
+    'type'                   => MENU_DEFAULT_LOCAL_TASK,
+  );
+  return $items;
+}
+
+/**
+ * Implements hook_permission().
+ */
+function goodreads_permission() {
+  return array(
+    'administer goodreads' =>
+    array(
+      'title' => t('Administer Goodreads module'),
+      'description' => t('Perform maintenance tasks for Goodreads module'),
+    ),
+  );
+}

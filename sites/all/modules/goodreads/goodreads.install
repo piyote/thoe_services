@@ -1,0 +1,73 @@
+<?php
+/**
+ * @file
+ * Implement Goodreads Install and Uninstall
+ */
+
+require_once dirname(__FILE__) . '/database_fields.inc';
+
+/**
+ * Implements hook_requirements().
+ */
+function goodreads_requirements($phase) {
+  $requirements = array();
+  if ($phase == 'install') {
+    $t = get_t();
+    // Check for required library.
+    // should never be seen in production, most likely seen when you
+    // enable the module and try it.
+    if (!function_exists('xml_parser_create')) {
+      // Get the XML parser of PHP - PHP must have this module
+      // for the parser to work.
+      $requirements['goodreads'] = array(
+        'value'       => $t('Not installed'),
+        'severity'    => REQUIREMENT_ERROR,
+        'description' => $t('Unable to find PHP parser. This module needs php-xml lib.'),
+        'title'       => $t('Goodreads XML parser.'),
+      );
+    }
+  }
+  return $requirements;
+}
+
+/**
+ * Implements hook_schema().
+ */
+function goodreads_schema() {
+  $schema['goodreads_cache'] = array(
+    'description'            => 'Goodreads API cache table.',
+    'fields' => array(
+      'cache_uid'            => _goodreads_int_field('User ID from {user}.uid.  Only used with OAuth'),
+      'cache_time'           => _goodreads_timestamp_field('Date and time the cache data was created.'),
+      'cache_key'            => _goodreads_varchar_field('Cache key, usually Goodreads API request URL.', 255),
+      'cache_data'           => _goodreads_bigtext_field('Cached data, usually the XML response.'),
+    ),
+    'primary key'            => array('cache_key'),
+    'indexes'                => array(
+      'cache_uid'            => array('cache_uid'),
+    ),
+  );
+  return $schema;
+}
+
+/**
+ * Implements hook_install().
+ */
+function goodreads_install() {
+  // I like the suggestion on http://drupal.org/node/161085,
+  // but coder flags it as an error, so out it goes for now
+  // drupal_set_message(st("Goodreads module installed, settings are
+  // available under !link",
+  // array( '!link' => l(st('Administer > Site configuration >
+  // Goodreads API'), 'admin/config/content/goodreads'))));
+}
+
+
+/**
+ * Implements hook_uninstall().
+ */
+function goodreads_uninstall() {
+  variable_del('goodreads_api_key');
+  variable_del('goodreads_api_secret');
+  variable_del('goodreads_cache_lifetime');
+}

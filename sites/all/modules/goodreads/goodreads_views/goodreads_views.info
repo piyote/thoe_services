@@ -1,0 +1,14 @@
+name = Goodreads Views
+description = Lets site builders use views to display what books are on users' bookshelves.
+package = "Goodreads"
+dependencies[] = goodreads_oauth
+dependencies[] = views
+core = 7.x
+configure = admin/config/content/goodreads/views
+
+; Information added by Drupal.org packaging script on 2016-11-19
+version = "7.x-1.x-dev"
+core = "7.x"
+project = "goodreads"
+datestamp = "1479598740"
+

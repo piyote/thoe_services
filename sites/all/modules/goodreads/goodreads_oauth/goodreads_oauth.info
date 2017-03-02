@@ -1,0 +1,15 @@
+name = Goodreads OAuth
+description = Adds support for Goodreads OAuth APIs
+core = 7.x
+package = Goodreads
+dependencies[] = goodreads
+dependencies[] = oauth_common
+dependencies[] = http_client_oauth
+configure = admin/config/content/goodreads
+
+; Information added by Drupal.org packaging script on 2016-11-19
+version = "7.x-1.x-dev"
+core = "7.x"
+project = "goodreads"
+datestamp = "1479598740"
+

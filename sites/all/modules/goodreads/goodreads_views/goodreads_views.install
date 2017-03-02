@@ -1,0 +1,61 @@
+<?php
+
+/**
+ * @file
+ * Implement Goodreads Views Install and Uninstall
+ */
+
+module_load_include('inc', 'goodreads', 'database_fields');
+
+
+/**
+ * Implements hook_schema().
+ */
+function goodreads_views_schema() {
+  $schema['goodreads_views_cache'] = array(
+    'description' => 'Goodreads views cache table.',
+    'fields' => array(
+      'unique_id'            => _goodreads_serial_field('Unique ID for primary key'),
+      'cache_uid'            => _goodreads_int_field('User ID from {user}.uid.'),
+      'cache_time'           => _goodreads_timestamp_field('Date and time the cache data was created.'),
+      'goodreads_user_id'    => _goodreads_text_field('Goodreads user ID.'),
+      'shelf_name'           => _goodreads_text_field('Goodreads shelf this book is on.'),
+      'title'                => _goodreads_text_field('Title of book.'),
+      'author'               => _goodreads_text_field('Primary author of the book.'),
+      'ratings_count'        => _goodreads_text_field('Number of ratings for this book.'),
+      'average_rating'       => _goodreads_text_field('Average rating for this book.'),
+      'text_reviews_count'   => _goodreads_text_field('Number of text reviews.'),
+      'image_url'            => _goodreads_text_field('URL of a book image.'),
+      'isbn'                 => _goodreads_text_field('ISBN for the book.'),
+      'goodreads_book_id'    => _goodreads_text_field('Goodreads book ID for the book.'),
+      'description'          => _goodreads_bigtext_field('Description of the book.'),
+    ),
+    'primary key' => array('unique_id'),
+    // 'indexes' => array(
+    // 'books_by_shelf'     => array('cache_uid', array('type', 4)),
+    // ),
+  );
+  return $schema;
+}
+
+/**
+ * Implements hook_install().
+ */
+function goodreads_views_install() {
+  // I like the suggestion on http://drupal.org/node/161085,
+  // but coder flags it as an error, so out it goes for now
+  // drupal_set_message(st("Goodreads views module installed,
+  // settings are available under !link",
+  // array( '!link' => l(st('Administer > Site configuration >
+  // Goodreads API > Views'),  'admin/config/content/goodreads/views'))
+  // ));
+}
+
+
+/**
+ * Implements hook_uninstall().
+ */
+function goodreads_views_uninstall() {
+  variable_del('goodreads_views_max_books_per_shelf');
+  variable_del('goodreads_views_cron_hour');
+}

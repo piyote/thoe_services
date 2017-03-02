@@ -1,0 +1,92 @@
+goodreads_book_search($q, $field = '', $page = '',
+  $max_pages = GOODREADS_MAX_PAGES)
+goodreads_cache_disable()
+goodreads_cache_enable()
+goodreads_find_author($author_name)
+goodreads_get_author_book_list($author_id, $page = '',
+  $max_pages = GOODREADS_MAX_PAGES)
+goodreads_get_author_info($author_id)
+goodreads_get_author_series($author_id)
+goodreads_get_comments($id = '', $type = '', $page = '',
+  $max_pages = GOODREADS_MAX_PAGES)
+goodreads_get_events($lat = '', $lng = '') **
+goodreads_get_gid_reviews($gid, $rating = '', $text_only = '')
+goodreads_get_group_by_id($group_id)
+goodreads_get_group_members($group_id, $page = '', $sort = '', $q = '',
+  $max_pages = GOODREADS_MAX_PAGES)
+goodreads_get_isbn_reviews($isbn, $rating = '', $text_only = '')
+goodreads_get_isbn_review_statistics($isbn) **
+goodreads_get_recent_reviews()
+goodreads_get_recent_user_status()
+goodreads_get_review($review_id, $page = '',
+  $max_pages = GOODREADS_MAX_PAGES)
+goodreads_get_reviews_title($title, $author = '', $rating = '',
+  $text_only = '')
+goodreads_get_review_by_user_and_book($user_id = '',
+  $book_id = '', $include_work = '')
+goodreads_get_series_info($series_id)
+goodreads_get_topics_by_group_and_folder($group_id = '', $folder_id = '',
+  $sort = '', $order = '', $page = '', $max_pages = GOODREADS_MAX_PAGES)
+goodreads_get_topic_info($topic_id = '')
+goodreads_get_user_books($user_id = '', $sort = '', $order = '',
+  $shelf_name = '', $query = '', $per_page = '', $page = '',
+  $max_pages = GOODREADS_MAX_PAGES)
+goodreads_get_user_follower_list($user_id, $page = '',
+  $max_pages = GOODREADS_MAX_PAGES) **
+goodreads_get_user_following_list($user_id, $page = '',
+  $max_pages = GOODREADS_MAX_PAGES) **
+goodreads_get_user_groups($user_id)
+goodreads_get_user_info($user_id = '', $username = '')
+goodreads_get_user_shelves($user_id, $page = '',
+  $max_pages = GOODREADS_MAX_PAGES)
+goodreads_get_work_series($work_id)
+goodreads_isbn2id($isbn)
+goodreads_oauth_add_bookshelf($name, $featured = '',
+  $exclusive = '', $sortable = '') **
+goodreads_oauth_add_book_to_shelf($book_id, $shelf_name = '', $delete = '')
+goodreads_oauth_add_friend($user_id)
+goodreads_oauth_add_owned_book($book_id = '', $condition = '',
+  $condition_description = '', $bcid = '', $purchase_location = '',
+  $purchase_date = '', $available_for_swap = '')
+goodreads_oauth_add_quote($quote = '', $author_name = '', $book_id = '',
+  $isbn = '', $author_id = '', $tags = '')
+goodreads_oauth_add_review($book_id = '', $rating = '', $review_text = '',
+  $shelf_name = '', $date_read = '') **
+goodreads_oauth_create_comment($resource_id =  NULL, $type = '',
+  $comment = '')
+goodreads_oauth_create_topic($title = '', $subject_type = '',
+  $subject_id = '', $comment = '', $update_feed = '', $digest = '',
+  $folder_id = '', $question_flag = '')
+goodreads_oauth_delete_bookshelf($shelf_id)
+goodreads_oauth_delete_status($status_id = '')
+goodreads_oauth_destroy_review($book_id = '') **
+goodreads_oauth_edit_bookshelf($shelf_id, $new_name = '', $featured = '',
+  $exclusive = '', $sortable = '')
+goodreads_oauth_edit_review($book_id = '', $rating = '', $review_text = '',
+  $shelf_name = '', $date_read = '')
+goodreads_oauth_follow_user($user_id, $my_user_id = '') **
+goodreads_oauth_get_show_owned_book($book_id = '1')
+goodreads_oauth_get_topics_with_unread_comments($group_id, $viewed = '',
+  $sort = '', $order = '', $page = '', $max_pages = GOODREADS_MAX_PAGES)
+goodreads_oauth_get_users_owned_books($user_id, $page = '',
+  $max_pages = GOODREADS_MAX_PAGES)
+goodreads_oauth_get_user_books($user_id = '', $sort = '', $order = '',
+  $shelf_name = '', $query = '', $per_page = '', $page = '',
+  $max_pages = GOODREADS_MAX_PAGES)
+goodreads_oauth_get_user_compare_books($other_user_id = '1')
+goodreads_oauth_get_user_follower_list($user_id, $page = '',
+  $max_pages = GOODREADS_MAX_PAGES) **
+goodreads_oauth_get_user_following_list($user_id, $page = '',
+  $max_pages = GOODREADS_MAX_PAGES) **
+goodreads_oauth_get_user_friends($goodreads_id = '', $page = '',
+  $sort = '', $max_pages = GOODREADS_MAX_PAGES)
+goodreads_oauth_get_user_friends_updates($update_filter = '',
+  $max_updates = '', $update_type = '')
+goodreads_oauth_get_user_id()
+goodreads_oauth_get_user_notifications() **
+goodreads_oauth_rate_review($resource_id = '', $like = '')
+goodreads_oauth_update_owned_book($owned_book_id = '', $condition = '',
+  $condition_description = '', $bcid = '', $purchase_location = '',
+  $purchase_date = '', $available_for_swap = '')
+goodreads_oauth_update_user_status($book_id = '', $percentage = '',
+  $page = '', $message = '')

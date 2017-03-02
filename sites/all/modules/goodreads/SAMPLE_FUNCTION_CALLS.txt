@@ -1,0 +1,503 @@
+/**
+ * @file
+ * Goodreads API functions with sample calls.
+ *
+ * User:  Mortimer Snerd '7535600' Random user with alot of data '6014887'
+ * Book: Pro Drupal GID '2851277' ISBN '1430209895' Different GID'920197'
+ * Groups:  Developer '8095', International Society of API Bots '62646'
+ * Review:  Moritmer's review - Edgar Bergen and Charlie McCarthy
+ *   (Old Time Radio), review ID '267977182'
+ * Author:  Dries Buytaert '3877065' Robert Heinlein '205'
+ *
+ * If you don't like the formatting of the inline function comments,
+ * thank the pareview coding standard "enforcer"
+ */
+
+
+/**
+ * Goodreads.inc non-OAuth functions
+ *
+ */
+function call_all_goodreads_non_oauth() {
+  // goodreads_get_gid_reviews($gid, $rating = '', $text_only = '')
+  $result = goodreads_get_gid_reviews('2851277');
+  $function_name = 'goodreads_get_gid_reviews';
+  do_something($function_name, $result);
+
+
+  // goodreads_get_isbn_reviews($isbn, $rating = '', $text_only = '')
+  $result = goodreads_get_isbn_reviews('1430209895');
+  $function_name = 'goodreads_get_isbn_reviews';
+  do_something($function_name, $result);
+
+
+  // goodreads_get_reviews_title($title, $author = '',
+  // $rating = '', $text_only = '')
+  $result = goodreads_get_reviews_title('Moby Dick');
+  $function_name = 'goodreads_get_reviews_title';
+  do_something($function_name, $result);
+
+
+  // goodreads_get_review($review_id, $page = '',
+  // $max_pages = GOODREADS_MAX_PAGES)
+  $result = goodreads_get_review('267977182');
+  $function_name = 'goodreads_get_review';
+  do_something($function_name, $result);
+
+
+  // goodreads_get_review_by_user_and_book($user_id = '',
+  // $book_id = '', $include_work = '')
+  $result = goodreads_get_review_by_user_and_book('7535600', '1519042');
+  $function_name = 'goodreads_get_review_by_user_and_book';
+  do_something($function_name, $result);
+
+
+  // goodreads_get_recent_reviews()
+  $result = goodreads_get_recent_reviews();
+  $function_name = 'goodreads_get_recent_reviews';
+  do_something($function_name, $result);
+
+
+  // ************* Only appears to work for a single ISBN
+  // goodreads_get_isbn_review_statistics($isbn)
+  $result = goodreads_get_isbn_review_statistics('1430209895');
+  $function_name = 'goodreads_get_isbn_review_statistics';
+  do_something($function_name, $result);
+
+
+  // goodreads_isbn2id($isbn)
+  $result = goodreads_isbn2id('1430209895');
+  $function_name = 'goodreads_isbn2id';
+  do_something($function_name, $result);
+
+
+  // Number of results returned != number said returned
+  // goodreads_book_search($q, $field = '', $page = '',
+  // $max_pages = GOODREADS_MAX_PAGES)
+  $result = goodreads_book_search('Moby Dick');
+  $function_name = 'goodreads_book_search';
+  do_something($function_name, $result);
+
+
+  // goodreads_get_author_book_list($author_id, $page = '',
+  // $max_pages = GOODREADS_MAX_PAGES)
+  $result = goodreads_get_author_book_list('205');
+  $function_name = 'goodreads_get_author_book_list';
+  do_something($function_name, $result);
+
+
+  // goodreads_get_author_info($author_id)
+  $result = goodreads_get_author_info('205');
+  $function_name = 'goodreads_get_author_info';
+  do_something($function_name, $result);
+
+
+  // ************* Returns empty result
+  // goodreads_find_author($author_name)
+  $result = goodreads_find_author('Orson Scott Card');
+  $function_name = 'goodreads_find_author';
+  do_something($function_name, $result);
+
+
+  // goodreads_get_author_series($author_id)
+  $result = goodreads_get_author_series('205');
+  $function_name = 'goodreads_get_author_series';
+  do_something($function_name, $result);
+
+
+  // goodreads_get_series_info($series_id)
+  $series_id = goodreads_get_author_series('205');
+  $series_work_id = $series_id['series_work'][0]['series']['id'];
+  $result = goodreads_get_series_info($series_work_id);
+  $function_name = 'goodreads_get_series_info';
+  do_something($function_name, $result);
+
+
+  // goodreads_get_work_series($work_id)
+  $work_id = goodreads_get_author_series('205');
+  $series_id = $work_id['series_work'][0]['work']['id']['value'];
+  $result = goodreads_get_work_series($series_id);
+  $function_name = 'goodreads_get_work_series';
+  do_something($function_name, $result);
+
+
+  // goodreads_get_group_by_id($group_id)
+  $result = goodreads_get_group_by_id('62646');
+  $function_name = 'goodreads_get_group_by_id';
+  do_something($function_name, $result);
+
+
+  // goodreads_get_group_members($group_id, $page = '',
+  // $sort = '', $q = '', $max_pages = GOODREADS_MAX_PAGES)
+  $result = goodreads_get_group_members('62646');
+  $function_name = 'goodreads_get_group_members';
+  do_something($function_name, $result);
+
+
+  // goodreads_get_user_groups($user_id)
+  $result = goodreads_get_user_groups('7535600');
+  $function_name = 'goodreads_get_user_groups';
+  do_something($function_name, $result);
+
+
+  // goodreads_get_user_info($user_id = '', $username = '')
+  $result = goodreads_get_user_info('7535600');
+  $function_name = 'goodreads_get_user_info';
+  do_something($function_name, $result);
+
+
+  // goodreads_get_recent_user_status()
+  $result = goodreads_get_recent_user_status();
+  $function_name = 'goodreads_get_recent_user_status';
+  do_something($function_name, $result);
+
+
+  // CURRENTLY BROKEN, gets a 401 unauthorized error
+  // goodreads_get_user_follower_list($user_id, $page = '',
+  // $max_pages = GOODREADS_MAX_PAGES)
+  $result = goodreads_get_user_follower_list('7535600');
+  $function_name = 'goodreads_get_user_follower_list';
+  do_something($function_name, $result);
+
+
+  // CURRENTLY BROKEN, gets a 401 unauthorized error
+  // goodreads_get_user_following_list($user_id, $page = '',
+  // $max_pages = GOODREADS_MAX_PAGES)
+  $result = goodreads_get_user_following_list('7535600');
+  $function_name = 'goodreads_get_user_following_list';
+  do_something($function_name, $result);
+
+
+  // goodreads_get_user_shelves($user_id, $page = '',
+  // $max_pages = GOODREADS_MAX_PAGES)
+  $result = goodreads_get_user_shelves('7535600');
+  $function_name = 'goodreads_get_user_shelves';
+  do_something($function_name, $result);
+
+
+  // goodreads_oauth_get_user_books($user_id = '', $sort = '',
+  // $order = '', $shelf_name = '', $query = '', $per_page = '',
+  // $page = '', $max_pages = GOODREADS_MAX_PAGES)
+  $result = goodreads_oauth_get_user_books('7535600');
+  $function_name = 'goodreads_oauth_get_user_books';
+  do_something($function_name, $result);
+
+
+  // goodreads_get_topics_by_group_and_folder($group_id = '',
+  // $folder_id = '', $sort = '', $order = '', $page = '',
+  // $max_pages = GOODREADS_MAX_PAGES)
+  $result = goodreads_get_topics_by_group_and_folder('62646', 109659);
+  $function_name = 'goodreads_get_topics_by_group_and_folder';
+  do_something($function_name, $result);
+
+
+  // goodreads_get_topic_info($topic_id = '')
+  $result = goodreads_get_topic_info('782796');
+  $function_name = 'goodreads_get_topic_info';
+  do_something($function_name, $result);
+
+
+  // goodreads_get_comments($id = '', $type = '', $page = '',
+  // $max_pages = GOODREADS_MAX_PAGES)
+  $result = goodreads_get_comments('782796', 'topic');
+  $function_name = 'goodreads_get_comments';
+  do_something($function_name, $result);
+
+
+  // Lat and Lng don't seem to work???
+  // goodreads_get_events($lat = '', $lng = '')
+  $result = goodreads_get_events('39.687237', '-104.857897');
+  $function_name = 'goodreads_get_events';
+  do_something($function_name, $result);
+}
+
+/**
+ *  goodreads_oauth.inc OAuth functions
+ *
+ *  Since many of the OAuth functions are relative to the current OAuth
+ *  user, you may need to adjust these sample calls to return data.
+ *
+ */
+function call_all_goodreads_oauth() {
+  // goodreads_oauth_get_user_id()
+  $result = goodreads_oauth_get_user_id();
+  $function_name = 'goodreads_oauth_get_user_id';
+  do_something($function_name, $result);
+
+
+  // CURRENTLY BROKEN, gets a 401 unauthorized error
+  // goodreads_oauth_get_user_notifications()
+  $result = goodreads_oauth_get_user_notifications();
+  $function_name = 'goodreads_oauth_get_user_notifications';
+  do_something($function_name, $result);
+
+
+  // goodreads_oauth_get_user_friends($goodreads_id = '', $page = '',
+  // $sort = '', $max_pages = GOODREADS_MAX_PAGES)
+  $result = goodreads_oauth_get_user_friends('6014887');
+  $function_name = 'goodreads_oauth_get_user_friends';
+  do_something($function_name, $result);
+
+
+  // goodreads_oauth_get_user_friends_updates($update_filter = '',
+  // $max_updates = '', $update_type = '')
+  $result = goodreads_oauth_get_user_friends_updates('6014887');
+  $function_name = 'goodreads_oauth_get_user_friends_updates';
+  do_something($function_name, $result);
+
+
+  // goodreads_oauth_get_users_owned_books($user_id, $page = '',
+  // $max_pages = GOODREADS_MAX_PAGES)
+  $result = goodreads_oauth_get_users_owned_books('6014887');
+  $function_name = 'goodreads_oauth_get_users_owned_books';
+  do_something($function_name, $result);
+
+
+  // goodreads_oauth_get_user_compare_books($other_user_id = '1')
+  $result = goodreads_oauth_get_user_compare_books('6014887');
+  $function_name = 'goodreads_oauth_get_user_compare_books';
+  do_something($function_name, $result);
+
+
+  // goodreads_oauth_get_show_owned_book($book_id = '1')
+  $owned_books = goodreads_oauth_get_users_owned_books('6014887');
+  $owned_book_id = $owned_books['owned_book'][0]['id']['value'];
+  $result = goodreads_oauth_get_show_owned_book($owned_book_id);
+  $function_name = 'goodreads_oauth_get_show_owned_book';
+  do_something($function_name, $result);
+
+
+  // goodreads_oauth_get_topics_with_unread_comments($group_id, $viewed = '',
+  // $sort = '', $order = '', $page = '', $max_pages = GOODREADS_MAX_PAGES)
+  $result = goodreads_oauth_get_topics_with_unread_comments('1');
+  $function_name = 'goodreads_oauth_get_topics_with_unread_comments';
+  do_something($function_name, $result);
+
+
+  // CURRENTLY BROKEN, gets a 401 unauthorized error
+  // goodreads_oauth_get_user_follower_list($user_id, $page = '',
+  // $max_pages = GOODREADS_MAX_PAGES)
+  $result = goodreads_oauth_get_user_follower_list('7535600');
+  $function_name = 'goodreads_oauth_get_user_follower_list';
+  do_something($function_name, $result);
+
+
+  // CURRENTLY BROKEN, gets a 401 unauthorized error
+  // goodreads_oauth_get_user_following_list($user_id, $page = '',
+  // $max_pages = GOODREADS_MAX_PAGES)
+  $result = goodreads_oauth_get_user_following_list('7535600');
+  $function_name = 'goodreads_oauth_get_user_following_list';
+  do_something($function_name, $result);
+
+
+  // Bookshelf flags: featured, exclusive, sortable,
+  // appear to not set when the API is called
+  // goodreads_oauth_add_bookshelf($name, $featured = '',
+  // $exclusive = '', $sortable = '')
+  $result = goodreads_oauth_add_bookshelf('Sample Bookshelf');
+  $function_name = 'goodreads_oauth_add_bookshelf';
+  do_something($function_name, $result);
+
+
+  // goodreads_oauth_edit_bookshelf($shelf_id, $new_name = '',
+  // $featured = '', $exclusive = '', $sortable = '')
+  $user_id = goodreads_oauth_get_user_id();
+  $bookshelf = goodreads_get_user_shelves($user_id['id']);
+  foreach ($bookshelf['user_shelf'] as $shelf) {
+    if ($shelf['name'] = 'sample-bookshelf') {
+      // Assuming you added 'Sample Bookshelf' above, this works.
+      $shelf_id = $shelf['id']['value'];
+    }
+  }
+  $result = goodreads_oauth_edit_bookshelf($shelf_id,
+  'Revised Sample Bookshelf', 'true', 'true', 'true');
+  $function_name = 'goodreads_oauth_edit_bookshelf';
+  do_something($function_name, $result);
+
+
+  // goodreads_oauth_delete_bookshelf($shelf_id)
+  $user_id = goodreads_oauth_get_user_id();
+  $bookshelf = goodreads_get_user_shelves($user_id['id']);
+  foreach ($bookshelf['user_shelf'] as $shelf) {
+    if ($shelf['name'] = 'revised-sample-bookshelf') {
+      // Assuming you revised 'Sample Bookshelf', this works.
+      $shelf_id = $shelf['id']['value'];
+    }
+  }
+  $result = goodreads_oauth_delete_bookshelf($shelf_id);
+  $function_name = 'goodreads_oauth_delete_bookshelf';
+  do_something($function_name, $result);
+
+
+  // *************** something wrong with API documentation,
+  // Always returns OK response with data =
+  // '$("follow_container_user_7535600").
+  // update("Something went wrong! Follower can't be blank");'
+  // goodreads_oauth_follow_user($user_id, $my_user_id = '')
+  $user_id = goodreads_oauth_get_user_id();
+  $result = goodreads_oauth_follow_user('6014887', $user_id);
+  $function_name = 'goodreads_oauth_follow_user';
+  do_something($function_name, $result);
+
+
+  // goodreads_oauth_add_friend($user_id)
+  // Call doesn't appear to return any status message.
+  // this only works once then you need a new $user_id
+  $result = goodreads_oauth_add_friend('4296003');
+  $function_name = 'goodreads_oauth_add_friend';
+  do_something($function_name, $result);
+
+
+  // goodreads_oauth_update_user_status($book_id = '', $percentage = '',
+  // $page = '', $message = '')
+  $result = goodreads_oauth_update_user_status('2851277', '50', NULL,
+  "Bot's been turning my pages");
+  $function_name = 'goodreads_oauth_update_user_status';
+  do_something($function_name, $result);
+
+
+  // goodreads_oauth_delete_status($status_id = '')
+  $user_id = goodreads_oauth_get_user_id();
+  $user_info = goodreads_get_user_info($user_id['id']);
+  $user_status_id = $user_info['user_statuses']['user_status']['id']['value'];
+  $result = goodreads_oauth_delete_status($user_status_id);
+  $function_name = 'goodreads_oauth_delete_status';
+  do_something($function_name, $result);
+
+
+  // goodreads_oauth_add_book_to_shelf($book_id, $shelf_name = '',
+  // $delete = '')
+  $result = goodreads_oauth_add_book_to_shelf('1519042', 'read');
+  $function_name = 'goodreads_oauth_add_book_to_shelf';
+  do_something($function_name, $result);
+
+
+  // goodreads_oauth_rate_review($resource_id = '', $like = '')
+  $result = goodreads_oauth_rate_review('94009070', 'true');
+  $function_name = 'goodreads_oauth_rate_review';
+  do_something($function_name, $result);
+
+
+  // goodreads_oauth_create_comment($resource_id =  NULL, $type = '',
+  // $comment = '')
+  $result = goodreads_oauth_create_comment('782796', 'topic',
+  "Bots don't like 10-40");
+  $function_name = 'goodreads_oauth_create_comment';
+  do_something($function_name, $result);
+
+
+  // goodreads_oauth_add_owned_book($book_id = '', $condition = '',
+  // $condition_description = '', $bcid = '', $purchase_location = '',
+  // $purchase_date = '', $available_for_swap = '')
+  $result = goodreads_oauth_add_owned_book('1519042', '60', 'tattered',
+  NULL, 'Scrap Heap', '2012-01-15');
+  $function_name = 'goodreads_oauth_add_owned_book';
+  do_something($function_name, $result);
+
+
+  // goodreads_oauth_update_owned_book($owned_book_id = '', $condition = '',
+  // $condition_description = '', $bcid = '', $purchase_location = '',
+  // $purchase_date = '', $available_for_swap = '')
+  $result = goodreads_oauth_update_owned_book('5703874', '30', 'not tattered',
+  NULL, 'book repair store', '2012-01-20');
+  $function_name = 'goodreads_oauth_update_owned_book';
+  do_something($function_name, $result);
+
+
+  // goodreads_oauth_add_review($book_id = '', $rating = '',
+  // $review_text = '', $shelf_name = '', $date_read = '')
+  $result = goodreads_oauth_add_review('1519042', '3',
+  'Bot liked it sort of ok');
+  $function_name = 'goodreads_oauth_add_review';
+  do_something($function_name, $result);
+
+
+  // CURRENTLY BROKEN, gets a 401 unauthorized error
+  // goodreads_oauth_edit_review($book_id = '', $rating = '',
+  // $review_text = '', $shelf_name = '', $date_read = '')
+  $result = goodreads_oauth_edit_review('61329', '3',
+  'Bot liked it sort of ok', 'read', '2012-01-15');
+  $function_name = 'goodreads_oauth_edit_review';
+  do_something($function_name, $result);
+
+
+  // goodreads_oauth_destroy_review($book_id = '')
+  $result = goodreads_oauth_destroy_review('61329');
+  $function_name = 'goodreads_oauth_destroy_review';
+  do_something($function_name, $result);
+
+
+  // goodreads_oauth_add_quote($quote = '', $author_name = '',
+  // $book_id = '', $isbn = '', $author_id = '', $tags = '')
+  $result = goodreads_oauth_add_quote('The Bots are taking over', 'Moore',
+  '61329', NULL, '34517', 'bot generated');
+  $function_name = 'goodreads_oauth_add_quote';
+  do_something($function_name, $result);
+
+
+  // goodreads_oauth_create_topic($title = '', $subject_type = '',
+  // $subject_id = '', $comment = '', $update_feed = '', $digest = '',
+  // $folder_id = '', $question_flag = '')
+  $result = goodreads_oauth_create_topic('A Test Topic', 'Group', '62646',
+  'This comment automagically generated');
+  $function_name = 'goodreads_oauth_create_topic';
+  do_something($function_name, $result);
+
+
+  // goodreads_oauth_get_user_books($user_id = '', $sort = '', $order = '',
+  // $shelf_name = '', $query = '', $per_page = '', $page = '',
+  // $max_pages = GOODREADS_MAX_PAGES)
+  $result = goodreads_oauth_get_user_books('7535600');
+  $function_name = 'goodreads_oauth_get_user_books';
+  do_something($function_name, $result);
+}
+
+
+/**
+ *   Output all functions as an HTML table.
+ *
+ */
+function do_something($function_name, $result) {
+  echo '<h1><center>!PAGE!' . $function_name . '</center></h1>';
+  echo '<br /><br />';
+  if ($result['api_error'] == 'true') {
+    echo '<h1>Returned an error</h1>';
+    echo '<p>' . $result['error_message'] . '</p>';
+  }
+  echo '<table><tr><th width="50%">Array Index</th>'
+    . '<th width="50%">Sample Result</th></tr>';
+  $array_structure = explode('<br />',
+  _goodreads_array_structure_nodups($result));
+  foreach ($array_structure as $array_item) {
+    if (!(($array_item == '[api_error]')
+      || stripos($array_item, 'original_xml'))) {
+      echo '<tr><td width="50%">' . $array_item . '</td><td width="50%">' .
+  	  _goodreads_variable_array($result, $array_item) . '</td></tr>';
+    }
+  }
+  echo '</table>';
+}
+
+/**
+ *   Output all functions as Goodreads filter list.
+ *   Only output functions that do NOT return an API error.
+ *
+ */
+function do_something($function_name, $result) {
+  if ($result['api_error'] == 'true') {
+    return;
+  }
+  echo $function_name . '<br /><br />';
+  $array_structure = _goodreads_array_structure_nodups($result,
+    FALSE, '<br />', '-', '');
+  $array_structure = explode('<br />', $array_structure);
+  foreach ($array_structure as $array_item) {
+    if (!(stripos($array_item, 'api_error')
+      || stripos($array_item, 'original_xml')
+      || (strlen($array_item) == 0))) {
+      echo '{<b>' . $function_name . '</b> ' . drupal_substr($array_item, 1)
+        . ' PARAMETERS}<br />';
+    }
+  }
+  echo '<br /><br />';
+}
