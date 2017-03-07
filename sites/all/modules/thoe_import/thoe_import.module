@@ -1,0 +1,133 @@
+<?php 
+
+function thoe_import_menu() {
+  $items = array();
+  
+  $items['thoe/import'] = array( //this creates a URL that will call this form at "examples/form-example"
+      'title' => 'Data crawler', //page title
+      'description' => 'Crawl data',
+      'page callback' => 'thoe_import_main', //this is the function that will be called when the page is accessed.  for a form, use drupal_get_form
+      'access callback' => TRUE
+  );
+  
+  return $items;
+}
+
+function thoe_import_main() {
+  print "test";
+}
+
+function thoe_import_format_content($content,$style) {
+  
+  switch ($style["name"]) {
+  	case "all_in_one":
+  	  $parts = explode(":",$content);
+  	  $time = $parts[0];
+  	  $time = thoe_import_time_define($time);
+  	  $title = $parts[1];
+  	  $desc = $parts[2];
+  	  break;
+  	
+  }
+  
+}
+
+function thoe_import_time_define($time) {
+  $abbrevation=="";
+  $time = str_replace("ca. ","",$time);
+  $time = preg_replace("/\(.*\)/","",$time);
+  
+  if($time == "0 seconds ") {
+    $time = 0;
+    $abbrevation = "zero";
+  }
+  
+  // check if million years
+  preg_match('/(.*) million year/', $time, $matches, PREG_OFFSET_CAPTURE);
+  if($matches[0][0] && $abbrevation=="") {
+    $time = $matches[1][0];
+    $abbrevation = "ma";
+  }
+  
+  // check if billion years
+  preg_match('/(.*) billion year/', $time, $matches, PREG_OFFSET_CAPTURE);
+  if($matches[0][0] && $abbrevation=="") {
+    $time = $matches[1][0];
+    $abbrevation = "ga";
+  }
+  
+  // check if it's a neg abbrevation time
+  preg_match('/(.*)<sup>−(.*)<\/sup> seconds/', $time, $matches, PREG_OFFSET_CAPTURE);
+  if($matches[1][0] && $matches[2][0])
+  {
+    $abbrevation = "neg";
+    $time = $matches[2][0];
+  }
+
+
+  
+  // check if seconds
+  preg_match('/(.*) second/', $time, $matches, PREG_OFFSET_CAPTURE);
+  if($matches[0][0] && $abbrevation=="") {
+    $time = $matches[1][0];
+    $abbrevation = "sec";
+  }
+  
+  // check if minutes
+  preg_match('/(.*) minute/', $time, $matches, PREG_OFFSET_CAPTURE);
+  if($matches[0][0] && $abbrevation=="") {
+    $time = $matches[1][0];
+    $abbrevation = "min";
+  }
+  
+  // check if years
+  preg_match('/(.*) year/', $time, $matches, PREG_OFFSET_CAPTURE);
+  if($matches[0][0] && $abbrevation=="") {
+    $time = $matches[1][0];
+    $time = str_replace(",","",$time);
+    $million = strpos($time,"million");
+    $billion = strpos($time,"billion");
+    if(!$million && !$billion)
+    {
+      if($time % 1000 == 0) {
+        $time = $time/1000;
+        $abbrevation = "ka";
+      }
+      else {
+        $abbrevation = "ye";
+      }
+    }
+    
+  }
+  
+  drush_print($time . " " . $abbrevation);
+  drush_print("---------");
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
