@@ -1,0 +1,5 @@
+name = Opencalais thoe
+description = Opencalais thoe import metatag creation
+core = 7.x
+
+files[] = opencalais.php

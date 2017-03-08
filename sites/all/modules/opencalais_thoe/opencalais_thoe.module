@@ -1,0 +1,65 @@
+<?php
+/**
+ * Example usage for the Open Calais Tags class written by Dan Grossman
+* (http://www.dangrossman.info). Read about this class and how to get
+* an API key at http://www.dangrossman.info/open-calais-tags
+*/
+function opencalais_thoe_get_tags($content) {
+  $apikey = "DuZd6qGigaiImyPq8av8xW9SD5egFQ25";
+  $oc = new OpenCalais($apikey);
+  $entities = $oc->getEntities($content);
+  foreach ($entities as $key=>$entity) {
+    $entities[$key] = array_flip($entity);
+  }
+  return $entities;
+}
+
+function opencalais_thoe_hierarchical_terms($vocab, $vid = 4, $parent = null) {
+  $term_ids = array();
+  foreach($vocab as $term_name_first => $terms) {
+    if(!is_array($terms)) {
+      return opencalais_thoe_hierarchical_terms(array($terms));
+    }
+    foreach ($terms as $term_name => $term) {
+      // Create the term
+      $term_object = new stdClass();
+      $term_object->vid = $vid;
+      $term_object->name = $term_name;
+      //     if(isset($parent)) {
+      //       $term_object->parent = $parent;
+      //     }
+      $possible_tid = _get_taxonomy_term_id_by_name($term_name);
+      if(!$possible_tid) {
+        taxonomy_term_save($term_object);
+        $term_ids[] = $term_object->tid;
+      }
+      else 
+      {
+        $term_ids[] = $possible_tid;
+      }
+    }
+  }
+  return $term_ids;
+}
+
+function opencalais_thoe_delete_terms() {
+  $vocabulary = taxonomy_vocabulary_machine_name_load('opencalais');
+  foreach (taxonomy_get_tree($vocabulary->vid) as $term) {
+    taxonomy_term_delete($term->tid);
+  }
+}
+
+/**
+ * Get taxonomy term ID by term name.
+ * 
+ * @param string $termname
+ * @param integer $vid
+ */
+function _get_taxonomy_term_id_by_name($termname, $vid = 4) {
+    return db_select('taxonomy_term_data', 't')
+    ->fields('t', array('tid'))
+    ->condition('t.name', $termname)
+    ->condition('t.vid', $vid)
+    ->execute()
+    ->fetchField();
+}

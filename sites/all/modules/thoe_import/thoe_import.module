@@ -23,14 +23,29 @@ function thoe_import_format_content($content,$style) {
   	case "all_in_one":
   	  $parts = explode(":",$content);
   	  $time = $parts[0];
-  	  $time = thoe_import_time_define($time);
+  	  $time_data = thoe_import_time_define($time);
+  	  $time = $time_data["time"];
+  	  $abbrevation = $time_data["abbrevation"];
+  	  
   	  $title = $parts[1];
+  	  $categories = opencalais_thoe_get_tags($title);
+  	  
   	  $desc = $parts[2];
   	  break;
   	
   }
   
 }
+
+// function thoe_import_get_categories_from_title($title) {
+//   drush_print($title);
+//   print_r(opencalais_thoe_get_tags($title));
+//   $terms = opencalais_thoe_get_tags($title);
+//   $term_ids = opencalais_thoe_hierarchical_terms($terms);
+//   print_r($term_ids);
+//   drush_print("---------");
+//   return $term_ids;
+// }
 
 function thoe_import_time_define($time) {
   $abbrevation=="";
@@ -63,8 +78,6 @@ function thoe_import_time_define($time) {
     $abbrevation = "neg";
     $time = $matches[2][0];
   }
-
-
   
   // check if seconds
   preg_match('/(.*) second/', $time, $matches, PREG_OFFSET_CAPTURE);
@@ -100,8 +113,10 @@ function thoe_import_time_define($time) {
     
   }
   
-  drush_print($time . " " . $abbrevation);
-  drush_print("---------");
+//   drush_print($time . " " . $abbrevation);
+//   drush_print("---------");
+  
+  return array("time"=>$time,"abbrevation"=>$abbrevation);
 }
 
 
