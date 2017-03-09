@@ -43,8 +43,6 @@ function thoe_import_bigbang_start() {
 	        }
 	        // 	    thoe_import_format_content($li->innertext);
 	        if($continue) {
-// 	          drush_print($li->innertext);
-// 	          drush_print("---------------");
 	          thoe_import_format_content($li->innertext,$style);
 	        }
 	      }

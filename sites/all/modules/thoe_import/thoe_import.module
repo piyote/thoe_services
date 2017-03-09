@@ -3,10 +3,10 @@
 function thoe_import_menu() {
   $items = array();
   
-  $items['thoe/import'] = array( //this creates a URL that will call this form at "examples/form-example"
-      'title' => 'Data crawler', //page title
+  $items['thoe/import'] = array( 
+      'title' => 'Data crawler', 
       'description' => 'Crawl data',
-      'page callback' => 'thoe_import_main', //this is the function that will be called when the page is accessed.  for a form, use drupal_get_form
+      'page callback' => 'thoe_import_main',
       'access callback' => TRUE
   );
   
@@ -24,28 +24,75 @@ function thoe_import_format_content($content,$style) {
   	  $parts = explode(":",$content);
   	  $time = $parts[0];
   	  $time_data = thoe_import_time_define($time);
+  	  
+  	  // get time and abbrevation
   	  $time = $time_data["time"];
   	  $abbrevation = $time_data["abbrevation"];
   	  
+  	  // get title
   	  $title = $parts[1];
+  	  
+  	  //get categories
   	  $categories = opencalais_thoe_get_tags($title);
   	  
+  	  // get image
+  	  $image_url = thoe_import_get_image($title);
+  	  
+  	  // get description
   	  $desc = $parts[2];
+  	  
+  	  // get the videos
+  	  $videos = thoe_youtube_api_search($title);
+  	  
+  	  // get the books
+  	  $books = thoe_import_get_google_books($title);
+  	  
   	  break;
   	
   }
   
 }
 
-// function thoe_import_get_categories_from_title($title) {
-//   drush_print($title);
-//   print_r(opencalais_thoe_get_tags($title));
-//   $terms = opencalais_thoe_get_tags($title);
-//   $term_ids = opencalais_thoe_hierarchical_terms($terms);
-//   print_r($term_ids);
-//   drush_print("---------");
-//   return $term_ids;
-// }
+// not using this
+function thoe_import_get_goodreads_books($title) {
+  $results = goodreads_book_search($title,'title',1,1);
+  $best_books_all = $results['results']['work'];
+  $best_books = array_slice($best_books_all,0,5);
+  
+  $results = array();
+  foreach ($best_books as $book) {
+  	$results[] = $book['best_book'];
+  }
+  
+  return $results;
+}
+
+function thoe_import_get_google_books($title,$lang="en") {
+  // for more info: https://developers.google.com/books/docs/v1/using#PerformingSearch
+  $google_api_key = "AIzaSyBHBN9EvpOH2Cpbup_ktQNXAzj6-8qe0ZI";
+  $cx = "018281177569452009831:a94jredrj7a";
+  $end_url = "https://www.googleapis.com/books/v1/volumes";
+  $data = array(
+      "q" => urlencode($title),
+      "langRestrict" => $lang,
+      "key" => $google_api_key,
+      "maxResults" => 5
+  );
+  
+  $full_url = url($end_url, array('query' => $data));
+  $google_result = drupal_http_request($full_url);
+  $books = array();
+  if ($google_result->code==200) {
+    $data = json_decode($google_result->data);
+    foreach ($data->items as $item) {
+    	$books[] = $item; 
+    }
+  }
+  else {
+    return false;
+  }
+  return $books;
+}
 
 function thoe_import_time_define($time) {
   $abbrevation=="";
@@ -113,13 +160,63 @@ function thoe_import_time_define($time) {
     
   }
   
-//   drush_print($time . " " . $abbrevation);
-//   drush_print("---------");
-  
   return array("time"=>$time,"abbrevation"=>$abbrevation);
 }
 
-
+function thoe_import_get_image($content) {
+  // first try wiki
+  $wiki_url = 'https://en.wikipedia.org/w/api.php';
+  $data = array(
+      'action' => "query",
+      'titles' => $content,
+      'prop' => "pageimages",
+      'format' => "json",
+      'pithumbsize' => "500"
+  );
+  $source = "";
+  $full_url = url($wiki_url, array('query' => $data));
+  $wiki_result = drupal_http_request($full_url);
+  $missing = true;
+  if ($wiki_result->code==200) {
+  	$data = json_decode($wiki_result->data);
+  	$obj_attr = get_object_vars($data->query->pages);
+  	  foreach ($obj_attr as $key=>$attr) {
+  	    if(isset($attr->missing)) {
+  	      break;
+  	    }
+  	    else if(isset($attr->thumbnail->source)) {
+  	      $source = $attr->thumbnail->source;
+  	      $missing = false;
+  	    }
+  	  }
+  }
+  
+  // if wiki is not working, use google search: 
+  if ($missing && $source=="") {
+    $google_api_key = "AIzaSyBHBN9EvpOH2Cpbup_ktQNXAzj6-8qe0ZI";
+    $cx = "018281177569452009831:a94jredrj7a";
+    $end_url = "https://www.googleapis.com/customsearch/v1";
+    $data = array(
+    	"q" => urlencode($content),
+      "num" => 1,
+      "start" => 1,
+      "imgSize" => "medium",
+      "searchType" => "image",
+      "filetype" => "jpg",
+      "key" => $google_api_key,
+      "cx" => $cx     
+    );
+    
+    $full_url = url($end_url, array('query' => $data));
+    $google_result = drupal_http_request($full_url);
+    if ($google_result->code==200) {
+      $data = json_decode($google_result->data);
+      $source = $data->items[0]->link;
+    }
+  }
+  $result = ($source!=="") ? $source : false;
+  return $result;
+}
 
 
 

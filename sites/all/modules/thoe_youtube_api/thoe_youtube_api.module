@@ -1,0 +1,51 @@
+<?php
+
+/**
+ * Implements hook_menu().
+ */
+function thoe_youtube_api_menu() {
+  $items['admin/config/services/thoe-youtube-api'] = array(
+    'title' => 'Youtube API',
+    'description' => 'Configure Youtube API settings.',
+    'page callback' => 'drupal_get_form',
+    'page arguments' => array('thoe_youtube_api_settings_form'),
+    'access arguments' => array('administer site configuration'),
+    'file' => 'thoe_youtube_api.admin.inc',
+  );
+
+  return $items;
+}
+
+function thoe_youtube_api_search($string) {
+  $youtube = thoe_youtube_api_get_google_client();
+  $searchResponse = $youtube->search->listSearch('id,snippet', array(
+      'q' => $string,
+      'maxResults' => 5,
+      'type' => "video"
+  ));
+  
+  $results = array();
+  
+  foreach ($searchResponse['items'] as $searchResult) {
+    $results[] = $searchResult['id']['videoId'];
+  }
+  return $results;
+}
+
+function thoe_youtube_api_get_google_client($api_key = NULL) {
+  if (!$api_key) {
+    $api_key = variable_get('thoe_youtube_api_key', '');
+  }
+  
+  if (!file_exists(__DIR__ . '/vendor/autoload.php')) {
+    throw new \Exception('please run "composer require google/apiclient:~2.0" in "' . __DIR__ .'"');
+  }
+  
+  require_once __DIR__ . '/vendor/autoload.php';
+
+  $client = new Google_Client();
+  $client->setDeveloperKey($api_key);
+  $youtube = new Google_Service_YouTube($client);
+  return $youtube;
+}
+
