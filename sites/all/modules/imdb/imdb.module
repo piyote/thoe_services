@@ -1,0 +1,212 @@
+<?php 
+
+/**
+ * Implements hook_libraries_info().
+ *
+ * For defining external libraries.
+ */
+
+function imdb_libraries_info() {
+  $libraries['imdbphp'] = array(
+    'name' => 'IMDB PHP library',
+    'vendor url' => 'https://github.com/tboothman',
+    'download url' => 'https://github.com/tboothman/imdbphp/',
+    'version' => '4.1.0',  
+    'version arguments' => array(
+      'file' => 'src/Imdb/MdbBase.php', 
+      'pattern' => 'public \$version = \'(.*)\';', 
+      'lines' => 21,
+    ),
+    'files' => array(
+      'php' => array('bootstrap.php'),
+    ),
+  );
+
+  return $libraries;
+}
+
+function imdb_library_check() {
+  if (!(($library = libraries_load("imdbphp")) && !empty($library['loaded']))) {
+    drupal_set_message(t("IMDBPHP Library is not downloaded. Please download the library from !url and put it under imdbphp folder. The path should be sites/all/libraries/imdbphp/bootsrap.php",array("!url"=>l("https://github.com/tboothman/imdbphp/","https://github.com/tboothman/imdbphp/",array("attributes"=>array("target"=>"_blank"))))), "error");
+    return false;
+  }
+  return true;
+}
+
+function imdb_get_full($title_id) {
+  if (!imdb_library_check()) {
+  	return false;
+  }
+  
+  $title = new \Imdb\Title($title_id);
+  
+  $item = new stdClass();
+  $item->akas = $title->alsoknow();
+  $item->awards = $title->awards();
+  $item->countries = $title->country();
+  $item->crazy_credits = $title->crazy_credits();
+  $item->credits_cast = $title->cast();
+  $item->credits_composer = $title->composer();
+  $item->credits_director = $title->director();
+  $item->credits_producer = $title->producer();
+  $item->credits_writing = $title->writing();
+  $item->extreviews = $title->extReviews();
+  $item->goofs = $title->goofs();
+  $item->langs = $title->languages();
+  $item->langs_full = $title->languages_detailed();
+  $item->aspectratio = $title->aspect_ratio();
+  $item->main_comment = $title->comment();
+  $item->main_genre = $title->genre();
+  $item->main_keywords = $title->keywords();
+  $item->all_keywords = $title->keywords_all();
+  $item->main_language = $title->language();
+  $item->main_photo = $title->photo(false);
+  $item->main_thumb = $title->photo(true);
+  $item->main_pictures = $title->mainPictures();
+  $item->main_plotoutline = $title->plotoutline();
+  $item->main_rating = $title->rating();
+//   $item->main_runtime = $title->runtime_all();
+  $item->main_movietype =$title->movietype();
+  $item->main_title = $title->title();
+  $item->original_title = $title->orig_title();
+  $item->main_votes = $title->votes();
+  $item->main_year = $title->year();
+  $item->main_endyear = $title->endyear();
+  $item->main_yearspan = $title->yearspan();
+  $item->main_creator = $title->creator();
+  $item->main_tagline = $title->tagline();
+  $item->main_storyline = $title->storyline();
+  $item->main_prodnotes = $title->prodNotes();
+  $item->main_movietypes = $title->movieTypes();
+  $item->main_top250 = $title->top250();
+  $item->moviecolors = $title->colors();
+  $item->movieconnections = $title->movieconnection();
+  $item->moviegenres = $title->genres();
+  $item->moviequotes = $title->quotes();
+  $item->movierecommendations = $title->movie_recommendations();
+  $item->movieruntimes = $title->runtimes();
+  $item->mpaas = $title->mpaa();
+  $item->mpaas_hist = $title->mpaa_hist();
+  $item->mpaa_justification = $title->mpaa_reason();
+  $item->plot_plot = $title->plot();
+  $item->synopsis_wiki = $title->synopsis();
+  $item->release_info = $title->releaseInfo();
+  $item->seasoncount = $title->seasons();
+  $item->season_episodes = $title->episodes();
+  $item->sound = $title->sound();
+  $item->soundtracks = $title->soundtrack();
+  $item->split_comment = $title->comment_split();
+  $item->split_plot = $title->plot_split();
+  $item->taglines = $title->taglines();
+  $item->trailers = $title->trailers();
+  $item->video_sites = $title->videosites();
+  $item->soundclip_sites = $title->soundclipsites();
+  $item->photo_sites = $title->photosites();
+  $item->misc_sites = $title->miscsites();
+  $item->trivia = $title->trivia();
+  $item->compcred_prod = $title->prodCompany();
+  $item->compcred_dist = $title->distCompany();
+  $item->compcred_special = $title->specialCompany();
+  $item->compcred_other = $title->otherCompany();
+  $item->parental_guide = $title->parentalGuide();
+  $item->official_sites = $title->officialSites();
+  $item->locations = $title->locations();
+  $item->budget = $title->budget();
+  $item->openingWeekend = $title->openingWeekend();
+  $item->gross = $title->gross();
+  $item->weekendGross = $title->weekendGross();
+  $item->admissions = $title->admissions();
+  $item->filmingDates = $title->filmingDates();
+  $item->moviealternateversions = $title->alternateVersions();
+  $item->isSerial = $title->is_serial();
+  $item->episodeSeason = $title->episodeSeason();
+  $item->episodeEpisode = $title->episodeEpisode();
+  
+  return $item;
+}
+
+function imdb_search($query,$type) {
+  if (!imdb_library_check()) {
+  	return false;
+  }
+  
+  $type = imdb_get_type($type);
+  
+  $search = new \Imdb\TitleSearch(); // Optional $config parameter
+  $results = $search->search($query, $type); // Optional second parameter restricts types returned
+  
+  $titles = array();
+  foreach ($results as $result) { 
+    $titles[] = array("title" => $result->title() . ' ( ' . $result->year() . ')', "id" => $result->imdbid());
+  }
+  return $titles;
+}
+
+
+function imdb_get_type($type) {
+  switch ($type) {
+  	case "Movie":
+  	  $type = [\Imdb\TitleSearch::MOVIE];
+  	  break;
+  	case "TV Series":
+  	  $type = [\Imdb\TitleSearch::TV_SERIES];
+  	  break;
+  
+  	case "TV Episode":
+  	  $type = [\Imdb\TitleSearch::TV_EPISODE];
+  	  break;
+  
+  	case "TV Mini-Series":
+  	  $type = [\Imdb\TitleSearch::TV_MINI_SERIES];
+  	  break;
+  
+  	case "TV Movie":
+  	  $type = [\Imdb\TitleSearch::TV_MOVIE];
+  	  break;
+  
+  	case "TV Special":
+  	  $type = [\Imdb\TitleSearch::TV_SPECIAL];
+  	  break;
+  	case "TV Short":
+  	  $type = [\Imdb\TitleSearch::TV_SHORT];
+  	  break;
+  
+  	case "Video Game":
+  	  $type = [\Imdb\TitleSearch::GAME];
+  	  break;
+  
+  	case "Video":
+  	  $type = [\Imdb\TitleSearch::VIDEO];
+  	  break;
+  
+  	case "Short":
+  	  $type = [\Imdb\TitleSearch::SHORT];
+  	  break;
+  
+  	default:
+  	  $type = [\Imdb\TitleSearch::MOVIE];
+  	  break;
+  }
+  return $type;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

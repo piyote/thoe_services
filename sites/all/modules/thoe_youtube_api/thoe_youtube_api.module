@@ -16,12 +16,14 @@ function thoe_youtube_api_menu() {
   return $items;
 }
 
-function thoe_youtube_api_search($string) {
+function thoe_youtube_api_search($string,$lang = "en") {
+  $string = strip_tags($string);
   $youtube = thoe_youtube_api_get_google_client();
   $searchResponse = $youtube->search->listSearch('id,snippet', array(
       'q' => $string,
       'maxResults' => 5,
-      'type' => "video"
+      'type' => "video",
+      'relevanceLanguage' => $lang
   ));
   
   $results = array();

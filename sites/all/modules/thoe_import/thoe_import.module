@@ -29,23 +29,72 @@ function thoe_import_format_content($content,$style) {
   	  $time = $time_data["time"];
   	  $abbrevation = $time_data["abbrevation"];
   	  
+  	  drush_print("TIME");
+  	  drush_print("*******************");
+  	  drush_print($time. " ". $abbrevation);
+  	  drush_print(" ");
+  	  
   	  // get title
   	  $title = $parts[1];
   	  
+  	  // get description
+  	  array_shift($parts);
+  	  array_shift($parts);
+  	  if(count($parts)>0) {
+  	    $desc = implode(".",$parts);
+  	  }
+  	  else {
+  	    $len = strlen(strip_tags($title));
+  	    if($len>50) {
+  	      $new_title = truncate_utf8(strip_tags($title),50,true,false);
+  	      $new_desc = str_replace($new_title,"",strip_tags($title));
+  	      
+  	      $title = $new_title;
+  	      $desc = $new_desc;
+  	    }
+  	  }
+  	  
   	  //get categories
-  	  $categories = opencalais_thoe_get_tags($title);
+  	  $categories = opencalais_thoe_get_tags($title . " " . $desc);
   	  
   	  // get image
   	  $image_url = thoe_import_get_image($title);
-  	  
-  	  // get description
-  	  $desc = $parts[2];
   	  
   	  // get the videos
   	  $videos = thoe_youtube_api_search($title);
   	  
   	  // get the books
   	  $books = thoe_import_get_google_books($title);
+  	  
+  	  drush_print("TITLE");
+  	  drush_print("*******************");
+  	  drush_print($title);
+  	  drush_print(" ");
+  	  
+  	  drush_print("DESCRIPTION");
+  	  drush_print("*******************");
+  	  drush_print($desc);
+  	  drush_print(" ");
+  	  
+  	  drush_print("BOOKS");
+  	  drush_print("*******************");
+  	  print_r($books);
+  	  drush_print(" ");
+  	  
+  	  drush_print("VIDEOS");
+  	  drush_print("*******************");
+  	  print_r($videos);
+  	  drush_print(" ");
+  	  
+  	  drush_print("IMAGE");
+  	  drush_print("*******************");
+  	  print_r($image_url);
+  	  drush_print(" ");
+  	  
+  	  drush_print("CATEGORIES");
+  	  drush_print("*******************");
+  	  print_r($categories);
+  	  drush_print(" ");
   	  
   	  break;
   	
@@ -55,6 +104,7 @@ function thoe_import_format_content($content,$style) {
 
 // not using this
 function thoe_import_get_goodreads_books($title) {
+  $title = strip_tags($title);
   $results = goodreads_book_search($title,'title',1,1);
   $best_books_all = $results['results']['work'];
   $best_books = array_slice($best_books_all,0,5);
@@ -68,12 +118,13 @@ function thoe_import_get_goodreads_books($title) {
 }
 
 function thoe_import_get_google_books($title,$lang="en") {
+  $title = strip_tags($title);
   // for more info: https://developers.google.com/books/docs/v1/using#PerformingSearch
   $google_api_key = "AIzaSyBHBN9EvpOH2Cpbup_ktQNXAzj6-8qe0ZI";
   $cx = "018281177569452009831:a94jredrj7a";
   $end_url = "https://www.googleapis.com/books/v1/volumes";
   $data = array(
-      "q" => urlencode($title),
+      "q" => urlencode(strip_tags($title)),
       "langRestrict" => $lang,
       "key" => $google_api_key,
       "maxResults" => 5
@@ -164,6 +215,7 @@ function thoe_import_time_define($time) {
 }
 
 function thoe_import_get_image($content) {
+  $content = strip_tags($content);
   // first try wiki
   $wiki_url = 'https://en.wikipedia.org/w/api.php';
   $data = array(
@@ -209,6 +261,7 @@ function thoe_import_get_image($content) {
     
     $full_url = url($end_url, array('query' => $data));
     $google_result = drupal_http_request($full_url);
+    print_r($google_result);
     if ($google_result->code==200) {
       $data = json_decode($google_result->data);
       $source = $data->items[0]->link;

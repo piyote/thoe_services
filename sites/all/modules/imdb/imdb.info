@@ -1,0 +1,3 @@
+name = "IMDB"
+description = "Gets information of a title from IMDB using IMDB PHP library"
+core = "7.x"
