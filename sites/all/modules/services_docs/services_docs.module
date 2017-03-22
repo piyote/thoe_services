@@ -1,0 +1,128 @@
+<?php
+
+/**
+ * Implements hook_menu()
+ */
+function services_docs_menu() {
+  $items = array();
+  
+  $items['admin/structure/services/docs'] = array(
+    'title' => 'Services Documentation Settings',
+    'page callback' => 'services_docs_page',
+    'access arguments' => array('administer services'),
+  );
+  $items['docs'] = array(
+    'title' => 'Services Documentation',
+    'page callback' => 'services_docs_page',
+    'access arguments' => array('administer services'),
+  );
+  
+  return $items;
+}
+
+function services_docs_page() {
+  $output = '';
+  
+  $services = services_endpoint_load_all();
+  $resources = services_get_resources();
+  $entity_types = entity_get_info();
+
+  foreach($services as $service_id => $service) {
+    foreach($service->resources as $resource_id => $resource) {
+      $path_element = (isset($resource['alias'])?$resource['alias']:$resource_id);
+      $output .= '<h2>' . ucfirst($path_element) . '</h2>';
+      foreach($resource as $type => $ops) {
+        if (is_array($ops)) {
+          foreach($ops as $op_id => $op) {
+            if ($op['enabled']) {
+              $resource_op = $resources[$resource_id][$type][$op_id];
+              $verb = 'GET';
+              if ($type == 'operations') {
+                if ($op_id == 'create') {
+                  $verb = 'POST';
+                }
+                if ($op_id == 'retrieve') {
+                  $verb = 'GET';
+                }
+                if ($op_id == 'update') {
+                  $verb = 'PUT';
+                }
+                if ($op_id == 'delete') {
+                  $verb = 'DELETE';
+                }
+                if ($op_id == 'index') {
+                  $verb = 'GET';
+                }
+                
+              }
+              if ($type == 'actions' || $type == 'targeted_actions') {
+                $verb = 'POST';
+              }
+              if ($type == 'relationships') {
+                $verb = 'GET';
+              }
+              $url = array($service->path, $path_element);
+              $params = array();
+              $data = array();
+              if (isset($resource_op['args'])) {
+                foreach($resource_op['args'] as $arg_id => $arg) {
+                  if (isset($arg['source'])) {
+                    if (is_array($arg['source'])) {
+                      if (isset($arg['source']['path'])) {
+                        $url[] = ':' . $arg['name'];
+                      }
+                      if (isset($arg['source']['param'])) {
+                        $params[] = '<div><h4>(' . $arg['type'] . ') ' . $arg['source']['param'] . (($arg['optional'])?' - optional':' - required') . '</h4><p>' . $arg['description']; 
+                      }
+                      if (isset($arg['source']['data'])) {
+                        $data[] = '<div><h4>(' . $arg['type'] . ') ' . $arg['source']['data'] . (($arg['optional'])?' - optional':' - required') . '</h4><p>' . $arg['description']; 
+                      }
+                    }
+                    else {
+                      if (isset($arg['source']['data'])) {
+                        // Support the services_entity module.
+                        if (preg_match('/^entity_/', $resource_id)) {
+                          $entity_type = preg_replace('/^entity_/', '', $resource_id);
+                        }
+                        else {
+                          $entity_type = $resource_id;
+                        }
+                        // If this is an entity, we can load in the data for it.
+                        if (isset($entity_types[$entity_type])) {
+                          $property_info = entity_get_all_property_info($entity_type);
+//                          dpm($property_info);
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+              // Relationships, actions and targeted_actions are postpended with the name.
+              if ($type == 'relationships' || $type == 'actions' || $type == 'targeted_actions') {
+                $url[] = $op_id;
+              }
+              $output .= '<h3>' . ucfirst($op_id) . '</h3>';
+              if (isset($resource_op['description'])) {
+                $output .= '<div>' . $resource_op['description'] . '</div>';
+              }
+              $output .= '<pre><code>' . $verb . ' ' . implode('/', $url) . '</code></pre>';
+              if (!empty($params)) {
+                $output .= '<div>Query String Parameters</div>';
+                $output .= implode('', $params);
+              }
+              if (!empty($data)) {
+                $output .= '<div>Body Data</div>';
+                $output .= implode('', $data);
+              }
+            }
+          }
+        }
+      }
+    }
+   }
+//  dpm($services);
+//  dpm($resources);
+//  dpm($entity_types);
+  
+  return $output;
+}

@@ -1,0 +1,13 @@
+name = Services Documentation
+description = Automatically generate documentation for services endpoints.
+package = Services
+core = 7.x
+dependencies[] = services
+dependencies[] = entity
+
+; Information added by drupal.org packaging script on 2013-10-01
+version = "7.x-1.x-dev"
+core = "7.x"
+project = "services_docs"
+datestamp = "1380627315"
+

@@ -606,6 +606,62 @@ function thoe_import_delete_all() {
   db_query("TRUNCATE TABLE {file_managed}");
 }
 
+function thoe_import_google_image_find_missing() {
+  $imageless_nodes = thoe_import_imageless_nodes();
+  
+  foreach ($imageless_nodes as $nid) {
+    $node = node_load($nid);
+    $title = $node->title;
+    $image_url = array("image"=>thoe_import_get_image($title));
+    dpm($image_url["image"]);
+    $node = thoe_import_add_image($image_url,$node);
+    node_save($node);
+  }
+}
+
+function thoe_import_imageless_nodes($node_type = "node") {
+  $nodes = db_query("select n.nid from {field_revision_field_image} f
+      right join {node} n on f.entity_id = n.nid
+      where n.type = 'node'
+      and f.entity_id is null");
+  
+  $empty_nodes = array();
+  foreach ($nodes as $record) {
+    $empty_nodes[] = $record->nid;
+  }
+  return $empty_nodes;
+}
+
+function thoe_import_query_alter(QueryAlterableInterface $query) {
+  if ($query->hasTag('views')) {
+    static $count;
+    $view =& $query->getMetaData('view');
+
+    if (strstr($groupby = $view->query->options['query_comment'], 'groupby')) {
+      list($action, $field) = explode(':', $groupby);
+
+      if (strlen($field) > 0) {
+        $query->groupBy($field);
+      }
+    }
+  }
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
