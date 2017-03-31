@@ -33,7 +33,7 @@ function thoe_import_format_content($content,$style) {
   	  $times[] = array(
   	      "time" => $time_data["time"],
   	      "abbrevation" =>  $time_data["abbrevation"],
-  	      "ago_after" => "after"
+  	      "ago_after" => "after",
   	  );
   	  
 //   	  drush_print("TIME");
@@ -86,7 +86,8 @@ function thoe_import_format_content($content,$style) {
 	      "time" => array(
 	        "type" => "big_date",
 	        "values" => $times
-	      )
+	      ),
+  	    "tis" => $time_data["tis"]
   	  );
   	  
   	  thoe_import_add_node($data);
@@ -158,7 +159,8 @@ function thoe_import_add_node($data,$lang = "en") {
   $node = thoe_import_add_image($data,$node);
   
   // set date
-
+  $tis_language = thoe_import_lang_code('field_tis',$node->language);
+  $node->field_tis[$tis_language][0]['value'] = $data["tis"];
   node_save($node);
   thoe_import_add_date($data,$node);
 }
@@ -212,10 +214,13 @@ function thoe_import_time_define($time) {
   $abbrevation=="";
   $time = str_replace("ca. ","",$time);
   $time = preg_replace("/\(.*\)/","",$time);
+  $big_bang = 13.8*pow(10,9);
+  $seconds_in_a_year = 3.154*pow(10,7); 
   
   if($time == "0 seconds ") {
     $time = 0;
     $abbrevation = "zero";
+    $tis = $big_bang*$seconds_in_a_year*(-1);
   }
   
   // check if million years
@@ -223,6 +228,7 @@ function thoe_import_time_define($time) {
   if($matches[0][0] && $abbrevation=="") {
     $time = $matches[1][0];
     $abbrevation = "ma";
+    $tis = $time*pow(10,6)*$seconds_in_a_year - $big_bang*$seconds_in_a_year;
   }
   
   // check if billion years
@@ -230,6 +236,7 @@ function thoe_import_time_define($time) {
   if($matches[0][0] && $abbrevation=="") {
     $time = $matches[1][0];
     $abbrevation = "ga";
+    $tis = $time*pow(10,9)*$seconds_in_a_year - $big_bang*$seconds_in_a_year;
   }
   
   // check if it's a neg abbrevation time
@@ -238,6 +245,7 @@ function thoe_import_time_define($time) {
   {
     $abbrevation = "neg";
     $time = $matches[2][0];
+    $tis = $big_bang*$seconds_in_a_year*(-1);
   }
   
   // check if seconds
@@ -245,6 +253,7 @@ function thoe_import_time_define($time) {
   if($matches[0][0] && $abbrevation=="") {
     $time = $matches[1][0];
     $abbrevation = "sec";
+    $tis = $time - $big_bang*$seconds_in_a_year;
   }
   
   // check if minutes
@@ -252,6 +261,7 @@ function thoe_import_time_define($time) {
   if($matches[0][0] && $abbrevation=="") {
     $time = $matches[1][0];
     $abbrevation = "min";
+    $tis = $time*60 - $big_bang*$seconds_in_a_year;
   }
   
   // check if years
@@ -271,10 +281,10 @@ function thoe_import_time_define($time) {
         $abbrevation = "ye";
       }
     }
-    
+    $tis = $time*$seconds_in_a_year - $big_bang*$seconds_in_a_year;
   }
   
-  return array("time"=>$time,"abbrevation"=>$abbrevation);
+  return array("time"=>$time,"abbrevation"=>$abbrevation,"tis"=>$tis);
 }
 
 function thoe_import_get_image($content) {
@@ -632,21 +642,69 @@ function thoe_import_imageless_nodes($node_type = "node") {
   return $empty_nodes;
 }
 
-function thoe_import_query_alter(QueryAlterableInterface $query) {
-  if ($query->hasTag('views')) {
-    static $count;
-    $view =& $query->getMetaData('view');
+function thoe_import_edit_bigdate_tis() {
+  $tisless_nodes = thoe_import_tisless_nodes();
 
-    if (strstr($groupby = $view->query->options['query_comment'], 'groupby')) {
-      list($action, $field) = explode(':', $groupby);
-
-      if (strlen($field) > 0) {
-        $query->groupBy($field);
-      }
+  $big_bang = 13.8*pow(10,9);
+  $seconds_in_a_year = 3.154*pow(10,7);
+  
+  $big_bang_seconds = 435252000000000000;
+  
+  foreach ($tisless_nodes as $nid) {
+    $node = node_load($nid);
+    $years_lang = thoe_import_lang_code('field_years_ago',$node->language);
+    
+    $entity = entity_load('field_collection_item', array($node->field_big_date[$years_lang][0]['value']));
+    
+    $time = $entity[$node->field_big_date[$years_lang][0]['value']]->field_years_ago['und'][0]['value'];
+    $abbrevation = $entity[$node->field_big_date[$years_lang][0]['value']]->field_abbrevation['und'][0]['value'];
+    
+    switch ($abbrevation) {
+    	case "zero":
+      	$tis = $big_bang*$seconds_in_a_year*(-1);
+      	break;
+    	case "neg":
+    	  $tis = $big_bang*$seconds_in_a_year*(-1);
+    	  break;
+  	  case "sec":
+  	    $tis = $time - $big_bang_seconds;
+  	    break;
+	    case "min":
+	      $tis = $time*60 - $big_bang_seconds;
+	      break;
+      case "hr":
+        $tis = $time*60 - $big_bang_seconds;
+        break;
+      case "ye":
+        $tis = $time*$seconds_in_a_year - $big_bang_seconds;
+        break;
+      case "ka":
+        $tis = $time*$seconds_in_a_year*1000 - $big_bang_seconds;
+        break;
+      case "ma":
+        $tis = $time*$seconds_in_a_year*1000000 - $big_bang_seconds;
+        break;
+      case "ga":
+        $tis = $time*$seconds_in_a_year*1000000000 - $big_bang_seconds;
+        break;
     }
+    $node->field_tis[$years_lang][0]['value'] = $tis;
+    dpm($tis);
+    node_save($node);
   }
 }
 
+function thoe_import_tisless_nodes($node_type = "node") {
+  $nodes = db_query("select n.nid from {node} n
+      where n.type = 'node'
+      ");
+
+  $empty_nodes = array();
+  foreach ($nodes as $record) {
+    $empty_nodes[] = $record->nid;
+  }
+  return $empty_nodes;
+}
 
 
 
