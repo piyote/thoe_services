@@ -1,0 +1,4 @@
+name = Thoe import 10th - 5th millennium
+description = Wikipedia 10th - 5th millennium data importer
+core = 7.x
+dependencies[] = thoe_import

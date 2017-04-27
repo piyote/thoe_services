@@ -48,7 +48,7 @@ class MediaInternetYouTubeHandler extends MediaInternetBaseHandler {
     $file = file_uri_to_object($uri, TRUE);
 
     // Try to default the file name to the video's title.
-    if (empty($file->fid) && $info = $this->getOEmbed()) {
+    if (empty($file->fid) && $this->getOEmbed() && $info = $this->getOEmbed()) {
       $file->filename = truncate_utf8($info['title'], 255);
     }
 
@@ -75,8 +75,8 @@ class MediaInternetYouTubeHandler extends MediaInternetBaseHandler {
       return drupal_json_decode($response->data);
     }
     else {
-      throw new Exception("Error Processing Request. (Error: {$response->code}, {$response->error})");
-      return;
+//       throw new Exception("Error Processing Request. (Error: {$response->code}, {$response->error})");
+      return false;
     }
   }
 
@@ -94,10 +94,12 @@ class MediaInternetYouTubeHandler extends MediaInternetBaseHandler {
     $response = drupal_http_request($oembed_url, array('method' => 'HEAD'));
 
     if ($response->code == 401) {
-      throw new MediaInternetValidationException('Embedding has been disabled for this YouTube video.');
+//       throw new MediaInternetValidationException('Embedding has been disabled for this YouTube video.');
+      return false;
     }
     elseif ($response->code != 200) {
-      throw new MediaInternetValidationException('The YouTube video ID is invalid or the video was deleted.');
+//       throw new MediaInternetValidationException('The YouTube video ID is invalid or the video was deleted.');
+      return false;
     }
 
     return TRUE;

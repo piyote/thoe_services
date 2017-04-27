@@ -10,7 +10,7 @@
  *  $youtube = new MediaYouTubeStreamWrapper('youtube://v/[video-code]');
  */
 class MediaYouTubeStreamWrapper extends MediaReadOnlyStreamWrapper {
-  protected $base_url = 'http://www.youtube.com/watch';
+  protected $base_url = 'https://www.youtube.com/watch';
 
   static function getMimeType($uri, $mapping = NULL) {
     return 'video/youtube';
@@ -20,7 +20,7 @@ class MediaYouTubeStreamWrapper extends MediaReadOnlyStreamWrapper {
     $parts = $this->get_parameters();
     $uri = file_stream_wrapper_uri_normalize('youtube://v/' . check_plain($parts['v']));
     $external_url = file_create_url($uri);
-    $oembed_url = url('http://www.youtube.com/oembed', array('query' => array('url' => $external_url, 'format' => 'json')));
+    $oembed_url = url('https://www.youtube.com/oembed', array('query' => array('url' => $external_url, 'format' => 'json')));
     $response = drupal_http_request($oembed_url);
 
     if (!isset($response->error)) {
@@ -28,7 +28,7 @@ class MediaYouTubeStreamWrapper extends MediaReadOnlyStreamWrapper {
       return $data['thumbnail_url'];
     }
     else {
-      throw new Exception("Error Processing Request. (Error: {$response->code}, {$response->error})");
+//       throw new Exception("Error Processing Request. (Error: {$response->code}, {$response->error})");
       return;
     }
   }

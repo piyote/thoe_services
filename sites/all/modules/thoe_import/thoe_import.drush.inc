@@ -46,7 +46,7 @@ function drush_thoe_import($service){
   $enabled_modules = thoe_import_enabled_modules();
   
   if(in_array("thoe_import_".$service, $enabled_modules)) {
-    drush_print("Service enabled, will process");
+    drush_print("Service ".$service." enabled, will process");
     call_user_func("thoe_import_".$service."_start");
   }
   else

@@ -1,0 +1,4 @@
+name = Thoe import natural history
+description = Wikipedia natural history data importer
+core = 7.x
+dependencies[] = thoe_import

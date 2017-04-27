@@ -1,0 +1,54 @@
+<?php 
+
+function thoe_import_human_prehistory_start() {
+	$url = "https://en.wikipedia.org/wiki/Timeline_of_human_prehistory";
+	
+// 	drush_print("Natural history import started");
+	
+	$style = array(
+	  "name"=>"all_in_one_prehistory",
+    "page"=>"bigbang",
+	  "data_in" => "ul",
+	  "clues" => array(
+	    "after"=>"h3",
+	  ),
+	  "ignore" => array(
+	  	"first" => "h2"
+	  ),
+	  "break" => array(
+		  '12,000 years ago:'
+	  )
+	);
+	
+	$html = file_get_html($url);
+	
+	// always remove $toc contents table
+	
+	$html->find('#toc',0)->outertext = "";
+	$html->load($html->save());
+	
+	$continue = true;
+	
+	foreach($html->find('#mw-content-text',0)->find("ul") as $ul) {
+	  if($ul->parent()->getAttribute("id")!=="toc" && $continue)
+	  {
+	    foreach ($ul->find("li") as $li) {
+	      if($continue)
+	      {
+	        $break_on = $style["break"];
+	        foreach ($break_on as $break_item) {
+	          $str_item = strpos($li->innertext,$break_item);
+	          if($str_item !== false) {
+	            $continue = false;
+	            break;
+	          }
+	        }
+	        if($continue) {
+// 	          dpm($li->innertext);
+	          thoe_import_format_content($li->innertext,$style);
+	        }
+	      }
+	    }
+	  }
+	}
+}
