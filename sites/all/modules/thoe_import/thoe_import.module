@@ -68,66 +68,6 @@ function thoe_import_format_content($content,$style) {
   	    return;
   	  }
   	  
-  	  $clean_desc = strip_tags($desc);
-  	  drush_print($clean_title);
-  	  //get categories
-  	  $categories = opencalais_thoe_get_tags($clean_title . " " . $clean_desc);
-  	  
-  	  // get image
-  	  $image_url = thoe_import_get_image($clean_title);
-  	  
-  	  // get the videos
-  	  $videos = thoe_youtube_api_search($clean_title);
-  	  
-  	  // get the books
-  	  $books = thoe_import_get_google_books($clean_title);
-  	  
-  	  $data = array(
-  	  	"title" => $clean_title,
-	      "description" => $clean_desc,
-	      "books" => $books,
-	      "videos" => $videos,
-	      "image" => $image_url,
-	      "categories" => $categories,
-	      "time" => array(
-	        "type" => "big_date",
-	        "values" => $times
-	      ),
-  	    "tis" => $time_data["tis"]
-  	  );
-  	  
-  	  thoe_import_add_node($data);
-  	  
-//   	  drush_print("TITLE");
-//   	  drush_print("*******************");
-//   	  drush_print($title);
-//   	  drush_print(" ");
-  	  
-//   	  drush_print("DESCRIPTION");
-//   	  drush_print("*******************");
-//   	  drush_print($desc);
-//   	  drush_print(" ");
-  	  
-//   	  drush_print("BOOKS");
-//   	  drush_print("*******************");
-//   	  print_r($books);
-//   	  drush_print(" ");
-  	  
-//   	  drush_print("VIDEOS");
-//   	  drush_print("*******************");
-//   	  print_r($videos);
-//   	  drush_print(" ");
-  	  
-//   	  drush_print("IMAGE");
-//   	  drush_print("*******************");
-//   	  print_r($image_url);
-//   	  drush_print(" ");
-  	  
-//   	  drush_print("CATEGORIES");
-//   	  drush_print("*******************");
-//   	  print_r($categories);
-//   	  drush_print(" ");
-  	  
   	  break;
   	  
   	  case "all_in_one_natural":
@@ -180,67 +120,6 @@ function thoe_import_format_content($content,$style) {
   	    if($node_exists) {
   	      return;
   	    }
-  	    
-  	    $clean_desc = strip_tags($desc);
-//   	    drush_print($clean_title);
-  	    //get categories
-  	    $categories = opencalais_thoe_get_tags($clean_title . " " . $clean_desc);
-  	    	
-  	    // get image
-  	    $image_url = thoe_import_get_image($clean_title);
-//   	    $image_url = "";
-  	    	
-  	    // get the videos
-  	    $videos = thoe_youtube_api_search($clean_title);
-  	    	
-  	    // get the books
-  	    $books = thoe_import_get_google_books($clean_title);
-  	    	
-  	    $data = array(
-  	    	  "title" => $clean_title,
-  	        "description" => $clean_desc,
-  	        "books" => $books,
-  	        "videos" => $videos,
-  	        "image" => $image_url,
-  	        "categories" => $categories,
-  	        "time" => array(
-  	            "type" => "big_date",
-  	            "values" => $times
-  	        ),
-  	        "tis" => $time_data["tis"]
-  	    );
-  	    	
-  	    thoe_import_add_node($data);
-  	    	
-  	      	  drush_print("TITLE");
-  	      	  drush_print("*******************");
-  	      	  drush_print($title);
-  	      	  drush_print(" ");
-  	    	
-  	      	  drush_print("DESCRIPTION");
-  	      	  drush_print("*******************");
-  	      	  drush_print($desc);
-  	      	  drush_print(" ");
-  	    	
-  	      	  drush_print("BOOKS");
-  	      	  drush_print("*******************");
-//   	      	  print_r($books);
-  	      	  drush_print(" ");
-  	    	
-  	      	  drush_print("VIDEOS");
-  	      	  drush_print("*******************");
-  	      	  print_r($videos);
-  	      	  drush_print(" ");
-  	    	
-  	      	  drush_print("IMAGE");
-  	      	  drush_print("*******************");
-  	      	  print_r($image_url);
-  	      	  drush_print(" ");
-  	    	
-  	      	  drush_print("CATEGORIES");
-  	      	  drush_print("*******************");
-  	      	  print_r($categories);
-  	      	  drush_print(" ");
   	    	
   	    break;
   	    
@@ -295,71 +174,137 @@ function thoe_import_format_content($content,$style) {
   	      if($node_exists) {
   	        return;
   	      }
-  	       
-  	      $clean_desc = strip_tags($desc);
-  	      //   	    drush_print($clean_title);
-  	      //get categories
-  	      $categories = opencalais_thoe_get_tags($clean_title . " " . $clean_desc);
-  	    
-  	      // get image
-  	      $image_url = thoe_import_get_image($clean_title);
-  	      //   	    $image_url = "";
-  	    
-  	      // get the videos
-  	      $videos = thoe_youtube_api_search($clean_title);
-  	    
-  	      // get the books
-  	      $books = thoe_import_get_google_books($clean_title);
-  	    
-  	      $data = array(
-  	          "title" => $clean_title,
-  	          "description" => $clean_desc,
-  	          "books" => $books,
-  	          "videos" => $videos,
-  	          "image" => $image_url,
-  	          "categories" => $categories,
-  	          "time" => array(
-  	              "type" => "big_date",
-  	              "values" => $times
-  	          ),
-  	          "tis" => $time_data["tis"]
-  	      );
-  	    
-  	      thoe_import_add_node($data);
-  	    
-  	      drush_print("TITLE");
-  	      drush_print("*******************");
-  	      drush_print($title);
-  	      drush_print(" ");
-  	    
-  	      drush_print("DESCRIPTION");
-  	      drush_print("*******************");
-  	      drush_print($desc);
-  	      drush_print(" ");
-  	    
-  	      drush_print("BOOKS");
-  	      drush_print("*******************");
-  	      //   	      	  print_r($books);
-  	      drush_print(" ");
-  	    
-  	      drush_print("VIDEOS");
-  	      drush_print("*******************");
-  	      print_r($videos);
-  	      drush_print(" ");
-  	    
-  	      drush_print("IMAGE");
-  	      drush_print("*******************");
-  	      print_r($image_url);
-  	      drush_print(" ");
-  	    
-  	      drush_print("CATEGORIES");
-  	      drush_print("*******************");
-  	      print_r($categories);
-  	      drush_print(" ");
   	    
   	      break;
+  	      
+	      case "10_5_bc":
+	        $parts = explode(":",strip_tags($content));
+	        $time = $parts[0];
+	        
+	        $parts = explode("—",$time);
+	        $time = $time[0];
+	        
+	        $parts = explode(";",$time);
+	        $time = $time[0];
+	        
+	        $time_data = thoe_import_time_define_10_5_bc($time,$style);
+	         
+	        // get time and abbrevation
+	        $time = $time_data["time"];
+	        $abbrevation = $time_data["abbrevation"];
+	         
+	        $times = array();
+	        $times[] = array(
+	            "time" => $time_data["time"],
+	            "abbrevation" =>  $time_data["abbrevation"],
+	            "ago_after" => "ago",
+	        );
+	         
+	        drush_print("TIME");
+	        drush_print("*******************");
+	        drush_print($time. " ". $abbrevation);
+	        drush_print(" ");
+	         
+	        // get title
+	        $title = $parts[1];
+	        
+	        if(!$time_data["time_found"]) {
+	          $title = strip_tags($content);
+	        }
+	        
+	        $title = preg_replace("/\[.*\]/","",$title);
+	         
+	        // get description
+	        array_shift($parts);
+	        array_shift($parts);
+	        if(count($parts)>0) {
+	          $desc = implode(".",$parts);
+	        }
+	        else {
+	          $len = strlen(strip_tags($title));
+	          if($len>50) {
+	            $new_title = truncate_utf8(strip_tags($title),50,true,false);
+	            $new_desc = str_replace($new_title,"",strip_tags($title));
+	             
+	            $title = $new_title;
+	            $desc = $new_desc;
+	          }
+	        }
+	        $title = str_replace("–","",$title);
+	        $title = str_replace("– ","",$title);
+	        $title = str_replace("- ","",$title);
+	        $title = trim($title);
+	      
+	        $clean_title = strip_tags($title);
+	        $node_exists = thoe_import_node_exists($clean_title);
+	        if($node_exists) {
+	          return;
+	        }
+	         
+	        break;
   	
   }
+  
+  $clean_desc = strip_tags($desc);
+  //   	    drush_print($clean_title);
+  //get categories
+  $categories = opencalais_thoe_get_tags($clean_title . " " . $clean_desc);
+  
+  // get image
+  $image_url = thoe_import_get_image($clean_title);
+  //   	    $image_url = "";
+  
+  // get the videos
+  $videos = thoe_youtube_api_search($clean_title);
+  
+  // get the books
+  $books = thoe_import_get_google_books($clean_title);
+  
+  $data = array(
+      "title" => $clean_title,
+      "description" => $clean_desc,
+      "books" => $books,
+      "videos" => $videos,
+      "image" => $image_url,
+      "categories" => $categories,
+      "time" => array(
+          "type" => "big_date",
+          "values" => $times
+      ),
+      "tis" => $time_data["tis"]
+  );
+  
+  thoe_import_add_node($data);
+  
+  drush_print("TITLE");
+  drush_print("*******************");
+  drush_print($title);
+  drush_print(" ");
+  
+  drush_print("DESCRIPTION");
+  drush_print("*******************");
+  drush_print($desc);
+  drush_print(" ");
+  
+  drush_print("BOOKS");
+  drush_print("*******************");
+  //   	      	  print_r($books);
+  drush_print(" ");
+  
+  drush_print("VIDEOS");
+  drush_print("*******************");
+  print_r($videos);
+  drush_print(" ");
+  
+  drush_print("IMAGE");
+  drush_print("*******************");
+  print_r($image_url);
+  drush_print(" ");
+  
+  drush_print("CATEGORIES");
+  drush_print("*******************");
+  print_r($categories);
+  drush_print(" ");
   
 }
 
@@ -571,6 +516,32 @@ function thoe_import_time_define_prehistory($time) {
   $tis = $seconds_in_a_year*($time-2000)*(-1);
 
   return array("time"=>$time,"abbrevation"=>$abbrevation,"tis"=>$tis);
+}
+
+function thoe_import_time_define_10_5_bc($time,$style) {
+  $time = strip_tags($time);
+  $time = str_replace(",","",$time);
+  $time = str_replace(" BC","",$time);
+  $time = str_replace("c. ","",$time);
+  $time = trim($time);
+  $time = preg_replace("/\(.*\)/","",$time);
+
+  $range = explode("–",$time);
+  $time = $range[0];
+  
+  $time_found = true;
+  if(!is_numeric($time)) {
+    $time = $style["millennium"]*1000;
+    $time_found = false;
+  }
+  
+  $seconds_in_a_year = 3.154*pow(10,7);
+
+  // all is years
+  $abbrevation = "ye";
+  $tis = $seconds_in_a_year*$time*(-1);
+
+  return array("time"=>$time,"abbrevation"=>$abbrevation,"tis"=>$tis,"time_found"=>$time_found);
 }
 
 function thoe_import_get_image($content) {

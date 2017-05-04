@@ -12,9 +12,10 @@ function thoe_import_10_5_bc_start() {
 	
 // 	drush_print("Natural history import started");
 	
-	foreach ($urls as $url) {
+	for ($i=5;$i<11;$i++) {
+	  $url = "https://en.wikipedia.org/wiki/".$i."th_millennium_BC";
 	  $style = array(
-	      "name"=>"all_in_one_10_5_bc",
+	      "name"=>"10_5_bc",
 	      "page"=>"bigbang",
 	      "data_in" => "ul",
 	      "clues" => array(
@@ -25,7 +26,8 @@ function thoe_import_10_5_bc_start() {
 	      ),
 	      "break" => array(
 	          '12,000 years ago:'
-	      )
+	      ),
+	      "millennium" => $i
 	  );
 	  
 	  $html = file_get_html($url);
@@ -36,29 +38,42 @@ function thoe_import_10_5_bc_start() {
 	  $html->load($html->save());
 	  
 	  $continue = true;
-	  
+	  $k = 0;
 	  foreach($html->find('#mw-content-text',0)->find("ul") as $ul) {
-	    if($ul->parent()->getAttribute("id")!=="toc" && $continue)
+	    if($ul->parent()->getAttribute("id")!=="toc" 
+	        && $continue 
+	        && $ul->parent()->getAttribute("class")!=="hlist" 
+	        && $ul->parent()->getAttribute("class")!=="plainlinks hlist navbar"  
+	        && $ul->parent()->parent()->getAttribute("class")!=="navbox-list navbox-even hlist" 
+	        && $ul->parent()->parent()->getAttribute("class")!=="navbox-list navbox-odd hlist"
+	        && $ul->parent()->getAttribute("class")!=="plainlinks hlist navbar mini"
+	      )
 	    {
 	      foreach ($ul->find("li") as $li) {
 	        if($continue)
 	        {
 	          $break_on = $style["break"];
 	          foreach ($break_on as $break_item) {
-	            $str_item = strpos($li->innertext,$break_item);
-	            if($str_item !== false) {
-	              $continue = false;
-	              break;
-	            }
+	              $str_item = strpos($li->innertext,$break_item);
+	              if($str_item !== false) {
+	                $continue = false;
+	                break;
+	              }
 	          }
 	          if($continue) {
-	            	          dpm($li->innertext);
-// 	            thoe_import_format_content($li->innertext,$style);
+	            $is_reference = strpos($li->innertext,"smallcaps");
+	            if(!$is_reference) {
+	              $k++;
+// 	              dpm($li->innertext);
+	              thoe_import_format_content($li->innertext,$style);
+	            }
+
 	          }
 	        }
 	      }
 	    }
 	  }
+	  dpm($k);
 	}
 	
 	
