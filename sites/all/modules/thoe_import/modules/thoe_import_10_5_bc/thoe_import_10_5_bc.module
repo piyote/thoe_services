@@ -10,7 +10,7 @@ function thoe_import_10_5_bc_start() {
 	    "https://en.wikipedia.org/wiki/5th_millennium_BC"
 	 );
 	
-// 	drush_print("Natural history import started");
+	drush_print("10_5_bc import starts");
 	
 	for ($i=5;$i<11;$i++) {
 	  $url = "https://en.wikipedia.org/wiki/".$i."th_millennium_BC";

@@ -29,6 +29,7 @@ function thoe_import_format_content($content,$style) {
   	  $time = $time_data["time"];
   	  $abbrevation = $time_data["abbrevation"];
   	  
+  	  $time_type = "big_date";
   	  $times = array();
   	  $times[] = array(
   	      "time" => $time_data["time"],
@@ -79,6 +80,7 @@ function thoe_import_format_content($content,$style) {
   	    $time = $time_data["time"];
   	    $abbrevation = $time_data["abbrevation"];
   	    	
+  	    $time_type = "big_date";
   	    $times = array();
   	    $times[] = array(
   	        "time" => $time_data["time"],
@@ -132,6 +134,7 @@ function thoe_import_format_content($content,$style) {
   	      $time = $time_data["time"];
   	      $abbrevation = $time_data["abbrevation"];
   	    
+  	      $time_type = "big_date";
   	      $times = array();
   	      $times[] = array(
   	          "time" => $time_data["time"],
@@ -178,27 +181,20 @@ function thoe_import_format_content($content,$style) {
   	      break;
   	      
 	      case "10_5_bc":
-	        $parts = explode(":",strip_tags($content));
-	        $time = $parts[0];
-	        
-	        $parts = explode("—",$time);
-	        $time = $time[0];
-	        
-	        $parts = explode(";",$time);
-	        $time = $time[0];
-	        
-	        $time_data = thoe_import_time_define_10_5_bc($time,$style);
+	        $time_data = thoe_import_time_define_10_5_bc($content,$style);
 	         
 	        // get time and abbrevation
 	        $time = $time_data["time"];
 	        $abbrevation = $time_data["abbrevation"];
 	         
+	        $time_type = "normal";
 	        $times = array();
-	        $times[] = array(
-	            "time" => $time_data["time"],
-	            "abbrevation" =>  $time_data["abbrevation"],
-	            "ago_after" => "ago",
-	        );
+  	      $times[] = array(
+  	          "year" => $time_data["time"],
+  	          "ad_bc" =>  "bc",
+  	      );
+	        
+	        $tag = $time_data["tag"];
 	         
 	        drush_print("TIME");
 	        drush_print("*******************");
@@ -206,22 +202,14 @@ function thoe_import_format_content($content,$style) {
 	        drush_print(" ");
 	         
 	        // get title
-	        $title = $parts[1];
-	        
-	        if(!$time_data["time_found"]) {
-	          $title = strip_tags($content);
-	        }
+	        $title = $time_data["title"];
 	        
 	        $title = preg_replace("/\[.*\]/","",$title);
 	         
 	        // get description
-	        array_shift($parts);
-	        array_shift($parts);
-	        if(count($parts)>0) {
-	          $desc = implode(".",$parts);
-	        }
-	        else {
-	          $len = strlen(strip_tags($title));
+
+
+	          $len = strlen($title);
 	          if($len>50) {
 	            $new_title = truncate_utf8(strip_tags($title),50,true,false);
 	            $new_desc = str_replace($new_title,"",strip_tags($title));
@@ -229,13 +217,10 @@ function thoe_import_format_content($content,$style) {
 	            $title = $new_title;
 	            $desc = $new_desc;
 	          }
-	        }
-	        $title = str_replace("–","",$title);
-	        $title = str_replace("– ","",$title);
-	        $title = str_replace("- ","",$title);
+
 	        $title = trim($title);
 	      
-	        $clean_title = strip_tags($title);
+	        $clean_title = $title;
 	        $node_exists = thoe_import_node_exists($clean_title);
 	        if($node_exists) {
 	          return;
@@ -245,7 +230,7 @@ function thoe_import_format_content($content,$style) {
   	
   }
   
-  $clean_desc = strip_tags($desc);
+  $clean_desc = $desc;
   //   	    drush_print($clean_title);
   //get categories
   $categories = opencalais_thoe_get_tags($clean_title . " " . $clean_desc);
@@ -268,13 +253,14 @@ function thoe_import_format_content($content,$style) {
       "image" => $image_url,
       "categories" => $categories,
       "time" => array(
-          "type" => "big_date",
+          "type" => $time_type,
           "values" => $times
       ),
-      "tis" => $time_data["tis"]
+      "tis" => $time_data["tis"],
+      "extra_tag" => $tag
   );
   
-  thoe_import_add_node($data);
+  thoe_import_add_node($data);  
   
   drush_print("TITLE");
   drush_print("*******************");
@@ -306,6 +292,8 @@ function thoe_import_format_content($content,$style) {
   print_r($categories);
   drush_print(" ");
   
+
+  
 }
 
 function thoe_import_add_node($data,$lang = "en") {
@@ -328,6 +316,11 @@ function thoe_import_add_node($data,$lang = "en") {
 
   // set tags
   $node = thoe_import_add_tags($data,$node);
+  
+  // set extra tags
+  if($data["extra_tag"]!=="") {
+    $node = thoe_import_add_extra_tag($data["extra_tag"],$node,$vid=4);
+  }
   
   // set weight
   $node = thoe_import_set_weight($data,$node);
@@ -519,29 +512,71 @@ function thoe_import_time_define_prehistory($time) {
 }
 
 function thoe_import_time_define_10_5_bc($time,$style) {
-  $time = strip_tags($time);
-  $time = str_replace(",","",$time);
-  $time = str_replace(" BC","",$time);
-  $time = str_replace("c. ","",$time);
-  $time = trim($time);
-  $time = preg_replace("/\(.*\)/","",$time);
-
-  $range = explode("–",$time);
-  $time = $range[0];
+  $regexps = array(
+      "/c\. (\d{2},\d+) BC:/i",
+      "/c\. (\d{1},\d+) BC:/i",
+      "/c\. (\d+) BC:/i",
+      "/(.*)±(.*) BC:/i",
+      "/c\. (.*) BC – (.*) BC/i",
+      "/c\. (.*) – (.*) BC/i",
+      "/\((.*)–(.*) BC\)/i",
+      "/\(c\. (.*) BC – (.*) BC\)/i",
+      "/c\. (.*) BC–(.*) BC/i",
+      "/c\. (\d+)–(\d+) BC/i",
+      "/c\. (\d)th millennium BC/i",
+      "/\(c\. (.*) BC:\)/i",
+      "/(\d+)–(\d+) BC/i",
+      "/(\d+) BC:/i",
+      "/c. (\d+) BC—/i",
+      "/(\d{2},\d+) BC/i",
+      "/(\d{1},\d+) BC/i",
+      "/(\d+) BC/i",
+  );
   
-  $time_found = true;
-  if(!is_numeric($time)) {
-    $time = $style["millennium"]*1000;
-    $time_found = false;
-  }
+    $value = strip_tags($time);
+    $found = false;
+    foreach ($regexps as $regexp) {
+      if(!$found) {
+        $exists = preg_match($regexp, $value, $matches, PREG_OFFSET_CAPTURE);
+        if($exists) {
   
-  $seconds_in_a_year = 3.154*pow(10,7);
-
-  // all is years
-  $abbrevation = "ye";
-  $tis = $seconds_in_a_year*$time*(-1);
-
-  return array("time"=>$time,"abbrevation"=>$abbrevation,"tis"=>$tis,"time_found"=>$time_found);
+          if($matches[0][1] == 0) {
+            $value = str_replace($matches[0][0],"",$value);
+            	
+          }
+          $date = $matches[1][0];
+          $date = str_replace(",","",$date);
+          if($regexp=="/c\. (\d)th millennium BC/i") {
+            $date = 1000*$date;
+          }
+          // print_r("FOUND");
+          $found = true;
+          break;
+        }
+      }
+    }
+    
+    $tag = "";
+    
+    if(!$found) {
+      // print_r("NOT FOUND");
+      $date = $style["millennium"]*1000;
+      $pos = strpos($value, ":");
+      if($pos!==false) {
+        $value_arr = explode(":",$value);
+        $tag = $value_arr[0];
+        array_shift($value_arr);
+        $value = implode(":",$value_arr);
+      }
+    }
+    
+    $seconds_in_a_year = 3.154*pow(10,7);
+  
+    // all is years
+    $abbrevation = "ye";
+    $tis = $seconds_in_a_year*$date*(-1);
+  
+    return array("title"=>$value,"time"=>$date,"abbrevation"=>$abbrevation,"tis"=>$tis,"time_found"=>$time_found,"tag"=>$tag);
 }
 
 function thoe_import_get_image($content) {
@@ -561,7 +596,8 @@ function thoe_import_get_image($content) {
   $missing = true;
   if ($wiki_result->code==200) {
   	$data = json_decode($wiki_result->data);
-  	$obj_attr = get_object_vars($data->query->pages);
+  	if(isset($data->query->pages)) {
+  	  $obj_attr = get_object_vars($data->query->pages);
   	  foreach ($obj_attr as $key=>$attr) {
   	    if(isset($attr->missing)) {
   	      break;
@@ -571,6 +607,7 @@ function thoe_import_get_image($content) {
   	      $missing = false;
   	    }
   	  }
+  	}
   }
   
   // if wiki is not working, use google search: 
@@ -626,6 +663,10 @@ function thoe_import_add_video($data,$node) {
       $obj = new MediaInternetYouTubeHandler($url);
       $file = $obj->getFileObject();
       $file->display = 1;
+      
+      if($file->filename=="" || $file->filename==" " || !isset($file->filename)) {
+        return $node;
+      }
       file_save($file);
       
       $video_node = new stdClass();
@@ -681,6 +722,8 @@ function thoe_import_add_books($data,$node) {
         if(isset($book->volumeInfo->subtitle)) {
           $book_node->title .= " " . $book->volumeInfo->subtitle;
         }
+        
+        $book_node->title = truncate_utf8(strip_tags($book_node->title ),255,true,false);
     
         $body_lang = thoe_import_lang_code('body',$node->language);
     
@@ -762,18 +805,30 @@ function thoe_import_add_date($data,$node) {
   	  $collection = entity_create('field_collection_item', array('field_name' => 'field_date'));
   	  $collection->setHostEntity('node', $node);
   
-  	  //   	  Now define the collection parameters.
-  	  //   	  $cwrapper = entity_metadata_wrapper('field_collection_item', $collection);
   	  	
   	  foreach ($data["time"]["values"] as $time) {
   	    $years_lang = thoe_import_lang_code('field_day',$node->language);
-  	    $collection->field_day[$years_lang][]['value'] = $time["day"];
-  	    $collection->field_month[$years_lang][]['value'] = $time["month"];
-  	    $collection->field_year[$years_lang][]['value'] = $time["year"];
-  	    $collection->field_ad_bc[$years_lang][]['value'] = $time["ad_bc"];
-  	    $collection->field_hour[$years_lang][]['value'] = $time["hour"];
-  	    $collection->field_minute[$years_lang][]['value'] = $time["minute"];
-  	    $collection->field_second[$years_lang][]['value'] = $time["second"];
+  	    if(isset($time["day"])) {
+  	      $collection->field_day[$years_lang][]['value'] = $time["day"];
+  	    }
+  	    if(isset($time["month"])) {
+  	      $collection->field_month[$years_lang][]['value'] = $time["month"];
+  	    }
+  	    if(isset($time["year"])) {
+  	      $collection->field_year[$years_lang][]['value'] = $time["year"];
+  	    }
+  	    if(isset($time["ad_bc"])) {
+  	      $collection->field_ad_bc[$years_lang][]['value'] = $time["ad_bc"];
+  	    }
+  	    if(isset($time["hour"])) {
+  	      $collection->field_hour[$years_lang][]['value'] = $time["hour"];
+  	    }
+  	    if(isset($time["minute"])) {
+  	      $collection->field_minute[$years_lang][]['value'] = $time["minute"];
+  	    }
+  	    if(isset($time["second"])) {
+  	      $collection->field_second[$years_lang][]['value'] = $time["second"];
+  	    }
   	    $collection->save();
   	  }
   
@@ -782,6 +837,34 @@ function thoe_import_add_date($data,$node) {
   
   // Save.
   $ewrapper->save();
+}
+
+function thoe_import_add_extra_tag($extra_tag,$node,$vid=4) {
+  $term_name = $extra_tag;
+  // Create the term
+  $term_object = new stdClass();
+  $term_object->vid = $vid;
+  $term_object->name = $term_name;
+  //     if(isset($parent)) {
+  //       $term_object->parent = $parent;
+  //     }
+  $possible_tid = _get_taxonomy_term_id_by_name($term_name);
+  if(!$possible_tid) {
+    taxonomy_term_save($term_object);
+    $possible_tid = $term_object->tid;
+  }
+  
+  // Get proper langcode
+  $tag_info = field_info_field('field_free_tagging');
+  if (field_is_translatable('node', $tag_info)) {
+    $tag_lang = field_valid_language($node->language);
+  } else {
+    $tag_lang = LANGUAGE_NONE;
+  }
+  
+  // set categories
+  $node->field_free_tagging[$tag_lang][] = array('tid' => $possible_tid);
+  return $node;
 }
 
 function thoe_import_add_tags($data,$node) {
