@@ -227,6 +227,59 @@ function thoe_import_format_content($content,$style) {
 	        }
 	         
 	        break;
+	        
+      case "40_19_c":
+      case "1790_740_bc":
+        $time_data = thoe_import_time_define_10_5_bc($content,$style);
+      
+        // get time and abbrevation
+        $time = $time_data["time"];
+        $abbrevation = $time_data["abbrevation"];
+      
+        $time_type = "normal";
+        $times = array();
+        $times[] = array(
+            "year" => $time_data["time"],
+            "ad_bc" =>  "bc",
+            "month" => $time_data["month"],
+            "day" => $time_data["day"],
+        );
+         
+        $tag = $time_data["tag"];
+        
+        $tag = (strlen($tag)>50) ? "" : $tag;
+      
+        drush_print("TIME");
+        drush_print("*******************");
+        drush_print($time. " ". $abbrevation);
+        drush_print(" ");
+      
+        // get title
+        $title = $time_data["title"];
+         
+        $title = preg_replace("/\[.*\]/","",$title);
+      
+        // get description
+      
+      
+        $len = strlen($title);
+        if($len>50) {
+          $new_title = truncate_utf8(strip_tags($title),50,true,false);
+          $new_desc = str_replace($new_title,"",strip_tags($title));
+      
+          $title = $new_title;
+          $desc = $new_desc;
+        }
+      
+        $title = trim($title);
+         
+        $clean_title = $title;
+        $node_exists = thoe_import_node_exists($clean_title);
+        if($node_exists) {
+          return;
+        }
+      
+        break;
   	
   }
   
@@ -260,7 +313,7 @@ function thoe_import_format_content($content,$style) {
       "extra_tag" => $tag
   );
   
-  thoe_import_add_node($data);  
+//   thoe_import_add_node($data);  
   
   drush_print("TITLE");
   drush_print("*******************");
@@ -272,25 +325,25 @@ function thoe_import_format_content($content,$style) {
   drush_print($desc);
   drush_print(" ");
   
-  drush_print("BOOKS");
-  drush_print("*******************");
-  //   	      	  print_r($books);
-  drush_print(" ");
+//   drush_print("BOOKS");
+//   drush_print("*******************");
+//   //   	      	  print_r($books);
+//   drush_print(" ");
   
-  drush_print("VIDEOS");
-  drush_print("*******************");
-  print_r($videos);
-  drush_print(" ");
+//   drush_print("VIDEOS");
+//   drush_print("*******************");
+//   print_r($videos);
+//   drush_print(" ");
   
-  drush_print("IMAGE");
-  drush_print("*******************");
-  print_r($image_url);
-  drush_print(" ");
+//   drush_print("IMAGE");
+//   drush_print("*******************");
+//   print_r($image_url);
+//   drush_print(" ");
   
-  drush_print("CATEGORIES");
-  drush_print("*******************");
-  print_r($categories);
-  drush_print(" ");
+//   drush_print("CATEGORIES");
+//   drush_print("*******************");
+//   print_r($categories);
+//   drush_print(" ");
   
 
   
@@ -512,39 +565,89 @@ function thoe_import_time_define_prehistory($time) {
 }
 
 function thoe_import_time_define_10_5_bc($time,$style) {
-  $regexps = array(
-      "/c\. (\d{2},\d+) BC:/i",
-      "/c\. (\d{1},\d+) BC:/i",
-      "/c\. (\d+) BC:/i",
-      "/(.*)±(.*) BC:/i",
-      "/c\. (.*) BC – (.*) BC/i",
-      "/c\. (.*) – (.*) BC/i",
-      "/\((.*)–(.*) BC\)/i",
-      "/\(c\. (.*) BC – (.*) BC\)/i",
-      "/c\. (.*) BC–(.*) BC/i",
-      "/c\. (\d+)–(\d+) BC/i",
-      "/c\. (\d)th millennium BC/i",
-      "/\(c\. (.*) BC:\)/i",
-      "/(\d+)–(\d+) BC/i",
-      "/(\d+) BC:/i",
-      "/c. (\d+) BC—/i",
-      "/(\d{2},\d+) BC/i",
-      "/(\d{1},\d+) BC/i",
-      "/(\d+) BC/i",
-  );
-  
-    $value = strip_tags($time);
+$month_pattern = "/(\d+) BC—(Jan(?:uary)|Feb(?:ruary)|Mar(?:ch)|Apr(?:il)|May|Jun(?:e)|Jul(?:y)|Aug(?:ust)|Sep(?:tember)|Oct(?:ober)|Nov(?:ember)|Dec(?:ember)) (\d{1,2})—/i";
+$month_pattern2 = "/(Jan(?:uary)|Feb(?:ruary)|Mar(?:ch)|Apr(?:il)|May|Jun(?:e)|Jul(?:y)|Aug(?:ust)|Sep(?:tember)|Oct(?:ober)|Nov(?:ember)|Dec(?:ember)) (\d{1,2}), (\d+) BC/i";
+$month_pattern3 = "/(Jan(?:uary)|Feb(?:ruary)|Mar(?:ch)|Apr(?:il)|May|Jun(?:e)|Jul(?:y)|Aug(?:ust)|Sep(?:tember)|Oct(?:ober)|Nov(?:ember)|Dec(?:ember)) (\d{1,2}) (\d+) BC/i";
+$month_pattern4 = "/c\. (\d+) BC \((Jan(?:uary)|Feb(?:ruary)|Mar(?:ch)|Apr(?:il)|May|Jun(?:e)|Jul(?:y)|Aug(?:ust)|Sep(?:tember)|Oct(?:ober)|Nov(?:ember)|Dec(?:ember)) (\d{1,2})\)/i";
+$month_pattern5 = "/(\d+) BC—(Jan(?:uary)|Feb(?:ruary)|Mar(?:ch)|Apr(?:il)|May|Jun(?:e)|Jul(?:y)|Aug(?:ust)|Sep(?:tember)|Oct(?:ober)|Nov(?:ember)|Dec(?:ember)) (\d{1,2})/i";
+$month_pattern6 = "/(\d+) BC,(Jan(?:uary)|Feb(?:ruary)|Mar(?:ch)|Apr(?:il)|May|Jun(?:e)|Jul(?:y)|Aug(?:ust)|Sep(?:tember)|Oct(?:ober)|Nov(?:ember)|Dec(?:ember)) (\d{1,2})—/i";
+$regexps = array(
+	$month_pattern,
+	$month_pattern2,
+	$month_pattern3,
+	$month_pattern4,
+	$month_pattern5,
+	$month_pattern6,
+	"/(\d+) BC \(or (\d+) BC\)/i",
+	"/c\. (\d+) to (\d+) BC/i",
+	"/(\d+) to (\d+) BC/i",
+	"/c\. (\d{2},\d+) BC:/i",
+	"/c\. (\d{1},\d+) BC:/i",
+	"/c\. (\d+) BC:/i",
+	"/(.*)±(.*) BC:/i",
+	"/c\. (\d+) BC–(\d+) BC:/i",
+	"/(\d+) BC–(\d+) BC:/i",
+	"/c\. (.*) BC – (.*) BC/i",
+	"/c\. (.*) – (.*) BC/i",
+	"/\((\d+)–(\d+) BC\)/i",
+	"/\(c\. (.*) BC – (.*) BC\)/i",
+	"/c\. (.*) BC–(.*) BC/i",
+	"/c\. (\d+)–(\d+) BC/i",
+	"/c\. (\d)th millennium BC/i",
+	"/\(c\. (.*) BC:\)/i",
+	"/(\d+)–(\d+) BC/i",
+	"/c. (\d+) BC—(\d+) BC/i",
+	"/c. (\d+) BC—/i",
+	"/(\d{2},\d+) BC/i",
+	"/(\d{1},\d+) BC/i",
+	"/(\d+)-(\d+) BC/i",
+	"/(\d+)-(\d+) \(Middle Chronology\)/i",
+	"/c. (\d+) BC — /i",
+	"/(\d+) BC – (\d+) BC:/i",
+	"/(\d+) BC–(\d+) BC—/i",
+	"/c.(\d+) BC-/i",
+	"/c. (\d+) BC -/i",
+	"/c.(\d+) BC— /i",
+	"/(\d+) BC — /i",
+	"/(\d+) BC:/i",
+	"/(\d+) BC/i",
+	"/(\d+) B.C./i"
+	);
+
+    $day = 1;
+    $month = 1;
+    $value = trim(strip_tags($value));
+	  $value = ltrim($value,".");
+	
     $found = false;
     foreach ($regexps as $regexp) {
       if(!$found) {
         $exists = preg_match($regexp, $value, $matches, PREG_OFFSET_CAPTURE);
         if($exists) {
-  
+
+          $date = $matches[1][0];
+          
+          if($regexp==$month_pattern2 || $regexp==$month_pattern3) {
+            $month = $matches[1][0];
+            $month_date = date_parse($month);
+            $month = $month_date["month"];
+            	
+            $day = $matches[2][0];
+            	
+            $date = $matches[3][0];
+          }
+          else if($regexp==$month_pattern || $regexp==$month_pattern4  || $regexp==$month_pattern5 || $regexp==$month_pattern6) {
+            $month = $matches[2][0];
+            $month_date = date_parse($month);
+            $month = $month_date["month"];
+            	
+            $day = $matches[3][0];
+          }
+          
           if($matches[0][1] == 0) {
             $value = str_replace($matches[0][0],"",$value);
-            	
           }
-          $date = $matches[1][0];
+          
           $date = str_replace(",","",$date);
           if($regexp=="/c\. (\d)th millennium BC/i") {
             $date = 1000*$date;
@@ -560,7 +663,15 @@ function thoe_import_time_define_10_5_bc($time,$style) {
     
     if(!$found) {
       // print_r("NOT FOUND");
-      $date = $style["millennium"]*1000;
+      if(isset($style["millennium"])) {
+        $date = $style["millennium"]*1000;
+      }
+      else if(isset($style["century"])) {
+        $date = $style["century"]*100;
+      }
+      else if(isset($style["year"])) {
+        $date = $style["year"];
+      }
       $pos = strpos($value, ":");
       if($pos!==false) {
         $value_arr = explode(":",$value);
@@ -576,7 +687,7 @@ function thoe_import_time_define_10_5_bc($time,$style) {
     $abbrevation = "ye";
     $tis = $seconds_in_a_year*$date*(-1);
   
-    return array("title"=>$value,"time"=>$date,"abbrevation"=>$abbrevation,"tis"=>$tis,"time_found"=>$time_found,"tag"=>$tag);
+    return array("title"=>$value,"time"=>$date,"abbrevation"=>$abbrevation,"tis"=>$tis,"time_found"=>$time_found,"tag"=>$tag,"month"=>$month,"day"=>$day);
 }
 
 function thoe_import_get_image($content) {
@@ -664,7 +775,9 @@ function thoe_import_add_video($data,$node) {
       $file = $obj->getFileObject();
       $file->display = 1;
       
-      if($file->filename=="" || $file->filename==" " || !isset($file->filename)) {
+      $incorrect_name = strpos($file->filename,"\x");
+      
+      if($file->filename=="" || $file->filename==" " || !isset($file->filename) || $incorrect_name == 0) {
         return $node;
       }
       file_save($file);

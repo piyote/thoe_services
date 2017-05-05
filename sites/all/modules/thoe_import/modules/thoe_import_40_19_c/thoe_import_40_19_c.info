@@ -1,0 +1,4 @@
+name = Thoe import 40th - 19th centuries
+description = Wikipedia 40th - 19th centuries data importer
+core = 7.x
+dependencies[] = thoe_import

@@ -1,0 +1,90 @@
+<?php 
+
+function thoe_import_40_19_c_start() {
+	
+// 	drush_print("40_19_c import starts");
+	
+	for ($i=40;$i>18;$i--) {
+	  $last_digit = substr($i,-1,1);
+	  
+	  switch ($last_digit) {
+	  	case 1:
+	  	  $suffix = "st";
+	  	  break;
+  	  case 2:
+  	    $suffix = "nd";
+  	    break;
+	    case 3:
+	      $suffix = "rd";
+        break;
+
+      default:
+        $suffix = "th";
+        break;  
+	  }
+	  
+	  $url = "https://en.wikipedia.org/wiki/".$i.$suffix."_century_BC";
+	  $style = array(
+	      "name"=>"40_19_c",
+	      "page"=>"40_19_c",
+	      "data_in" => "ul",
+	      "clues" => array(
+	          "after"=>"h3",
+	      ),
+	      "ignore" => array(
+	          "first" => "h2"
+	      ),
+	      "break" => array(
+	          '12,000 years ago:'
+	      ),
+	      "century" => $i
+	  );
+	  
+	  $html = file_get_html($url);
+	  
+	  // always remove $toc contents table
+	  
+	  $html->find('#toc',0)->outertext = "";
+	  $html->load($html->save());
+	  
+	  $continue = true;
+	  $k = 0;
+	  foreach($html->find('#mw-content-text',0)->find("ul") as $ul) {
+	    if($ul->parent()->getAttribute("id")!=="toc" 
+	        && $continue 
+	        && $ul->parent()->getAttribute("class")!=="hlist" 
+	        && $ul->parent()->getAttribute("class")!=="plainlinks hlist navbar"  
+	        && $ul->parent()->parent()->getAttribute("class")!=="navbox-list navbox-even hlist" 
+	        && $ul->parent()->parent()->getAttribute("class")!=="navbox-list navbox-odd hlist"
+	        && $ul->parent()->getAttribute("class")!=="plainlinks hlist navbar mini"
+	      )
+	    {
+	      foreach ($ul->find("li") as $li) {
+	        if($continue)
+	        {
+	          $break_on = $style["break"];
+	          foreach ($break_on as $break_item) {
+	              $str_item = strpos($li->innertext,$break_item);
+	              if($str_item !== false) {
+	                $continue = false;
+	                break;
+	              }
+	          }
+	          if($continue) {
+	            $is_reference = strpos($li->innertext,"smallcaps");
+	            if(!$is_reference) {
+	              $k++;
+// 	              dpm(strip_tags($li->innertext));
+	              thoe_import_format_content($li->innertext,$style);
+	            }
+
+	          }
+	        }
+	      }
+	    }
+	  }
+	  dpm($k);
+	}
+	
+	
+}
