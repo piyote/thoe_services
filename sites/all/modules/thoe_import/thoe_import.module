@@ -248,6 +248,8 @@ function thoe_import_format_content($content,$style) {
         $tag = $time_data["tag"];
         
         $tag = (strlen($tag)>50) ? "" : $tag;
+        
+        $title = $time_data["title"];
       
         drush_print("TIME");
         drush_print("*******************");
@@ -255,13 +257,74 @@ function thoe_import_format_content($content,$style) {
         drush_print(" ");
       
         // get title
-        $title = $time_data["title"];
-         
         $title = preg_replace("/\[.*\]/","",$title);
+        $title = preg_replace("/c\. /","",$title);
       
         // get description
+        $len = strlen($title);
+        if($len>50) {
+          $new_title = truncate_utf8(strip_tags($title),50,true,false);
+          $new_desc = str_replace($new_title,"",strip_tags($title));
       
+          $title = $new_title;
+          $desc = $new_desc;
+        }
       
+        $title = trim($title);
+         
+        $clean_title = $title;
+        $node_exists = thoe_import_node_exists($clean_title);
+        if($node_exists) {
+          return;
+        }
+      
+        break;
+        
+      case "490_0":
+        // get time and abbrevation
+        
+        $seconds_in_a_year = 3.154*pow(10,7);
+        // all is years
+        $abbrevation = "ye";
+        $tis = $seconds_in_a_year*$style["year"]*(-1)+86400*(($style["month"]-1)*30+$style["day"]);
+        
+        $time_data = array("tis"=>$tis);
+        
+        $time = $style["year"];
+      
+        $time_type = "normal";
+        $times = array();
+        $times[] = array(
+            "year" => $style["year"],
+            "ad_bc" =>  "bc",
+            "month" => $style["month"],
+            "day" => $style["day"],
+        );
+         
+        $tag = trim($style["tag"]);
+      
+        $tag = (strlen($tag)>50) ? "" : $tag;
+      
+        
+        $title = $content;
+        
+        if($tag=="Births") {
+          $title = "Birth of " . $title;
+        }
+        else if($tag=="Deaths") {
+          $title = "Death of " . $title;
+        }
+      
+        drush_print("TIME");
+        drush_print("*******************");
+        drush_print($time. " ". $abbrevation);
+        drush_print(" ");
+      
+        // get title
+        $title = preg_replace("/\[.*\]/","",$title);
+        $title = preg_replace("/c\. /","",$title);
+      
+        // get description
         $len = strlen($title);
         if($len>50) {
           $new_title = truncate_utf8(strip_tags($title),50,true,false);
@@ -313,7 +376,7 @@ function thoe_import_format_content($content,$style) {
       "extra_tag" => $tag
   );
   
-//   thoe_import_add_node($data);  
+  thoe_import_add_node($data);  
   
   drush_print("TITLE");
   drush_print("*******************");
@@ -325,25 +388,25 @@ function thoe_import_format_content($content,$style) {
   drush_print($desc);
   drush_print(" ");
   
-//   drush_print("BOOKS");
-//   drush_print("*******************");
-//   //   	      	  print_r($books);
-//   drush_print(" ");
+  drush_print("BOOKS");
+  drush_print("*******************");
+  //   	      	  print_r($books);
+  drush_print(" ");
   
-//   drush_print("VIDEOS");
-//   drush_print("*******************");
-//   print_r($videos);
-//   drush_print(" ");
+  drush_print("VIDEOS");
+  drush_print("*******************");
+  print_r($videos);
+  drush_print(" ");
   
-//   drush_print("IMAGE");
-//   drush_print("*******************");
-//   print_r($image_url);
-//   drush_print(" ");
+  drush_print("IMAGE");
+  drush_print("*******************");
+  print_r($image_url);
+  drush_print(" ");
   
-//   drush_print("CATEGORIES");
-//   drush_print("*******************");
-//   print_r($categories);
-//   drush_print(" ");
+  drush_print("CATEGORIES");
+  drush_print("*******************");
+  print_r($categories);
+  drush_print(" ");
   
 
   
@@ -354,6 +417,9 @@ function thoe_import_add_node($data,$lang = "en") {
   $node->type = "node";
   $node->language = $lang;
   node_object_prepare($node);
+  
+  $data["title"] = preg_replace('/[\x00-\x1F\x7F-\xFF]/', '', $data["title"]);
+  
   $node->title = $data["title"];
   
   $body_language = thoe_import_lang_code('body',$node->language);
@@ -614,9 +680,9 @@ $regexps = array(
 	"/(\d+) B.C./i"
 	);
 
-    $day = 1;
-    $month = 1;
-    $value = trim(strip_tags($value));
+    $day = 0;
+    $month = 0;
+    $value = trim(strip_tags($time));
 	  $value = ltrim($value,".");
 	
     $found = false;
@@ -679,6 +745,13 @@ $regexps = array(
         array_shift($value_arr);
         $value = implode(":",$value_arr);
       }
+    }
+    
+    $value = ltrim($value,".");
+    $clear = array(":","—","– ","-");
+    
+    foreach ($clear as $item) {
+      $value = ltrim($value,$item);
     }
     
     $seconds_in_a_year = 3.154*pow(10,7);
@@ -775,9 +848,11 @@ function thoe_import_add_video($data,$node) {
       $file = $obj->getFileObject();
       $file->display = 1;
       
-      $incorrect_name = strpos($file->filename,"\x");
+//       $incorrect_name = strpos($file->filename,"\x");
       
-      if($file->filename=="" || $file->filename==" " || !isset($file->filename) || $incorrect_name == 0) {
+      $file->filename = preg_replace('/[\x00-\x1F\x7F-\xFF]/', '', $file->filename);
+      
+      if($file->filename=="" || $file->filename==" " || !isset($file->filename) /*|| $incorrect_name == 0*/) {
         return $node;
       }
       file_save($file);
@@ -1222,7 +1297,43 @@ function thoe_import_renew_images($nodes="") {
   }
 }
 
+function thoe_import_fix_month_day($nodes="") {
+//   update field_data_field_date fdate
+//   INNER JOIN field_data_field_month AS fmonth ON fmonth.entity_id = fdate.field_date_value
+//   set fmonth.field_month_value = 0
+//   WHERE fmonth.field_month_value <2
+//   AND fdate.entity_id <7620
 
+//   SELECT *
+//   FROM field_data_field_date DATE
+//   INNER JOIN field_data_field_day AS
+//   DAY ON day.entity_id = date.field_date_value
+//   WHERE day.field_day_value <2
+//   AND date.entity_id <7620
+//   LIMIT 0 , 30
+}
+
+function thoe_import_wiki_convert($text) {
+  $regexps = array(
+      "/\[\[([^\[\]]+)\|([^\[\]]+)\]\]/i",
+      "/\'\'\[\[([^\[\]]+)\]\]\'\'/i",
+      "/\[\[([^\[\]]+)\]\]/i",
+  );
+  $line = $text;
+  foreach($regexps as $regexp) {
+    $replacement = '${1}';
+    $exists = preg_match($regexp, $text, $matches, PREG_OFFSET_CAPTURE);
+
+    if($exists) {
+      if($regexp=="/\[\[([^\[\]]+)\|([^\[\]]+)\]\]/i") {
+        $replacement = '${2}';
+      }
+      $line = preg_replace($regexp,$replacement,$line);
+    }
+  }
+  $line = html_entity_decode($line);
+  return $line;
+}
 
 
 

@@ -4,7 +4,7 @@ function thoe_import_1790_740_bc_start() {
 	
 // 	drush_print("40_19_c import starts");
 	
-	for ($i=1400;$i>740;$i-=10) {
+	for ($i=740;$i>490;$i-=10) {
 // 	  $last_digit = substr($i,-1,1);
 	  
 // 	  switch ($last_digit) {
@@ -87,7 +87,6 @@ function thoe_import_1790_740_bc_start() {
                 $title = trim($title);
                 if($title!="" && $title!=" ") {
 //                   dpm($title);
-                  //dpm($title);
                   thoe_import_format_content($title,$style);
                 }
 	              

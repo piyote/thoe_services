@@ -1,0 +1,157 @@
+<?php 
+
+function thoe_import_490_0_start() {
+	
+// 	drush_print("40_19_c import starts");
+	
+	for ($i=499;$i>0;$i--) {
+	  $url = "https://en.wikipedia.org/w/api.php?action=query&prop=revisions&rvprop=content&titles=".$i."_BC&format=json";;
+// 	  dpm($url);
+	  
+	  $style = array(
+	      "name"=>"490_0",
+	      "page"=>"490_0",
+	      "data_in" => "ul",
+	      "clues" => array(
+	          "after"=>"h3",
+	      ),
+	      "ignore" => array(
+	          "first" => "h2"
+	      ),
+	      "break" => array(
+	          'dont break ever. never.'
+	      ),
+	      "year" => $i
+	  );
+	  
+	  $data = file_get_contents($url);
+	  
+	  $data = json_decode($data);
+	  $new = current((array)$data->query->pages);
+	  $sd = "*";
+	  $wikitext = $new->revisions[0]->$sd;
+	  // print $wikitext;exit;
+	  $wiki_arr = explode("\n",strip_tags($wikitext));
+	  
+	  $months_list = "(Jan(?:uary)|Feb(?:ruary)|Mar(?:ch)|Apr(?:il)|May|Jun(?:e)|Jul(?:y)|Aug(?:ust)|Sep(?:tember)|Oct(?:ober)|Nov(?:ember)|Dec(?:ember))";
+	  
+	  $headlines = array(
+	      "/== Events ==/i",
+	      "/===\s*By (.*)\s*===/i",
+	      "/==\s*Births\s*==/i",
+	      "/==\s*Deaths\s*==/i",
+	      "/==\s*Nobel Prizes\s*==/i",
+	      "/====\s*(.*)\s*====/i",
+	      "/==\s*References\s*==/i",
+	      "/\[\[".$months_list." (\d{1,2})\]\]/i"
+	  );
+	  
+	  $by = "";
+	  $tag = "";
+	  
+	  $month_group = 0;
+	  $day_group = 0;
+	  
+	  foreach($wiki_arr as $line) {
+	    if($line!=="") {
+	      $month = 0;
+	      $day = 0;
+	      $a_single_day = false;
+	      foreach ($headlines as $regexp) {
+	        $exists = preg_match($regexp, $line, $matches, PREG_OFFSET_CAPTURE);
+	        if($exists) {
+	          if($regexp=="/===\s*By (.*)\s*===/i") {
+	            $by = $matches[1][0];
+	          }
+	          else if($regexp=="/====\s*(.*)\s*====/i") {
+	            $tag = $matches[1][0];
+	          }
+	          else if($regexp=="/==\s*References\s*==/i") {
+	            break;
+	          }
+	          else if($regexp=="/==\s*Births\s*==/i") {
+	            $tag = "Births";
+	          }
+	          else if($regexp=="/==\s*Deaths\s*==/i") {
+	            $tag = "Deaths";
+	          }
+	          else if($regexp=="/==\s*Nobel Prizes\s*==/i") {
+	            $tag = "Nobel Prizes";
+	          }
+	          else if($regexp=="/\[\[".$months_list." (\d{1,2})\]\]/i") {
+	            $check_beginning = strpos($line,"* ".$matches[0][0]);
+	            if($check_beginning===0) {
+	              $month_group = $matches[1][0];
+	              $month_date = date_parse($month_group);
+	              $month_group = $month_date["month"];
+	              $day_group = $matches[2][0];
+	              $a_single_day = true;
+	            }
+	          }
+	        }
+	      }
+	      $pos = strpos($line,"* ");
+	      if($pos === 0) {
+	        $line = ltrim($line,"* ");
+	        $match_len = ($a_single_day) ? strlen($matches[0][0]) : 0;
+	        $line_len = strlen($line);
+	        	
+	        if($line_len>$match_len) {
+	          $line = thoe_import_wiki_convert($line);
+	          $month_pattern = "/".$months_list." (\d{1,2})(?:\s)(—|–)(?:\s)/i";
+	          $exists = preg_match($month_pattern, $line, $matches, PREG_OFFSET_CAPTURE);
+	          if($exists) {
+	            $check_beginning = strpos($matches[0][1],$line);
+	            if($check_beginning==0) {
+	              $month = $matches[1][0];
+	              $month_date = date_parse($month);
+	              $month = $month_date["month"];
+	              $day = $matches[2][0];
+	              if($matches[0][1] == 0) {
+	                $line = str_replace($matches[0][0],"",$line);
+	              }
+	            }
+	          }
+	          $month_pattern = "/".$months_list."(?:\s)(—|–)(?:\s)/i";
+	          $exists = preg_match($month_pattern, $line, $matches, PREG_OFFSET_CAPTURE);
+	          if($exists) {
+	            $check_beginning = strpos($matches[0][1],$line);
+	            if($check_beginning==0) {
+	              $month = $matches[1][0];
+	              $month_date = date_parse($month);
+	              $month = $month_date["month"];
+	              if($matches[0][1] == 0) {
+	                $line = str_replace($matches[0][0],"",$line);
+	              }
+	            }
+	          }
+	          //                   dpm($title);
+	          $style["tag"] = $tag;
+	          $style["month"] = $month;
+	          $style["day"] = $day;
+	          thoe_import_format_content($line,$style);
+// 	          print "MONTH: " . $month ." DAY: " . $day ." BY: " . $by . " TAG: " . $tag . " LINE: " . $line."\n";
+	        }
+	      }
+	      $pos = strpos($line,"** ");
+	      if($pos === 0) {
+	        $line = ltrim($line,"** ");
+	        $line = thoe_import_wiki_convert($line);
+	        $month = $month_group;
+	        $day = $day_group;
+	        //                   dpm($title);
+	        $style["tag"] = $tag;
+	        $style["month"] = $month;
+	        $style["day"] = $day;
+	        $style["month"] = $month;
+	        thoe_import_format_content($line,$style);
+// 	        print "MONTH: " . $month ." DAY: " . $day ." BY: " . $by . " TAG: " . $tag . " LINE: " . $line."\n";
+	      }
+	    }
+	  }
+	  
+	  
+	}
+	
+	
+}

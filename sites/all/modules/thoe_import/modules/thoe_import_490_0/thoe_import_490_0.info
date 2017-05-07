@@ -1,0 +1,4 @@
+name = Thoe import 490 BC - 0
+description = Wikipedia 490 BC - 0 data importer
+core = 7.x
+dependencies[] = thoe_import
