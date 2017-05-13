@@ -6,7 +6,7 @@
 */
 function opencalais_thoe_get_tags($content) {
   $content = strip_tags($content);
-  $apikey = "DuZd6qGigaiImyPq8av8xW9SD5egFQ25";
+  $apikey = "MNRG2KLEFR4lDqICpWwG0Em2D3D410GP";
   $oc = new OpenCalais($apikey);
   $entities = $oc->getEntities($content);
   foreach ($entities as $key=>$entity) {

@@ -23,7 +23,8 @@ function thoe_youtube_api_search($string,$lang = "en") {
       'q' => $string,
       'maxResults' => 5,
       'type' => "video",
-      'relevanceLanguage' => $lang
+      'relevanceLanguage' => $lang,
+      'order' => "relevance"
   ));
   
   $results = array();

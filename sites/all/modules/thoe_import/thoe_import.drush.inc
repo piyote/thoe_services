@@ -21,6 +21,25 @@ function thoe_import_drush_command(){
           'drush timpl' => 'List available services',
       ),
   );
+  $items['thoe_import_fix_text'] = array(
+      'description' => 'Fix text in nodes',
+      'aliases' => array('thoeft'),
+      'examples' => array(
+          'drush thoeft' => 'Fix text in nodes',
+      ),
+  );
+  
+  $items['thoe_import_translate'] = array(
+      'description' => 'Translate the nodes into different languages',
+      'arguments' => array(
+          'language' => '',
+      ),
+      'aliases' => array('thoe_translate'),
+      'examples' => array(
+          'drush thoe_translate tr' => 'Translate nodes',
+      ),
+  );
+  
   return $items;
 }
 
@@ -29,6 +48,10 @@ function drush_thoe_import_list() {
   $list = implode("\n",$enabled_modules);
   $list = str_replace("thoe_import_","",$list);
   return $list;
+}
+
+function drush_thoe_import_fix_text() {
+  thoe_import_fix_text();
 }
 
 function thoe_import_enabled_modules() {
@@ -53,6 +76,10 @@ function drush_thoe_import($service){
   {
     drush_print("Service disabled, exit");
   }
+}
+
+function drush_thoe_import_translate($language){
+  thoe_import_translate_mass($language);
 }
 
 

@@ -10,6 +10,16 @@ function thoe_import_menu() {
       'access callback' => TRUE
   );
   
+  $items['thoe/delete/%'] = array(
+      'title' => 'Delete node',
+      'description' => 'Delete node',
+      'page callback' => 'thoe_delete_node',
+      'page arguments' => array(2),
+      'access callback' => TRUE,
+      'access arguments' => array('administer'),
+      'type' => MENU_CALLBACK
+  );
+  
   return $items;
 }
 
@@ -53,8 +63,8 @@ function thoe_import_format_content($content,$style) {
   	  }
   	  else {
   	    $len = strlen(strip_tags($title));
-  	    if($len>50) {
-  	      $new_title = truncate_utf8(strip_tags($title),50,true,false);
+  	    if($len>150) {
+  	      $new_title = truncate_utf8(strip_tags($title),150,true,false);
   	      $new_desc = str_replace($new_title,"",strip_tags($title));
   	      
   	      $title = $new_title;
@@ -104,8 +114,8 @@ function thoe_import_format_content($content,$style) {
   	    }
   	    else {
   	      $len = strlen(strip_tags($title));
-  	      if($len>50) {
-  	        $new_title = truncate_utf8(strip_tags($title),50,true,false);
+  	      if($len>150) {
+  	        $new_title = truncate_utf8(strip_tags($title),150,true,false);
   	        $new_desc = str_replace($new_title,"",strip_tags($title));
   	         
   	        $title = $new_title;
@@ -159,8 +169,8 @@ function thoe_import_format_content($content,$style) {
   	      }
   	      else {
   	        $len = strlen(strip_tags($title));
-  	        if($len>50) {
-  	          $new_title = truncate_utf8(strip_tags($title),50,true,false);
+  	        if($len>150) {
+  	          $new_title = truncate_utf8(strip_tags($title),150,true,false);
   	          $new_desc = str_replace($new_title,"",strip_tags($title));
   	    
   	          $title = $new_title;
@@ -210,8 +220,8 @@ function thoe_import_format_content($content,$style) {
 
 
 	          $len = strlen($title);
-	          if($len>50) {
-	            $new_title = truncate_utf8(strip_tags($title),50,true,false);
+	          if($len>150) {
+	            $new_title = truncate_utf8(strip_tags($title),150,true,false);
 	            $new_desc = str_replace($new_title,"",strip_tags($title));
 	             
 	            $title = $new_title;
@@ -262,8 +272,8 @@ function thoe_import_format_content($content,$style) {
       
         // get description
         $len = strlen($title);
-        if($len>50) {
-          $new_title = truncate_utf8(strip_tags($title),50,true,false);
+        if($len>150) {
+          $new_title = truncate_utf8(strip_tags($title),150,true,false);
           $new_desc = str_replace($new_title,"",strip_tags($title));
       
           $title = $new_title;
@@ -286,7 +296,7 @@ function thoe_import_format_content($content,$style) {
         $seconds_in_a_year = 3.154*pow(10,7);
         // all is years
         $abbrevation = "ye";
-        $tis = $seconds_in_a_year*$style["year"]*(-1)+86400*(($style["month"]-1)*30+$style["day"]);
+        $tis = $seconds_in_a_year*($style["year"]-1)+86400*(($style["month"]-1)*30+$style["day"]);
         
         $time_data = array("tis"=>$tis);
         
@@ -296,15 +306,16 @@ function thoe_import_format_content($content,$style) {
         $times = array();
         $times[] = array(
             "year" => $style["year"],
-            "ad_bc" =>  "bc",
+            "ad_bc" =>  "ad",
             "month" => $style["month"],
             "day" => $style["day"],
         );
          
         $tag = trim($style["tag"]);
-      
+        $tag = explode(",",$tag);
+        $tag = $tag[0];
+        
         $tag = (strlen($tag)>50) ? "" : $tag;
-      
         
         $title = $content;
         
@@ -326,8 +337,8 @@ function thoe_import_format_content($content,$style) {
       
         // get description
         $len = strlen($title);
-        if($len>50) {
-          $new_title = truncate_utf8(strip_tags($title),50,true,false);
+        if($len>150) {
+          $new_title = truncate_utf8(strip_tags($title),150,true,false);
           $new_desc = str_replace($new_title,"",strip_tags($title));
       
           $title = $new_title;
@@ -346,20 +357,21 @@ function thoe_import_format_content($content,$style) {
   	
   }
   
+  $short_title = truncate_utf8(strip_tags($clean_title),50,true,false);
   $clean_desc = $desc;
   //   	    drush_print($clean_title);
   //get categories
   $categories = opencalais_thoe_get_tags($clean_title . " " . $clean_desc);
   
   // get image
-  $image_url = thoe_import_get_image($clean_title);
+  $image_url = thoe_import_get_image($short_title);
   //   	    $image_url = "";
   
   // get the videos
-  $videos = thoe_youtube_api_search($clean_title);
+  $videos = thoe_youtube_api_search($short_title);
   
   // get the books
-  $books = thoe_import_get_google_books($clean_title);
+  $books = thoe_import_get_google_books($short_title);
   
   $data = array(
       "title" => $clean_title,
@@ -803,9 +815,9 @@ function thoe_import_get_image($content) {
     	"q" => urlencode($content),
       "num" => 1,
       "start" => 1,
-      "imgSize" => "medium",
+//       "imgSize" => "medium",
       "searchType" => "image",
-      "filetype" => "jpg",
+//       "filetype" => "jpg",
       "key" => $google_api_key,
       "cx" => $cx     
     );
@@ -897,7 +909,8 @@ function thoe_import_add_books($data,$node) {
           ->fetchField();
     
       if($bid) {
-        $node->field_video_reference[$node->language][] = array(
+        $book_lang = thoe_import_lang_code('field_book',$node->language);
+        $node->field_book[$book_lang][] = array(
             'target_id' => $bid,
             'target_type' => 'node',
         );
@@ -1297,6 +1310,83 @@ function thoe_import_renew_images($nodes="") {
   }
 }
 
+function thoe_import_fix_text($nodes="") {
+  if($nodes=="") {
+    $nodes = db_query('SELECT nid FROM {node} WHERE type =  :type', array(
+        ':type' => 'node',
+    ))->fetchCol();
+  }
+
+  foreach ($nodes as $nid) {
+    $node = node_load($nid);
+    $title = $node->title;
+    $body_language = thoe_import_lang_code('body',$node->language);
+    $body = $node->body[$body_language][0]['value'];
+    $text = $title.$body;
+    
+    $text = trim($text);
+    $text = str_replace("''","",$text);
+    $text = preg_replace("/\{\{(.*)\}\}/i","",$text);
+
+//     preg_match("/\: /i",$matches,$text);
+    
+    $dot_pos = strpos($text,": ");
+    if($dot_pos===0) {
+      $text = str_replace(": ","",$text);
+    }
+    
+    $text = strip_tags_content($text);
+    $title = $text;
+    $desc = "";
+    $len = strlen($text);
+    if($len>150) {
+      $new_title = truncate_utf8($text,150,true,false);
+      $new_desc = str_replace($new_title,"",$text);
+       
+      $title = $new_title;
+      $desc = $new_desc;
+    }
+    
+    drush_print("TITLE");
+    drush_print("*******************");
+    drush_print($title);
+    drush_print(" ");
+    
+    drush_print("BODY");
+    drush_print("*******************");
+    drush_print($desc);
+    drush_print(" ");
+    
+    drush_print("NID");
+    drush_print("*******************");
+    drush_print($node->nid);
+    drush_print(" ");
+    
+    $node->title = $title;
+    $node->body[$body_language][0]['value'] = $desc;
+    node_save($node);
+  }
+}
+
+function strip_tags_content($text, $tags = '', $invert = FALSE) {
+
+  preg_match_all('/<(.+?)[\s]*\/?[\s]*>/si', trim($tags), $tags);
+  $tags = array_unique($tags[1]);
+
+  if(is_array($tags) AND count($tags) > 0) {
+    if($invert == FALSE) {
+      return preg_replace('@<(?!(?:'. implode('|', $tags) .')\b)(\w+)\b.*?>.*?</\1>@si', '', $text);
+    }
+    else {
+      return preg_replace('@<('. implode('|', $tags) .')\b.*?>.*?</\1>@si', '', $text);
+    }
+  }
+  elseif($invert == FALSE) {
+    return preg_replace('@<(\w+)\b.*?>.*?</\1>@si', '', $text);
+  }
+  return $text;
+}
+
 function thoe_import_fix_month_day($nodes="") {
 //   update field_data_field_date fdate
 //   INNER JOIN field_data_field_month AS fmonth ON fmonth.entity_id = fdate.field_date_value
@@ -1335,13 +1425,210 @@ function thoe_import_wiki_convert($text) {
   return $line;
 }
 
+function thoe_delete_node($nid) {
+  node_delete($nid);
+}
 
+function thoe_import_taxonomy_translation($tid,$translation_language,$translation_string) {
+  $possible_tid = _get_taxonomy_term_id_by_name($translation_string);
+  if($possible_tid) {
+    $possible_term = taxonomy_term_load($possible_tid);
+    if($possible_term->language == $translation_language) {
+      return $possible_tid;
+    }
+  }
+  
+  $source_term = taxonomy_term_load($tid);
+  // 1. Load or create a translation set.
+  $translation_set = ($source_term->i18n_tsid) ?
+    i18n_translation_set_load($source_term->i18n_tsid) :
+    i18n_translation_set_create('taxonomy_term', $source_term->vocabulary_machine_name);
 
+  // 2. Add the full source term in this set.
+  $translation_set->add_item($source_term, $source_term->language);
 
+  $translated_term = new stdClass();
+  $translated_term->vid = $source_term->vid;
+  $translated_term->name = $translation_string;
+  $translated_term->language = $translation_language;
+  taxonomy_term_save($translated_term);
 
+  // 3. Add the full translated term in this set.
+  $translation_set->add_item($translated_term, $translated_term->language);
+  $translation_set->save(TRUE);
+  return $translated_term->tid;
+}
 
+function thoe_import_node_translation($nid,$translation_language) {
+  $node = node_load($nid);
+  $node->tnid = $nid;
+  node_save($node);
+  $text = $node->title . $node->body['und'][0]['value']; 
+  $text = thoe_import_google_translate($text,"en",$translation_language);
 
+  if(!$text) {
+    return false;
+  }
+  
+  $translation_title = $text;
+  $translation_body = "";
+  $len = strlen($text);
+  if($len>150) {
+    $translation_title = truncate_utf8($text,150,true,false);
+    $translation_body = str_replace($translation_title,"",$text);
+  }
+  
+  $tnode = new StdClass;
+  $tnode->type = "node";
+  node_object_prepare($tnode);
+  $tnode->title = $translation_title; 
+  
+  $body_language = thoe_import_lang_code('body',$translation_language);
+  
+  $tnode->body[$body_language][0]['value'] = $translation_body;
+  $tnode->body[$body_language][0]['summary'] = text_summary($translation_body);
+  $tnode->body[$body_language][0]['format'] = "full_html";
+  
+  $tnode->language = $translation_language;
+  $tnode->uid = 1;
+  $tnode->status = 1;
+  $tnode->promote = 0;
+  $tnode->tnid = $nid;
+  
+  drush_print("TITLE");
+  drush_print("*******************");
+  drush_print($translation_title);
+  drush_print(" ");
+  
+  drush_print("DEC");
+  drush_print("*******************");
+  drush_print($translation_body);
+  drush_print(" ");
+  
+  //other values
+  // books
+  $books = thoe_import_get_google_books($translation_title,$translation_language);
+  // set books
+  $tnode = thoe_import_add_books(array("books"=>$books),$tnode);
+  
+  // get the videos
+  $videos = thoe_youtube_api_search($translation_title,$translation_language);
+  // set videos
+  $tnode = thoe_import_add_video(array("videos"=>$videos),$tnode);
+  
+  //field_date
+  $date_collection_id = $node->field_date['und'][0]['value'];
+  $date_collection = entity_load('field_collection_item', array($date_collection_id));
+  
+  $ewrapper = entity_metadata_wrapper('node', $tnode);
+  $collection = entity_create('field_collection_item', array('field_name' => 'field_date'));
+  $collection->setHostEntity('node', $tnode);
+  
+  $years_lang = thoe_import_lang_code('field_day',$tnode->language);
+  
+  if(isset($date_collection[$date_collection_id]->field_day['und'][0]['value'])) {
+    $collection->field_day[$years_lang][]['value'] = $date_collection[$date_collection_id]->field_day['und'][0]['value'];
+  }
+  if(isset($date_collection[$date_collection_id]->field_month['und'][0]['value'])) {
+    $collection->field_month[$years_lang][]['value'] = $date_collection[$date_collection_id]->field_month['und'][0]['value'];
+  }
+  if(isset($date_collection[$date_collection_id]->field_year['und'][0]['value'])) {
+    $collection->field_year[$years_lang][]['value'] = $date_collection[$date_collection_id]->field_year['und'][0]['value'];
+  }
+  if(isset($date_collection[$date_collection_id]->field_ad_bc['und'][0]['value'])) {
+    $collection->field_ad_bc[$years_lang][]['value'] = $date_collection[$date_collection_id]->field_ad_bc['und'][0]['value'];
+  }
+  if(isset($date_collection[$date_collection_id]->field_hour['und'][0]['value'])) {
+    $collection->field_hour[$years_lang][]['value'] = $date_collection[$date_collection_id]->field_hour['und'][0]['value'];
+  }
+  if(isset($date_collection[$date_collection_id]->field_minute['und'][0]['value'])) {
+    $collection->field_minute[$years_lang][]['value'] = $date_collection[$date_collection_id]->field_minute['und'][0]['value'];
+  }
+  if(isset($date_collection[$date_collection_id]->field_second['und'][0]['value'])) {
+    $collection->field_second[$years_lang][]['value'] = $date_collection[$date_collection_id]->field_second['und'][0]['value'];
+  }
+  
+  // field_big_date
+  $date_collection_id = $node->field_big_date['und'][0]['value'];
+  $date_collection = entity_load('field_collection_item', array($date_collection_id));
+  
+  $ewrapper = entity_metadata_wrapper('node', $tnode);
+  $collection = entity_create('field_collection_item', array('field_name' => 'field_big_date'));
+  $collection->setHostEntity('node', $tnode);
+  
+  $years_lang = thoe_import_lang_code('field_years_ago',$tnode->language);
+  
+  if(isset($date_collection[$date_collection_id]->field_years_ago['und'][0]['value'])) {
+    $collection->field_years_ago[$years_lang][]['value'] = $date_collection[$date_collection_id]->field_years_ago['und'][0]['value'];
+  }
+  if(isset($date_collection[$date_collection_id]->field_abbrevation['und'][0]['value'])) {
+    $collection->field_abbrevation[$years_lang][]['value'] = $date_collection[$date_collection_id]->field_abbrevation['und'][0]['value'];
+  }
+  if(isset($date_collection[$date_collection_id]->field_ago_after['und'][0]['value'])) {
+    $collection->field_ago_after[$years_lang][]['value'] = $date_collection[$date_collection_id]->field_ago_after['und'][0]['value'];
+  }
+  
+  $collection->save();
+  $ewrapper->save();
+  
+  // tis
+  $tis_language = thoe_import_lang_code('field_tis',$translation_language);
+  $tnode->field_tis[$tis_language][0]['value'] = $node->field_tis['und'][0]['value'];
+  $tnode->field_image = $node->field_image;
+  $tnode->field_weight = $node->field_weight;
+  
+  foreach ($node->field_free_tagging['und'] as $term) {
+  	$tid = $term['tid'];
+  	$source_term = taxonomy_term_load($tid);
+  	$translation_string = $source_term->name;
+  	
+  	$translation_string = thoe_import_google_translate($source_term->name,"en",$translation_language);
+  	if($translation_string) {
+  	  $new_tid = thoe_import_taxonomy_translation($tid,$translation_language,$translation_string);
+  	  $tnode->field_free_tagging['und'][] = array('tid' => $new_tid);
+  	}
+  }
+  
+  node_save($tnode);
+}
 
+function thoe_import_google_translate($string,$source_language,$target_language) {
+  $google_api_key = "AIzaSyBHBN9EvpOH2Cpbup_ktQNXAzj6-8qe0ZI";
+  $cx = "018281177569452009831:a94jredrj7a";
+  $end_url = "https://translation.googleapis.com/language/translate/v2";
+  $data = array(
+      "q" => $string,
+      "target" => $target_language,
+      "source" => $source_language,
+      "key" => $google_api_key,
+      "format" => "text",
+      "model" => "nmt"
+  );
+  
+  $full_url = url($end_url, array('query' => $data));
+  $google_result = drupal_http_request($full_url);
+  if ($google_result->code==200) {
+    $data = json_decode($google_result->data);
+    $result = $data->data->translations[0]->translatedText;
+    return $result;
+  }
+  return false;
+}
+
+function thoe_import_translate_mass($translation_language) {
+  $nodes = db_query("select n.nid from {node} n
+      where n.type = 'node'
+      and n.language = 'en'
+      ");
+  
+  foreach ($nodes as $record) {
+    $nid = $record->nid;
+    $target_exists = db_query("select n.nid from {node} n where n.tnid = :nid and n.language = :lang",array(":nid"=>$nid,":lang"=>$translation_language))->fetchField();
+    if(!$target_exists) {
+      thoe_import_node_translation($nid,$translation_language);
+    }
+  }
+}
 
 
 
