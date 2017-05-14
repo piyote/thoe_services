@@ -29,6 +29,22 @@ function thoe_import_drush_command(){
       ),
   );
   
+  $items['thoe_import_remove_duplicates'] = array(
+      'description' => 'Remove duplicates',
+      'aliases' => array('thoerd'),
+      'examples' => array(
+          'drush thoeft' => 'Remove duplicates',
+      ),
+  );
+  
+  $items['thoe_import_remove_videos'] = array(
+      'description' => 'Remove trash videos',
+      'aliases' => array('thoerv'),
+      'examples' => array(
+          'drush thoeft' => 'Remove trash videos',
+      ),
+  );
+  
   $items['thoe_import_translate'] = array(
       'description' => 'Translate the nodes into different languages',
       'arguments' => array(
@@ -82,9 +98,13 @@ function drush_thoe_import_translate($language){
   thoe_import_translate_mass($language);
 }
 
+function drush_thoe_import_remove_videos() {
+  thoe_import_youtube_clean();
+}
 
-
-
+function drush_thoe_import_remove_duplicates() {
+  thoe_import_delete_duplicates();
+}
 
 
 

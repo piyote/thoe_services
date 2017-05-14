@@ -61,15 +61,24 @@ function thoe_import_format_content($content,$style) {
   	  if(count($parts)>0) {
   	    $desc = implode(".",$parts);
   	  }
-  	  else {
-  	    $len = strlen(strip_tags($title));
-  	    if($len>150) {
-  	      $new_title = truncate_utf8(strip_tags($title),150,true,false);
-  	      $new_desc = str_replace($new_title,"",strip_tags($title));
+//   	  else {
+//   	    $len = strlen(strip_tags($title));
+//   	    if($len>150) {
+//   	      $new_title = truncate_utf8(strip_tags($title),150,true,false);
+//   	      $new_desc = str_replace($new_title,"",strip_tags($title));
   	      
-  	      $title = $new_title;
-  	      $desc = $new_desc;
-  	    }
+//   	      $title = $new_title;
+//   	      $desc = $new_desc;
+//   	    }
+//   	  }
+
+  	  $len = strlen(strip_tags($title));
+  	  if($len>150) {
+  	    $new_title = truncate_utf8(strip_tags($title),150,true,false);
+  	    $new_desc = str_replace($new_title,"",strip_tags($desc));
+  	     
+  	    $title = $new_title;
+  	    $desc = $new_desc;
   	  }
   	  
   	  $clean_title = strip_tags($title);
@@ -1619,7 +1628,7 @@ function thoe_import_translate_mass($translation_language) {
   $nodes = db_query("select n.nid from {node} n
       where n.type = 'node'
       and n.language = 'en'
-      ");
+      ")->fetchCol();
   
   foreach ($nodes as $record) {
     $nid = $record->nid;
@@ -1629,6 +1638,86 @@ function thoe_import_translate_mass($translation_language) {
     }
   }
 }
+
+function thoe_import_youtube_clean() {
+  $videos = db_query("select n.nid from {node} n
+      where n.type = 'video'
+      ")->fetchCol();
+  
+  $patterns = array(
+      "/\!\!\!/i",
+      "/Top \d{1,2}/i",
+      "/full album/i",
+      "/tv channel/i",
+      "/sub tv/i",
+      "/episode \d{1,2} sub/i",
+      "/sexy girls/i",
+      "/english sub/i",
+      "/ep\d{1,2}/i",
+  );
+  
+  
+  foreach ($videos as $video) {
+    $delete = false;
+    $nid = $video->nid;
+    $title = $video->title;
+    if($title=="" || $title==" ") {
+      $delete = true;
+    }
+    foreach ($patterns as $regexp) {
+      $exists = preg_match($regexp, $title, $matches, PREG_OFFSET_CAPTURE);
+      if($exists) {
+        $delete = true;
+      }
+    }
+    if($delete) {
+      drush_print("deleted: ".$nid);
+//       node_delete($nid);
+    }
+  }
+  
+}
+
+function thoe_import_delete_duplicates() {
+  $nodes = db_query("select n.nid from {node} n
+      where n.type = 'video'
+      limit 0,100
+      ")->fetchCol();
+  
+  foreach ($nodes as $nid) {
+    $node = node_load($nid);
+//     dpm("nid: ".$node->nid." | main title: ".$node->title);
+    $duplicates = db_query("select n.nid from {node} n
+      where n.type = 'video'
+        and n.title = :ntitle
+        and n.nid <> :nid
+        limit 0,10
+      ",array(":ntitle"=>$node->title,":nid"=>$node->nid))->fetchCol();
+    
+    foreach ($duplicates as $duplicatenid) {
+//       node_delete($duplicate->nid);
+      $duplicate = node_load($duplicatenid);
+      drush_print("nid: ".$duplicate->nid. " | duplicate title: ".$duplicate->title);
+    }
+  }
+  
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 

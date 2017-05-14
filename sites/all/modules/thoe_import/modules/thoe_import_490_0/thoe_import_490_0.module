@@ -4,8 +4,10 @@ function thoe_import_490_0_start() {
 	
 // 	drush_print("40_19_c import starts");
 	
-	for ($i=1227;$i<2018;$i++) {
-	  $url = "https://en.wikipedia.org/w/api.php?action=query&prop=revisions&rvprop=content&titles=".$i."&format=json";;
+	for ($i=1350;$i<2018;$i++) {
+	  $url = "https://en.wikipedia.org/w/api.php?action=query&prop=revisions&rvprop=content&titles=".$i."&format=json";
+//   for ($i=740;$i>310;$i--) {
+//     $url = "https://en.wikipedia.org/w/api.php?action=query&prop=revisions&rvprop=content&titles=".$i."_BC&format=json";
 // 	  dpm($url);
 	  
 	  $style = array(

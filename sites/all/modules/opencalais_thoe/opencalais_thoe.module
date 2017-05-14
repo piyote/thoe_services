@@ -5,8 +5,13 @@
 * an API key at http://www.dangrossman.info/open-calais-tags
 */
 function opencalais_thoe_get_tags($content) {
+//   sleep(20);
   $content = strip_tags($content);
-  $apikey = "MNRG2KLEFR4lDqICpWwG0Em2D3D410GP";
+//   $apikey = "MNRG2KLEFR4lDqICpWwG0Em2D3D410GP";
+  $api_arr = array("MNRG2KLEFR4lDqICpWwG0Em2D3D410GP","DuZd6qGigaiImyPq8av8xW9SD5egFQ25");
+//   $apikey = "DuZd6qGigaiImyPq8av8xW9SD5egFQ25";
+  $rand = rand(0,1);
+  $apikey = $api_arr[$rand];
   $oc = new OpenCalais($apikey);
   $entities = $oc->getEntities($content);
   foreach ($entities as $key=>$entity) {
