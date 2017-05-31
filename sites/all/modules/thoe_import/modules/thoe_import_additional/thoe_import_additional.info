@@ -1,0 +1,4 @@
+name = Thoe import by topic
+description = Wikipedia by topic data importer
+core = 7.x
+dependencies[] = thoe_import

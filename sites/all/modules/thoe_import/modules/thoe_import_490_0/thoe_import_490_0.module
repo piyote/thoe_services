@@ -1,10 +1,10 @@
 <?php 
 
-function thoe_import_490_0_start() {
+function thoe_import_490_0_start($topic="") {
 	
 // 	drush_print("40_19_c import starts");
 	
-	for ($i=1350;$i<2018;$i++) {
+	for ($i=1966;$i<2018;$i++) {
 	  $url = "https://en.wikipedia.org/w/api.php?action=query&prop=revisions&rvprop=content&titles=".$i."&format=json";
 //   for ($i=740;$i>310;$i--) {
 //     $url = "https://en.wikipedia.org/w/api.php?action=query&prop=revisions&rvprop=content&titles=".$i."_BC&format=json";
@@ -133,7 +133,7 @@ function thoe_import_490_0_start() {
 	          $style["day"] = $day;
 	          $line = str_replace("''","",$line);
 	          $line = preg_replace("/\{\{(.*)\}\}/i","",$line);
-	          if($tag!=="Births" && $tag!=="Deaths" ) {
+	          if($tag!=="Births" && $tag!=="Deaths" && $tag!=="Birthyears" ) {
 	            thoe_import_format_content($line,$style);
 	          }
 	          
@@ -153,7 +153,7 @@ function thoe_import_490_0_start() {
 	        $style["month"] = $month;
 	        $line = str_replace("''","",$line);
 	        $line = preg_replace("/\{\{(.*)\}\}/i","",$line);
-	      	if($tag!=="Births" && $tag!=="Deaths" ) {
+	      	if($tag!=="Births" && $tag!=="Deaths" && $tag!=="Birthyears") {
 	          thoe_import_format_content($line,$style);
 	        }
 // 	        print "MONTH: " . $month ." DAY: " . $day ." BY: " . $by . " TAG: " . $tag . " LINE: " . $line."\n";

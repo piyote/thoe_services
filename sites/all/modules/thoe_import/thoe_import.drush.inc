@@ -8,6 +8,7 @@ function thoe_import_drush_command(){
       'description' => 'Import content from different sources',
       'arguments' => array(
           'service' => '',
+          'topic' => ''
       ),
       'aliases' => array('timp'),
       'examples' => array(
@@ -33,7 +34,7 @@ function thoe_import_drush_command(){
       'description' => 'Remove duplicates',
       'aliases' => array('thoerd'),
       'examples' => array(
-          'drush thoeft' => 'Remove duplicates',
+          'drush thoerd' => 'Remove duplicates',
       ),
   );
   
@@ -41,7 +42,7 @@ function thoe_import_drush_command(){
       'description' => 'Remove trash videos',
       'aliases' => array('thoerv'),
       'examples' => array(
-          'drush thoeft' => 'Remove trash videos',
+          'drush thoerv' => 'Remove trash videos',
       ),
   );
   
@@ -80,13 +81,13 @@ function thoe_import_enabled_modules() {
   return $modules;
 }
 
-function drush_thoe_import($service){
+function drush_thoe_import($service,$topic){
   
   $enabled_modules = thoe_import_enabled_modules();
   
   if(in_array("thoe_import_".$service, $enabled_modules)) {
     drush_print("Service ".$service." enabled, will process");
-    call_user_func("thoe_import_".$service."_start");
+    call_user_func("thoe_import_".$service."_start",$topic);
   }
   else
   {

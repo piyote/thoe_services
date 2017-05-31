@@ -1166,6 +1166,21 @@ function thoe_import_delete_all() {
   db_query("TRUNCATE TABLE {file_managed}");
 }
 
+function thoe_import_delete_tr() {
+  $results = db_select('node', 'n')
+  ->fields('n', array('nid'))
+  ->condition('n.language',"tr")
+  ->execute();
+  foreach ($results as $result) {
+      $nids[] = $result->nid;
+  }
+
+  if (!empty($nids)) {
+    node_delete_multiple($nids);
+    drupal_set_message(t('Deleted %count nodes.', array('%count' => count($nids))));
+  }
+}
+
 function thoe_import_node_exists($title) {
   $nid = db_query("select nid from {node} where type='node' and title=:title",array(":title"=>$title))->fetchField();
   if($nid) {
@@ -1645,7 +1660,6 @@ function thoe_import_youtube_clean() {
       ")->fetchCol();
   
   $patterns = array(
-      "/\!\!\!/i",
       "/Top \d{1,2}/i",
       "/full album/i",
       "/tv channel/i",
@@ -1680,22 +1694,21 @@ function thoe_import_youtube_clean() {
 
 function thoe_import_delete_duplicates() {
   $nodes = db_query("select n.nid from {node} n
-      where n.type = 'video'
-      limit 0,100
+      where n.type = 'node'
+      
       ")->fetchCol();
   
   foreach ($nodes as $nid) {
     $node = node_load($nid);
 //     dpm("nid: ".$node->nid." | main title: ".$node->title);
     $duplicates = db_query("select n.nid from {node} n
-      where n.type = 'video'
+      where n.type = 'node'
         and n.title = :ntitle
         and n.nid <> :nid
-        limit 0,10
       ",array(":ntitle"=>$node->title,":nid"=>$node->nid))->fetchCol();
     
     foreach ($duplicates as $duplicatenid) {
-//       node_delete($duplicate->nid);
+      node_delete($duplicate->nid);
       $duplicate = node_load($duplicatenid);
       drush_print("nid: ".$duplicate->nid. " | duplicate title: ".$duplicate->title);
     }
@@ -1703,7 +1716,24 @@ function thoe_import_delete_duplicates() {
   
 }
 
+function thoe_import_select_nodes($tid) {
+  $nodes = taxonomy_select_nodes($tid,false, FALSE);
+//   dpm($nodes);
+  node_delete_multiple($nodes);
+}
 
+function thoe_import_delete_terms($lang) {
+  $tids = db_query("select t.tid from {taxonomy_term_data} t
+      where t.language = '".$lang."'
+      
+      ")->fetchCol();
+  
+  foreach ($tids as $tid) {
+//     dpm($tid);
+  	taxonomy_term_delete($tid);
+  }
+  
+}
 
 
 
